@@ -24,15 +24,15 @@
   - [Channels]()
   - [When all else fails]()
   - [Misc]()
+- [Testing]()
+  - [Separation of concerns]()
+  - [Simulating message execution]()
+  - [How to test my own configuration]()
+  - [Testing the full XCM Journey]()
 - [Transport Protocols]()
   - [VMP]()
   - [HRMP]()
   - [XCMP]()
-- [Testing]()
-  - [Separation of concerns]()
-  - [Simulating message execution]()
-  - [What if I configured it differently?]()
-  - [The nuclear solution]()
 
 # Reference
 
