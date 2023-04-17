@@ -7,7 +7,7 @@
   - [A Format, not a Protocol]()
   - [Architecture]()
 - [Quickstart](quickstart/README.md)
-  - [XCM Emulator](quickstart/xcm-emulator.md)
+  - [XCM Simulator](quickstart/xcm-simulator.md)
   - [First Look at an XCM](quickstart/first-look.md)
 - [Fundamentals]()
   - [MultiLocation]()
