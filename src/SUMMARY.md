@@ -2,10 +2,11 @@
 
 [XCM: Cross-Consensus Messaging](xcm.md)
 
-- [Overview]()
-  - [The Promise of Interoperability]()
-  - [A Format, not a Protocol]()
-  - [Architecture]()
+- [Overview](overview/README.md)
+  - [Introduction](overview/interoperability.md)
+  - [A Format, not a Protocol](overview/format.md)
+  - [The XCVM](overview/xcvm.md)
+  - [Architecture](overview/architecture.md)
 - [Quickstart]()
   - [XCM Simulator]()
   - [First Look at an XCM]()
@@ -24,6 +25,7 @@
   - [Channels]()
   - [When all else fails]()
   - [Misc]()
+- [Config Deep Dive]()
 - [Testing]()
   - [Separation of concerns]()
   - [Simulating message execution]()
@@ -38,5 +40,6 @@
 
 - [Cookbook]()
 - [All Instructions]()
+- [All XCVM Registers]()
 
 [Next Steps]()
