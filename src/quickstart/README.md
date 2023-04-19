@@ -2,12 +2,12 @@
 
 The XCM code can be found in [polkadot repository](https://github.com/paritytech/polkadot/tree/master/xcm).
 
-### Rust & Cargo
+## Rust & Cargo
 A pre-requisite for using XCM is to have a stable Rust version and Cargo installed. Here's an [installation guide](https://docs.substrate.io/install/) on how to install rust and cargo.
 
-### Running the Examples
+## Running the Examples
 
-All examples in the documentation are located in the [examples repository](). Follow the following steps to run the `first-look` example. First clone the repository:
+All examples in the documentation are located in the [examples repository](). Follow these steps to run the `first-look` example. First clone the repository:
 
 ```shell
 git clone git@github.com:vstam1/xcm-examples.git
