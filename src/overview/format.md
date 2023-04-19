@@ -1,9 +1,9 @@
 # A Format, Not a Protocol
 
 It's essential to understand that XCM is a format, not a protocol.
-It describes how messages should be structured and contain instructions relevant to the on-chain actions the message intends to perform.
+It describes how messages should be structured and contains instructions relevant to the on-chain actions the message intends to perform.
 However, XCM does not dictate how messages are delivered.
-That responsibility falls on transport layer protocols such as XCMP (Cross Chain Message Passing) in the Polkadot ecosystem, or any others to come.
+That responsibility falls on [transport layer protocols](TODO:link) such as XCMP (Cross Chain Message Passing) and VMP (Vertical Message Passing) in the Polkadot ecosystem, or any others to come.
 
 XCM is similar to how RESTful services use REST as an architectural style of development, where HTTP requests contain specific parameters to perform some action.
 Similar to UDP, out of the box XCM is a "fire and forget" model, unless there is a separate XCM message designed to be a response message which can be sent from the recipient to the sender. All error handling should also be done on the recipient side.

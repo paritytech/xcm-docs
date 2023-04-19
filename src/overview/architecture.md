@@ -1,11 +1,11 @@
 # Architecture
 
-XCM is a [specification](https://github.com/paritytech/xcm-format), which means anyone is free to create an implementation for it.
-The first one is made in [Rust](https://www.rust-lang.org/), primarily for [substrate](https://substrate.io/)-based chains in the [Polkadot](https://polkadot.network/) ecosystem.
+XCM is a [format](https://github.com/paritytech/xcm-format), which means anyone is free to create an implementation for it.
+The first one is made in [Rust](https://www.rust-lang.org/), primarily for [Substrate](https://substrate.io/)-based chains in the [Polkadot](https://polkadot.network/) ecosystem.
 We'll be looking at this first implementation to tinker with different types of messages in the next sections.
 For now, we'll take a look at how it's structured.
 
-All the code lives in its own [folder](https://github.com/paritytech/polkadot/tree/master/xcm) in the Polkadot repository.
+All the code lives in the [Polkadot repo](https://github.com/paritytech/polkadot/tree/master/xcm).
 The main structure is as follows:
 - XCM: Defines the fundamental constructs used in XCM and an enum with all the instructions available.
 - Executor: Implements the XCVM, capable of executing XCMs. Highly configurable.
@@ -26,10 +26,11 @@ XCM builder provides building blocks people can use to configure their executor 
 
 ## Pallet
 
-The XCM pallet is a FRAME pallet that can be used to execute XCMs (Cross-Consensus Messages) or send them.
+The XCM pallet is a FRAME pallet that can be used to execute XCMs locally or send them to a different system.
 It also has extrinsics for specific use cases such as teleporting assets or doing reserve asset transfers, which we'll talk about later.
+It's the glue between XCM and FRAME, which is highly used in the Polkadot ecosystem.
 
 ## Simulator 
 
-The simulator allows for testing XCM programs needing to do it in production.
+The simulator allows for testing XCMs fast, without needing to boot up several different nodes in a network, or test in production.
 It's a very useful tool which we'll use later to build and test different XCMs.
