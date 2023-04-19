@@ -25,6 +25,7 @@
   - [Channels]()
   - [When all else fails]()
   - [Misc]()
+- [Config Deep Dive]()
 - [Testing]()
   - [Separation of concerns]()
   - [Simulating message execution]()
@@ -39,5 +40,6 @@
 
 - [Cookbook]()
 - [All Instructions]()
+- [All XCVM Registers]()
 
 [Next Steps]()

@@ -9,7 +9,7 @@ Most of the XCM format comprises these registers and the instructions used to co
 Like XCM, the XCVM is also a specification.
 The first implementation is [xcm-executor](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-executor), provided by Parity.
 It's built to be highly configurable, with its building blocks available in [xcm-builder](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-builder).
-Configuring the executor is an important and extensive topic, one we will dive into further in [Executor Deep Dive](TODO:link).
+Configuring the executor is an important and extensive topic, one we will dive into further in [Config Deep Dive](TODO:link).
 It's entirely possible to create another implementation of the XCVM if desired.
 
 Typically, an XCM takes the following path through the XCVM:
@@ -20,3 +20,4 @@ Typically, an XCM takes the following path through the XCVM:
 The XCVM register you will hear most about is the `Holding` register.
 An XCVM program that handles assets (which means most of them) will be putting them in and taking them out of this register.
 Instructions we'll see later like `DepositAsset`, `WithdrawAsset` and many more, make use of this register.
+You can see all registers in the [All XCVM Registers](TODO:link) section.
