@@ -48,7 +48,7 @@ The first two examples are relative to RelayA and the second set of examples is 
 In the `Location` comments, we expressed the locations in text.
 The `..` express a step up in the hierarchical structure (the “parent” or the encapsulating consensus system).
 The `..` are followed by some number of [Junctions](junction.md), all separated by `/`.
-The `X1` and `X2` types explain the number of `Junction`s that we step down in the hierarchical structure (see [Junctions](junction.md) for an explanation).
+The `X1` and `X2` variants are expressing the number of `Junction`s that we step down in the hierarchical structure (see [Junctions](junction.md) for an explanation).
 
 
 ```rust,noplayground
