@@ -1,6 +1,6 @@
 # MultiLocation
 The [MultiLocation](https://paritytech.github.io/polkadot/doc/xcm/v3/struct.MultiLocation.html) type identifies any single location that exists within the world of consensus.
-It can represent all manner of things that exist within consensus, from a scalable multi-shard blockchain such as Polkadot down to a lowly ERC-20 asset account on a parachain.
+It can represent all manner of things that exist within consensus, from a scalable multi-shard blockchain such as Polkadot down to a ERC-20 asset account on a parachain.
 MultiLocations are used to identify places to send XCMs, places that can receive assets, and then can even help describe the type of an asset itself, as we will see in [MultiAsset](../multiasset.md).
 
 ### Location is relative
