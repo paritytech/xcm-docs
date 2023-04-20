@@ -111,7 +111,7 @@ See the [BodyId documentation](https://paritytech.github.io/polkadot/doc/xcm/v3/
 A global network (e.g. Polkadot or Kusama) is capable of externalizing its own consensus.
 This is not generally meaningful outside of the universal level.
 An example would be describing the Kusama relay chain from the perspective of the Polkadot relay chain as `{parents: 1, interior: GlobalConsensus(Kusama)}`.
-An example use case could be routing XCM messages between global consensus networks using bridges.
+An example use case could be routing XCMs between global consensus networks using bridges.
 
 ## Multiple ways to create a MultiLocation
 ```rust,noplayground

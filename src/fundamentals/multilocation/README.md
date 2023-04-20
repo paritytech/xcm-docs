@@ -1,14 +1,14 @@
 # MultiLocation
 The [MultiLocation](https://paritytech.github.io/polkadot/doc/xcm/v3/struct.MultiLocation.html) type identifies any single location that exists within the world of consensus.
-It is quite an abstract idea and can represent all manner of things that exist within consensus, from a scalable multi-shard blockchain such as Polkadot down to a lowly ERC-20 asset account on a parachain.
-MultiLocations are used to identify places to send XCM messages, places that can receive assets, and then can even help describe the type of an asset itself, as we will see in [MultiAsset](../multiasset.md).
+It can represent all manner of things that exist within consensus, from a scalable multi-shard blockchain such as Polkadot down to a lowly ERC-20 asset account on a parachain.
+MultiLocations are used to identify places to send XCMs, places that can receive assets, and then can even help describe the type of an asset itself, as we will see in [MultiAsset](../multiasset.md).
 
 ### Location is relative
 MultiLocation always expresses a location relative to the current location.
 You can think of it a bit like a file system path but where there is no way of directly expressing the “root” of the file system tree.
 This is for a simple reason: In the world of Polkadot, blockchains can be merged into, and split from other blockchains.
 A blockchain can begin life very much alone, and eventually be elevated to become a parachain within a larger consensus.
-If it did that, then the meaning of “root” would change overnight and this could spell chaos for XCM messages and anything else using MultiLocation.
+If it did that, then the meaning of “root” would change overnight and this could spell chaos for XCMs and anything else using MultiLocation.
 To keep things simple, we exclude this possibility altogether.
 
 ### Hierarchical structure
