@@ -1,22 +1,19 @@
 # Executor Config
 As previously mentioned, the xcm-executor is the first Cross-Consensus Virtual Machine(XCVM) implementation.
 It handles the correct interpretation and execution of XCMs.
-Each chain that implements the xcm-executor, can configure it for their use case.
+Each chain that uses the xcm-executor, can configure it for their use case.
 In this chapter we will go over this configuration, explain each config item and give some examples of pre-defined solutions for these items.
 
 
 ## XCM Executor Configuration
-Below we list the [Config](https://paritytech.github.io/polkadot/doc/xcm_executor/trait.Config.html) of the xcm-executor.
-The Config is implemented with as a trait that expects multiple Types.
-Each Type specifies the traits that the implementation must have implemented.
+Below we list the [Config](https://paritytech.github.io/polkadot/doc/xcm_executor/trait.Config.html) trait of the xcm-executor.
+The Config trait expects multiple associated types.
+Each type has a trait bound which the concrete type must implement.
 Some of these types will use a default implementation in most situations (e.g.
 RuntimeCall).
 Other types have a default implementation specified by the unit type `()`.
-There are also types that are highly configurable, and in certain cases will have multiple implementations (e.g.
-Barrier).
-These implementations are then grouped using a tuple `(impl_1, impl_2, ..., impl_n)`.
-The execution of the tuple type is consequtive.
-For most of these types there are pre-defined solutions.
+Most types you'll want to carefully choose which implementation they get.
+For most of these types there are pre-defined solutions and building blocks you can use and adapt to your scenario.
 These solutions are listed in the xcm-builder [folder](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-builder/src).
 
 We will now explain each type and go over some of the implementations of the type:
@@ -51,8 +48,32 @@ pub trait Config {
 }
 ```
 
+## How to use multiple implementations.
+Some associated types in the Config trait are highly configurable and in certain cases will have multiple implementations (e.g. Barrier).
+These implementations are then grouped using a tuple `(impl_1, impl_2, ..., impl_n)`.
+The execution of the tuple type is consequtive, meaning that each item is executed one after another. In most cases the execution is halted when one of these items returns positive (Ok or true, etc.). The next example of the Barrier type shows how the grouping works (you don't have to understand what the implementation does).
+
+```rust,noplayground
+pub type Barrier = (
+	TakeWeightCredit,
+	AllowTopLevelPaidExecutionFrom<Everything>,
+	AllowKnownQueryResponses<XcmPallet>,
+	AllowSubscriptionsFrom<Everything>,
+);
+
+pub struct XcmConfig;
+impl xcm_executor::Config for XcmConfig {
+    ...
+	type Barrier = Barrier;
+    ...
+}
+```
+
+## Config Items
+We now go over each config item to explain what the associate type does and how it is used in the xcm-executor. Many of these types have pre-defined solutions that can be found in the xcm-builder and a good way to understand these configurations is to look at example configurations. On the bottom of this page we listed some examples. 
+
 ### RuntimeCall
-The `RuntimeCall` type is equal to the RuntimeCall created in the `construct_runtime!` macro.
+The `RuntimeCall` type is equal to the RuntimeCall created in the `construct_runtime!` macro. It is an enum of all the callable functions of each of the implemented pallets. 
 
 ### XcmSender
 The XcmSender type implements the `SendXcm` trait, and defines how the xcm_executor can send XCMs (which transport layer it can use for the XCMs).
