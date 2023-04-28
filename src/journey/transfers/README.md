@@ -2,19 +2,16 @@
 
 The first feature you'll be interested in when dealing with XCM is being able to transfer assets between consensus systems.
 In the [Quickstart](../../overview/README.md) section, we saw a simple XCM that when executed, would send assets between two accounts on the same consensus system.
-This can, of course, be done locally as well. The beauty with XCM is we can send it to another system for them to execute.
-The end result is what's called a "remote transfer", making a transfer between two accounts on another system.
+This can, of course, be done without XCM as well.
+The beauty with XCM is we can send it to another system for them to execute.
+In that case, we get a remote transfer, making a transfer between two accounts on another system.
 
 Now that we've learnt the [fundamentals](../../fundamentals/README.md), let's go over those same instructions.
 
 ## WithdrawAsset
 
 ```rust,noplayground
-enum Instruction {
-  ...
-  WithdrawAsset(MultiAssets),
-  ...
-}
+WithdrawAsset(MultiAssets),
 ```
 
 This instruction is the most common way to get assets to the holding register of the XCVM.
@@ -24,11 +21,7 @@ As we've seen, we can use the expression `(Here, amount).into()` to take a certa
 ## BuyExecution
 
 ```rust,noplayground
-enum Instruction {
-  ...
-  BuyExecution { fees: MultiAssets, weight_limit: WeightLimit },
-  ...
-}
+BuyExecution { fees: MultiAssets, weight_limit: WeightLimit },
 ```
 
 Because XCM is designed to be agnostic to the underlying consensus system, it doesn't have fee payment baked in.
@@ -38,30 +31,32 @@ Most XCMs are not allowed to be executed (blocked by the [barrier](TODO:link)) i
 ## DepositAsset
 
 ```rust,noplayground
-enum Instruction {
-  ...
-  DepositAsset { assets: MultiAssetFilter, beneficiary: MultiLocation },
-  ...
-}
+DepositAsset { assets: MultiAssetFilter, beneficiary: MultiLocation },
 ```
 
 This instruction will put assets from the holding register that match the [MultiAssetFilter](../../fundamentals/multiasset.md) into the `beneficiary`.
 
-## Examples
+## Example
 
 ```rust,noplayground
 let message = Xcm(vec![
-  WithdrawAsset(),
-  BuyExecution {  },
-  DepositAsset {  },
+  WithdrawAsset((Here, amount).into()),
+  BuyExecution { fees: (Here, amount).into(), weight_limit: Unlimited },
+  DepositAsset { 
+    assets: All.into(),
+    beneficiary: AccountId32 { id: ALICE.into(), network: None }.into()
+  },
 ]);
 ```
+
+As we've seen, the above message results in withdrawing assets from the origin of the message, paying for execution and depositing the rest to another account on the same system.
+The full example can be seen in [the examples repo](TODO:add_link).
 
 ## Transferring between systems
 
 But what if you want to make a transfer from one system to another?
-There are two ways of transfering assets between systems:
-- Teleporting
+There are two ways of doing this:
+- Asset teleportation
 - Reserve-backed transfers
 
-We'll be discussing them in the following chapters.
+We'll be discussing both in the following chapters.
