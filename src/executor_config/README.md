@@ -1,8 +1,8 @@
 # Executor Config
-As previously mentioned, the xcm-executor is the first Cross-Consensus Virtual Machine(XCVM) implementation.
-It handles the correct interpretation and execution of XCMs.
+As previously mentioned, the xcm-executor is the a Cross-Consensus Virtual Machine(XCVM) implementation.
+It provides an opinionated interpretation and execution of XCMs.
 Each chain that uses the xcm-executor, can configure it for their use case.
-In this chapter we will go over this configuration, explain each config item and give some examples of pre-defined solutions for these items.
+In this chapter we will go over this configuration, explain each config item and give some examples of the tools and types that can be used to configure these items.
 
 
 ## XCM Executor Configuration
@@ -51,7 +51,7 @@ pub trait Config {
 ## How to use multiple implementations.
 Some associated types in the Config trait are highly configurable and in certain cases will have multiple implementations (e.g. Barrier).
 These implementations are then grouped using a tuple `(impl_1, impl_2, ..., impl_n)`.
-The execution of the tuple type is consequtive, meaning that each item is executed one after another. In most cases the execution is halted when one of these items returns positive (Ok or true, etc.). The next example of the Barrier type shows how the grouping works (you don't have to understand what the implementation does).
+The execution of the tuple type is sequential, meaning that each item is executed one after another. Each item is checked, if it fails to pass, the next item is checked and so on. The execution is halted when one of these items returns positive (Ok or true, etc.). The next example of the Barrier type shows how the grouping works (understanding each item in the tuple is not necessary).
 
 ```rust,noplayground
 pub type Barrier = (
@@ -69,6 +69,8 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
+In the above example, when checking the barrier, we'll first check the TakeWeightCredit type. If it fails, we'll go on to check the AllowTopLevelPaidExecutionFrom<Everything> and so on until one of them gives a positive. If they all fail, a `Barrier` error is thrown.  
+
 ## Config Items
 We now go over each config item to explain what the associate type does and how it is used in the xcm-executor. Many of these types have pre-defined solutions that can be found in the xcm-builder and a good way to understand these configurations is to look at example configurations. On the bottom of this page we listed some examples. 
 
@@ -76,7 +78,7 @@ We now go over each config item to explain what the associate type does and how 
 The `RuntimeCall` type is equal to the RuntimeCall created in the `construct_runtime!` macro. It is an enum of all the callable functions of each of the implemented pallets. 
 
 ### XcmSender
-The XcmSender type implements the `SendXcm` trait, and defines how the xcm_executor can send XCMs (which transport layer it can use for the XCMs).
+The `XcmSender` type implements the `SendXcm` trait, and defines how the xcm_executor can send XCMs (which transport layer it can use for the XCMs).
 This type normally implements a tuple for one or more [transport layer(s)](Todo Transport Layer Link).
 For example a parachain can implement the XcmSender as: 
 ```rust,noplayground
@@ -87,8 +89,8 @@ For example a parachain can implement the XcmSender as:
 	XcmpQueue,
 );
 ```
-If a parachain does not implement the XcmpQueue, it will not be able to send messages to other parachains.
-This can be useful for controlling the destinations that an XCM can be send to.
+If a runtime does not contain the XcmpQueue pallet as a config item for XcmSender, it will not be able to send messages to other parachains.
+This can be useful for controlling the destinations that an XCM can be sent to.
 
 
 ### AssetTransactor
@@ -99,23 +101,38 @@ Three default implementations are provided in the xcm-builder, namely the `Curre
 ### OriginConverter
 The `OriginConverter` type implements the `ConvertOrigin` trait and defines how the xcm-executor can convert a `MultiLocation` into a `RuntimeOrigin`.
 Most xcm-executors take multiple implementations in a tuple for this configuration as there are many different MLs we would like to convert.
-Take for example the `SignedAccountId32AsNative` implementation, that can convert an `AccountId32` Junction to an signed RuntimeOrigin.
-There are many pre-defined solutions in the xcm-builder (e.g.
-converting parachains (siblings or children) and relay chain or root origins).
+When multiple `OriginConverter`s conflict, the [OriginKind](https://paritytech.github.io/polkadot/doc/xcm/v2/enum.OriginKind.html) that is passed to the `convert_origin` function is used to distingues which `OriginConverter` to use. There are four different `OriginKind`s :
 
 ```rust,noplayground
-// ThisNetwork = Kusama;
-SignedAccountId32AsNative<ThisNetwork, RuntimeOrigin>;
+pub enum OriginKind {
+	Native,
+	SovereignAccount,
+	Superuser,
+	Xcm,
+}
+```
+
+An example of the use of `OriginKind`s are the `SovereignSignedViaLocation` and `SignedAccountId32AsNative` OriginConverters (defined in xcm-builder). The first converts an sovereign account into a `Signed` RuntimeOrigin (uses `SovereignAccount` OriginKind) while the second converts a local native account into a `Signed` RuntimeOrigin (uses `Native` OriginKind). 
+
+```rust,noplayground
+pub type SovereignAccountOf = AccountId32Aliases<ThisNetwork, AccountId>;
+(
+	// A `Signed` origin of the sovereign account that the original location controls.
+	SovereignSignedViaLocation<SovereignAccountOf, RuntimeOrigin>,
+	// The AccountId32 location type can be expressed natively as a `Signed` origin.
+	SignedAccountId32AsNative<ThisNetwork, RuntimeOrigin>,
+);
+
 ```
 
 ### IsReserve
 The `IsReserve` type must be set to specify which `<MultiAsset, MultiLocation>` pair we trust to deposit reserve assets on our chain.
-We can also use the unit type `()` to prohibit reserve asset transfers.
+We can also use the unit type `()` to block `ReserveAssetDeposited` instructions.
 An example implementation is the `NativeAsset` struct, that accepts an asset iff it is a native asset.
 
 ### IsTeleporter
 The `IsTeleporter` type must be set to specify which `<MultiAsset, MultiLocation>` pair we trust to teleport assets to our chain.
-We can also use the unit type `()` to prohibit asset teleportations.
+We can also use the unit type `()` to block `ReceiveTeleportedAssets` instruction.
 An example implementation is the `NativeAsset` struct, that accepts an asset iff it is a native asset.
 
 ### UniversalLocation
@@ -132,7 +149,7 @@ X2(GlobalConsensus(NetworkId::Polkadot), Parachain(1000))
 ```
 
 ### Barrier
-Before any XCMs are executed, they need to pass the `Barrier`.
+Before any XCMs are executed in the XCM executor, they need to pass the `Barrier`.
 The `Barrier` type implements the `ShouldExecute` trait and can be seen as the firewall of the xcm-executor.
 Each time the xcm-executor receives an XCM, it check with the barrier if the XCM should be executed.
 We can also define multiple barriers for our `Barrier` type by using a tuple.
