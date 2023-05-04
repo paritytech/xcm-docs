@@ -69,13 +69,15 @@ It then sends an XCM to the destination system given by `dest` with the followin
 2. ClearOrigin
 3. All the instructions from the `xcm` operand, in this case `DepositAsset`
 
+As we see in the example, instructions 1. and 2. are always added by the executor, no need to specify them.
+
 ### ReceiveTeleportedAsset
 
 ```rust,noplayground
 ReceiveTeleportedAssets(MultiAssets)
 ```
 
-This instruction is a *trusted indication*, it's meant to only be executed if the origin of the XCM is trusted for this purpose.
+This instruction is a *trusted indication*. It should only be executed if the origin of the XCM is trusted for this purpose.
 This level of care must be taken because this instruction will *put assets into the circulating supply*, usually minting them.
 As specified earlier, this can result in an increase/decrease in circulating supply of an asset, or a duplication/loss of an NFT, if the source is not trusted for this purpose.
 

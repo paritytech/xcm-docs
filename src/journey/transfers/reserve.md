@@ -1,6 +1,6 @@
 # Reserve-backed transfers
 
-For consensus systems that don't have the level of trust required for asset teleportation, they can instead opt for trusting a third party called a reserve to store the real assets (think Statemine on Kusama or Statemint on Polkadot).
+For consensus systems that don't have the level of trust required for asset teleportation, they can instead opt for trusting a third party called a reserve to store the real assets (think Kusama's relay chain or Statemine, or Polkadot's relay or Statemint).
 The source and the destination need a way to keep track of the real assets they own on the reserve, this is usually done by minting a new derivative token.
 Both source and destination now need accounts on the reserve to hold their assets, we call these their sovereign accounts on that system.
 
@@ -77,9 +77,11 @@ InitiateReserveWithdraw { assets: MultiAssetFilter, reserve: MultiLocation, xcm:
 The `InitiateReserveWithdraw` instruction takes the derivative token from the holding register and burns it.
 Then it sends a new XCM to the specified `reserve`, in this example, the relay chain.
 This new XCM contains the following instructions, in order:
-- WithdrawAsset
-- ClearOrigin
-- All instructions specified in the `xcm` operand, in this case `DepositReserveAsset`
+1. WithdrawAsset
+2. ClearOrigin
+3. All instructions specified in the `xcm` operand, in this case `DepositReserveAsset`
+
+As was the case with [teleports](../teleports.md), instructions 1. and 2. are added automatically by the executor when using `InitiateReserveWithdraw`.
 
 Upon receiving this XCM, the reserve will withdraw the asset from parachain 1's sovereign account (where the real asset is stored), and deposit it on parachain 2's sovereign account.
 
@@ -91,9 +93,9 @@ DepositReserveAsset { assets: MultiAssetFilter, dest: MultiLocation, xcm: Xcm<()
 
 This instruction is used in this example instead of `DepositAsset`, because as well as depositing the assets to parachain 2's sovereign account, this instruction will send another XCM to parachain 2.
 This new XCM has the following instructions:
-- ReserveAssetDeposited
-- ClearOrigin
-- All instructions specified in the `xcm` operand, in this case, only `DepositAsset`
+1. ReserveAssetDeposited
+2. ClearOrigin
+3. All instructions specified in the `xcm` operand, in this case, only `DepositAsset`
 
 ### ReserveAssetDeposited
 
@@ -103,14 +105,14 @@ ReserveAssetDeposited(MultiAssets)
 
 Parachain 2 receives the XCM, mints new derivative tokens and deposit them locally to the beneficiary account.
 `ReserveAssetDeposited` is a *trusted indication*.
-As is the case with teleporting, you need to trust the reserve.
+As is the case with teleporting, you need to trust the reserve to have actually put the specified amount of assets in the sovereign account of this system.
 You can specify which systems you trust as reserves for which assets by configuring the [IsReserve](TODO:add_link) type in the executor.
-In our example, both parachains trust the relay chain as a reserve for it's own native token.
+In our example, both parachains trust the relay chain as a reserve for its own native token.
 
 ## Another example
 
-We now know this type of transfers requires 3 actors, the source, the reserve, and the destination.
-However, the source and destination don't have to be different systems, they could be one and the same, as in the following diagram.
+We now know this type of transfers requires 3 actors: the source, the reserve, and the destination.
+However, the source and reserve don't have to be different systems, they could be one and the same, as in the following diagram.
 
 ![Source is reserve](images/source_is_reserve.png)
 

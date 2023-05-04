@@ -35,6 +35,7 @@ DepositAsset { assets: MultiAssetFilter, beneficiary: MultiLocation },
 ```
 
 This instruction will put assets from the holding register that match the [MultiAssetFilter](../../fundamentals/multiasset.md) into the `beneficiary`.
+Note that `beneficiary` must be a location where the local consensus system can actually deposit assets to, e.g. it doesn't make sense to deposit assets to `../AccountId32(0x0)`.
 
 ## Example
 
