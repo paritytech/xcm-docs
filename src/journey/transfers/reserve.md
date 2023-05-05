@@ -1,6 +1,6 @@
 # Reserve-backed transfers
 
-For consensus systems that don't have the level of trust required for asset teleportation, they can instead opt for trusting a third party called a reserve to store the real assets (think Kusama's relay chain or Statemine, or Polkadot's relay or Statemint).
+For consensus systems that don't have the level of trust required for asset teleportation, they can instead opt for trusting a third party called a reserve to store the real assets (think Statemine on Kusama, or Statemint on Polkadot).
 The source and the destination need a way to keep track of the real assets they own on the reserve, this is usually done by minting a new derivative token.
 Both source and destination now need accounts on the reserve to hold their assets, we call these their sovereign accounts on that system.
 
@@ -38,6 +38,15 @@ Firstly, the reserve could easily become a point of centralization when too many
 Secondly, the sheer amount of steps required necessarily makes it more prone to errors, and as such, implementors will have to consider more possible pitfalls and provide technical support accordingly when an end user encounters issues arising from these steps.
 Last, but not least, either the source or destination can opt to designate multiple consensus systems to be their reserves.
 In such a situation, care must be taken in order to ensure that the sovereign accounts on the reserves are balanced, so that one doesn't get drained while the others still contain a healthy balance.
+
+### A note on trust
+
+We mentioned that reserve-backed transfers require the sender and the destination to trust a third party, the reserve, and not each other.
+This is true, but it doesn't mean the sender and destination have to trust ONLY the reserve, they also have to trust the issuer of the token.
+Whenever you are dealing with a particular asset, you are always trusting the issuer of said asset, because at any point they could mint a huge amount of that asset, wreaking havoc.
+You have to make sure you trust the asset, based on the security mechanisms used to protect its issuance.
+For this reason, reserves work best when they are the issuers of the asset being transacted.
+In that scenario, you only have to trust the reserve, period.
 
 ## Example
 
@@ -153,6 +162,11 @@ let message = Xcm(vec![
   },
 ]);
 ```
+
+### Another note on trust
+
+In this model, where the sender is the reserve, the destination is trusting the sender entirely.
+It's the sender the one who doesn't need to trust the destination, since it'll ever only be minting derivatives anyway, the sender/reserve controls the real assets and issuance.
 
 ## Next steps
 

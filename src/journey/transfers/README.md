@@ -2,10 +2,6 @@
 
 The first feature you'll be interested in when dealing with XCM is being able to transfer assets between consensus systems.
 In the [Quickstart](../../overview/README.md) section, we saw a simple XCM that when executed, would send assets between two accounts on the same consensus system.
-This can, of course, be done without XCM as well.
-The beauty with XCM is we can send it to another system for them to execute.
-In that case, we get a remote transfer, making a transfer between two accounts on another system.
-
 Now that we've learnt the [fundamentals](../../fundamentals/README.md), let's go over those same instructions.
 
 ## WithdrawAsset
