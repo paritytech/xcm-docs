@@ -91,7 +91,7 @@ Non-descript indices and keys within the current context location.
 The usage will vary widely owing to its generality.
 An example use case for the `GeneralIndex` is to describe an Asset within an Assets Parachain.
 
-NOTE: Try to avoid using this and instead use a more specific item.
+NOTE: If possible, try to avoid using this and instead use a more specific junction.
 
 #### AccountIndex64
 The `AccountIndex64` can be used to describe an account index. 

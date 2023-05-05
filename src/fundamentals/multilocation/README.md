@@ -1,7 +1,7 @@
 # MultiLocation
 The [MultiLocation](https://paritytech.github.io/polkadot/doc/xcm/v3/struct.MultiLocation.html) type identifies any single location that exists within the world of consensus.
-It can represent all manner of things that exist within consensus, from a scalable multi-shard blockchain such as Polkadot down to a ERC-20 asset account on a parachain.
-MultiLocations are used to identify places to send XCMs, places that can receive assets, and then can even help describe the type of an asset itself, as we will see in [MultiAsset](../multiasset.md).
+It can represent all manner of things that exist within consensus, from a scalable multi-shard blockchain such as Polkadot down to an ERC-20 asset account on a parachain.
+MultiLocations are used to identify places to send XCMs, places that can receive assets, and can even help describe the type of an asset itself, as we will see in [MultiAsset](../multiasset.md).
 
 ### Location is relative
 MultiLocation always expresses a location relative to the current location.
@@ -13,7 +13,7 @@ To keep things simple, we exclude this possibility altogether.
 
 ### Hierarchical structure
 Locations in XCM are hierarchical; some places in consensus are wholly encapsulated within other places in consensus.
-A parachain of Polkadot exists wholly within the overall Polkadot consensus and we call it an interior location.
+A parachain of Polkadot exists wholly within the overall Polkadot consensus; we call this an interior location.
 Or a pallet exists wholly within a parachain or relay chain.
 Putting it more strictly, say we have two consensus systems, A and B.
 If any change in A implies a change in B, then we say A is interior to B.
