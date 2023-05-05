@@ -1,5 +1,5 @@
 # Executor Config
-As previously mentioned, the xcm-executor is the a Cross-Consensus Virtual Machine(XCVM) implementation.
+As previously mentioned, the xcm-executor is a Cross-Consensus Virtual Machine(XCVM) implementation.
 It provides an opinionated interpretation and execution of XCMs.
 Each chain that uses the xcm-executor, can configure it for their use case.
 In this chapter we will go over this configuration, explain each config item and give some examples of the tools and types that can be used to configure these items.
@@ -51,7 +51,7 @@ pub trait Config {
 ## How to use multiple implementations.
 Some associated types in the Config trait are highly configurable and in certain cases will have multiple implementations (e.g. Barrier).
 These implementations are then grouped using a tuple `(impl_1, impl_2, ..., impl_n)`.
-The execution of the tuple type is sequential, meaning that each item is executed one after another. Each item is checked, if it fails to pass, the next item is checked and so on. The execution is halted when one of these items returns positive (Ok or true, etc.). The next example of the Barrier type shows how the grouping works (understanding each item in the tuple is not necessary).
+The execution of the tuple type is sequential, meaning that each item is executed one after another. Each item is checked to see whether it fails to pass, then the next item is checked, and so on. The execution is halted when one of these items returns positive (Ok or true, etc.). The next example of the Barrier type shows how the grouping works (understanding each item in the tuple is not necessary).
 
 ```rust,noplayground
 pub type Barrier = (
