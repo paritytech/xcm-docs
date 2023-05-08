@@ -65,13 +65,13 @@ ReportHolding { response_info: QueryResponseInfo, assets: MultiAssetFilter }
 For the full example, check [here](TODO). Assets are withdrawn from the account of parachain 1 on the relay chain and partly deposited in the account of parachain 2. The remaining assets are reported back to parachain 1. 
 ```rust, noplayground
 Xcm(vec![
-    WithdrawAsset((Here, send_amount).into()),
-    BuyExecution { fees: (Here, send_amount).into(), weight_limit: Unlimited },
-    DepositAsset { assets: Definite((Here, send_amount - 5).into()), beneficiary: Parachain(2).into() },
+    WithdrawAsset((Here, AMOUNT).into()),
+    BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: Unlimited },
+    DepositAsset { assets: Definite((Here, AMOUNT - 5).into()), beneficiary: Parachain(2).into() },
     ReportHolding {
         response_info: QueryResponseInfo {
             destination: Parachain(1).into(),
-            query_id: query_id_set,
+            query_id: QUERY_ID,
             max_weight: Weight::from_all(0),
         },
         assets: All.into(),
@@ -95,7 +95,7 @@ Xcm(vec![
         module_name: "pallet_balances".into(),
         response_info: QueryResponseInfo {
             destination: Parachain(1).into(),
-            query_id: query_id_set,
+            query_id: QUERY_ID,
             max_weight: Weight::from_all(0),
         },
     }
@@ -118,7 +118,7 @@ Xcm(vec![
     SetErrorHandler(Xcm(vec![
         ReportError(QueryResponseInfo {
             destination: Parachain(1).into(),
-            query_id: query_id_set,
+            query_id: QUERY_ID,
             max_weight: Weight::from_all(0),
         })
     ])),
@@ -145,7 +145,7 @@ Xcm(vec![
     },
     ReportTransactStatus(QueryResponseInfo {
         destination: Parachain(1).into(),
-        query_id: query_id_set,
+        query_id: QUERY_ID,
         max_weight: Weight::from_all(0),
     }),
 ]);
