@@ -27,7 +27,7 @@
   - [Channels]()
   - [When all else fails]()
   - [Misc]()
-- [Config Deep Dive]()
+- [Config Deep Dive](executor_config/README.md)
 - [Testing]()
   - [Separation of concerns]()
   - [Simulating message execution]()
