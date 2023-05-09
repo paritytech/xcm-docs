@@ -6,9 +6,8 @@ XCM contains query instructions that can be used to query information from anoth
 - `ReportTransactStatus`
 
 
-Each of these instructions is send to the destination of which we would like to query the information. 
-Each instruction has as one of its inputs a `QueryResponseInfo` struct. 
-The `destination` tells the queried consensus system where to send the response to and the `query_id` field links the query and the query response together. The `max_weight` field tells the queried consensus system what the maximum weight is that the response instruction can take.
+Each of these instructions is sent to the destination where we would like the information to be reported back to us. 
+Each instruction has a `QueryResponseInfo` struct as one of its inputs.
 
 ```rust, noplayground
 pub struct QueryResponseInfo {
@@ -19,8 +18,11 @@ pub struct QueryResponseInfo {
 }
 ```
 
+The `destination` tells the queried consensus system where to send the response to and the `query_id` field links the query and the query response together. The `max_weight` field tells the queried consensus system what the maximum weight is that the response instruction can take.
+
 When a query instruction is executed correctly, it sends a `QueryResponse` instruction to the location defined in the previously described `destination` field. 
-The `QueryResponse` looks the following: 
+The `QueryResponse` looks like this: 
+
 ```rust,noplayground
 QueryResponse {
     #[codec(compact)]
@@ -55,11 +57,12 @@ The response can be send back to the requester, or to another location, so the q
 Now we take a look at the query instructions.
 
 ## ReportHolding
-The `ReportHolding` instruction report to the given destination the contents of the Holding Register. The `assets` field is a filter for the assets that should be reported back. The assets reported back will be, asset-wise, *the lesser of this value and the holding register*. For example, if the holding register contains 10 of some fungible asset and the `assets` field specifies 15 of the same fungible asset, the result will return 10 of that asset. No wildcards will be used when reporting assets back.
 
 ```rust, noplayground
 ReportHolding { response_info: QueryResponseInfo, assets: MultiAssetFilter }
 ```
+
+The `ReportHolding` instruction reports to the given destination the contents of the Holding Register. The `assets` field is a filter for the assets that should be reported back. The assets reported back will be, asset-wise, *the lesser of this value and the holding register*. For example, if the holding register contains 10 units of some fungible asset and the `assets` field specifies 15 units of the same asset, the result will return 10 units of that asset. Wild cards can be used to describe which assets in the holding register to report, but the response always contains assets and no wild cards. 
 
 ### Example
 For the full example, check [here](TODO). Assets are withdrawn from the account of parachain 1 on the relay chain and partly deposited in the account of parachain 2. The remaining assets are reported back to parachain 1. 
@@ -84,6 +87,23 @@ The `QueryPallet` instruction queries the existence of a particular pallet based
 
 ```rust, noplayground
 QueryPallet { module_name: Vec<u8>, response_info: QueryResponseInfo }
+```
+
+The destination responds with a vec of `PalletInfo`s if the pallet exists. 
+
+```rust,noplayground
+pub struct PalletInfo {
+	#[codec(compact)]
+	index: u32,
+	name: BoundedVec<u8, MaxPalletNameLen>,
+	module_name: BoundedVec<u8, MaxPalletNameLen>,
+	#[codec(compact)]
+	major: u32,
+	#[codec(compact)]
+	minor: u32,
+	#[codec(compact)]
+	patch: u32,
+}
 ```
 
 ### Example

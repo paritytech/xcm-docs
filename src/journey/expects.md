@@ -1,5 +1,8 @@
 # Expects
-XCM contains instructions to check for specific conditions during the execution of the message. These 'expect' instructions check for a specific condition and if the condition is not as expected, the instruction throws an error. These instructions are, for example, useful to check the state of the registers before executing specific instructions. XCM contains the following expect instructions:
+XCM contains instructions to check for specific conditions during the execution of the message. 
+These 'expect' instructions check for a specific condition and if it's not fulfilled, an error is then thrown. 
+These instructions are used for things like checking the state of the registers before executing specific instructions. 
+XCM contains the following expect instructions:
 - `ExpectAsset`
 - `ExpectOrigin`
 - `ExpectPallet`
@@ -39,7 +42,8 @@ ExpectOrigin(Option<MultiLocation>)
 ```
 
 ### Example
-For the full example, check [here](TODO).
+For the full example, check [here](TODO). 
+The `ExpectOrigin` instruction errors because the `ClearOrigin` clears the origin register and we expect it to be equal to `Parachain(1)`.
 ```rust,noplayground
 // Set the instructions that are executed when ExpectOrigin does not pass.
 // In this case, reporting back an error to the Parachain.
@@ -54,10 +58,12 @@ ExpectOrigin(Some(Parachain(1).into())),
 ```
 
 ## ExpectPallet
-The `ExpectPallet` instruction ensures that a particular pallet with a particular version exists. 
+The `ExpectPallet` instruction ensures that a particular pallet with a particular version exists in the destination's runtime. 
 It throws a `PalletNotFound` error if there is no pallet at the given index.
 It throws a `NameMismatch` error is the `name` or `module_name` mismatch and a `VersionIncompatible` error if the `crate_major` or `crate_minor` mismatch. 
 The `name` and `module_name` represent a byte representation of the pallet's name and module name (e.g. 'Balances' and 'pallet_balances'). 
+Consensus systems that are not substrate-based may throw an `Unimplemented` error for this instruction.
+
 ```rust,noplayground
 ExpectPallet {
     #[codec(compact)]
@@ -94,7 +100,9 @@ ExpectPallet {
 ```
 
 ## ExpectError
-The `ExpectError` instruction throws an `ExpectationFalse` error if the error register does not equal the expected error. This instruction is useful during the error handler execution to halt the error handler if the error that started the execution of the error handler is not as expected. The `ExpectError` instruction allows to only execute the instructions in the error handler, when a specific error is thrown. 
+The `ExpectError` instruction throws an `ExpectationFalse` error if the error register does not equal the expected error at that point in the execution. 
+This instruction is useful during the error handler execution to halt the error handler if the error that started the execution of the error handler is not as expected. 
+The `ExpectError` instruction allows to only execute the instructions in the error handler, when a specific error is thrown. 
 ```rust,noplayground
 	ExpectError(Option<(u32, Error)>)
 ```
@@ -122,7 +130,8 @@ ExpectPallet {
 
 ## ExpectTransactStatus
 The `ExpectTransactStatus` instruction throws an `ExpectationFalse` error if the transact status register does not equal the expected transact status.
-The status is described by the `MaybeErrorCode` enum, and can either be a Success, Error or TruncatedError if the length of the error exceeds the MaxDispatchErrorLen. For pallet-based calls, the Error is represented as the scale encoded `Error` enum of the called pallet. 
+The status is described by the `MaybeErrorCode` enum, and can either be a Success, Error or TruncatedError if the length of the error exceeds the MaxDispatchErrorLen. 
+For pallet-based calls, the Error is represented as the scale encoded `Error` enum of the called pallet. 
 ```rust,noplayground
 ExpectTransactStatus(MaybeErrorCode)
 
@@ -135,7 +144,7 @@ pub enum MaybeErrorCode {
 
 ### Example
 For the full example, check [here](TODO).
-The transact status is reported to `parachain(1)` if the call in the `Transact` errors. 
+The transact status is reported to `Parachain(1)` if the call in the `Transact` errors. 
 ```rust,noplayground
 SetErrorHandler(Xcm(vec![ReportTransactStatus(QueryResponseInfo {
     destination: Parachain(1).into(),
