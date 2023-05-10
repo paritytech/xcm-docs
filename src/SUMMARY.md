@@ -27,7 +27,7 @@
   - [Locks]()
   - [Origin]()
   - [Channels]()
-  - [When all else fails]()
+  - [When all else fails](journey/transact.md)
   - [Misc]()
 - [Config Deep Dive](executor_config/README.md)
 - [Testing]()
