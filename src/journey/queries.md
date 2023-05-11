@@ -52,7 +52,7 @@ pub enum Response {
 The `QueryResponse` has the same `query_id` as the request to link the request and response and takes over the `max_weight` from the `QueryResponseInfo`. 
 It has the requested information in the `response` field. 
 And it has the location of the querier relative to the queried location in the querier field. 
-The response can be send back to the requester, or to another location, so the querier field is important to determine where the request originated from. 
+The response can be sent back to the requester, or to another location, so the querier field is important to determine where the requested information is needed. 
 
 Now we take a look at the query instructions.
 
