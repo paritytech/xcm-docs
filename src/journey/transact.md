@@ -1,5 +1,5 @@
 # Transact
-XCM has an instruction that allows for the execution of calls (Frame-based systems have Runtime calls or extrinsics) in a consensus system.
+XCM has an instruction that allows for the execution of calls (from a `RuntimeCall` in a Frame-based system, to a smart contract function call in an EVM-based system) in a consensus system.
 It is the `Transact` instruction and it looks like this:
 
 ```rust,noplayground
@@ -11,14 +11,14 @@ Transact {
 ```
 
 The Transact instruction has three fields. 
-The `origin_kind` has as type [OriginKind](https://paritytech.github.io/polkadot/doc/xcm/v2/enum.OriginKind.html) and specifies how the origin of the call should be interpreted. 
+The `origin_kind` is of type [OriginKind](https://paritytech.github.io/polkadot/doc/xcm/v2/enum.OriginKind.html) and specifies how the origin of the call should be interpreted. 
 In the xcm-executor, the `origin_kind` is used to determine how to convert a `MultiLocation` origin into a `RuntimeOrigin`. 
 For more information, check out the [xcm-executor config docs](../executor_config/index.html). 
 
 The `require_weight_at_most` field tells the XCVM executing the call how much [weight](../fundamentals/fees.md) it can use. 
 If the call uses more weight than the specified `require_weight_at_most`, the execution of the call fails. 
 
-The `call` field has as a type `DoubleEncoded<Call>`. 
+The `call` field is of type `DoubleEncoded<Call>`. 
 
 ```rust,noplayground
 pub struct DoubleEncoded<T> {
@@ -28,7 +28,8 @@ pub struct DoubleEncoded<T> {
 }
 ```
 
-XCM is consensus system agnostic, so it does not know what is being encoded in the call field. So the field has to be opaque. 
+XCM is consensus system agnostic; it does not know what is being encoded in the call field. 
+Hence, the field is a byte vector that can be freely interpreted in whatever form possible.
 However, the XCVM knows how to interpret this call field and how to decode it. 
 Instead of just using a `Vec<u8>` we use `DoubleEncoded` as a wrapper around a pre-encoded call (`Vec<u8>`) with extra functionalities such as caching of the decoded value. 
 We like to emphasize that the call in the `Transact` instruction can be anything from a `RuntimeCall` in a Frame-based system, to a smart contract function call in an EVM-based system.
