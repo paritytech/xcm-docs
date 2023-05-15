@@ -89,7 +89,7 @@ NoteUnlockable {
 }
 ```
 
-3. Parachain A sends RequestUnlock instruction to Parachain B
+3. Parachain A sends `RequestUnlock` instruction to Parachain B
 ```rust,noplayground
 ParaA::execute_with(|| {
     let message = Xcm(vec![RequestUnlock {
@@ -100,7 +100,7 @@ ParaA::execute_with(|| {
 });
 ```
 
-4. Parachain B sends an UnlockAsset instruction to the relay chain. We check if the lock is updated accordingly:
+4. Parachain B sends an `UnlockAsset` instruction to the relay chain. We check if the lock is updated accordingly:
 ```rust,noplayground
 assert_eq!(
     relay_chain::Balances::locks(&parachain_sovereign_account_id(1)),
@@ -117,7 +117,7 @@ The scenario of this example is as follows:
 Parachain A sets two locks on the relay chain with as unlockers Parachain B and Parachain C.
 Parachain A then requests Parachain B to partly unlock.
 
-Note: The locks overlap.
+Note: The locks overlap. When there are two or more locks, the total assets that are locked is equal to the most restrictive lock (the lock that locks the most assets). When the most restrictive lock is unlocked, the total locked assets is than equal to the second most restrictive lock. 
 
 ![Example](./images/Example2.png)
 
@@ -126,8 +126,8 @@ Note: The locks overlap.
 ```rust, noplayground
 ParaA::execute_with(|| {
     let message = Xcm(vec![
-        LockAsset { asset: (Here, CENTS * 10).into(), unlocker: (Parachain(2)).into() },
-        LockAsset { asset: (Here, CENTS * 5).into(), unlocker: (Parachain(3)).into() },
+        LockAsset { asset: (Here, 10 * CENTS).into(), unlocker: (Parachain(2)).into() },
+        LockAsset { asset: (Here, 5 * CENTS).into(), unlocker: (Parachain(3)).into() },
     ]);
     assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone()));
 });
@@ -135,7 +135,7 @@ ParaA::execute_with(|| {
 Relay::execute_with(|| {
     assert_eq!(
         relay_chain::Balances::locks(&parachain_sovereign_account_id(1)),
-        vec![BalanceLock { id: *b"py/xcmlk", amount: CENTS * 10, reasons: Reasons::All }]
+        vec![BalanceLock { id: *b"py/xcmlk", amount: 10 * CENTS, reasons: Reasons::All }]
     );
 });
 ```
@@ -147,7 +147,7 @@ ParaB::execute_with(|| {
         parachain::MsgQueue::received_dmp(),
         vec![Xcm(vec![NoteUnlockable {
             owner: (Parent, Parachain(1)).into(),
-            asset: (Parent, CENTS * 10).into()
+            asset: (Parent, 10 * CENTS).into()
         }])]
     );
 });
@@ -157,7 +157,7 @@ ParaC::execute_with(|| {
         parachain::MsgQueue::received_dmp(),
         vec![Xcm(vec![NoteUnlockable {
             owner: (Parent, Parachain(1)).into(),
-            asset: (Parent, CENTS * 5).into()
+            asset: (Parent, 5 * CENTS).into()
         }])]
     );
 });
