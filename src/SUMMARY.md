@@ -24,7 +24,7 @@
   - [Fees]()
   - [Expectations]()
   - [Queries]()
-  - [Locks]()
+  - [Locks](journey/locks/locks.md)
   - [Origin]()
   - [Channels]()
   - [When all else fails]()
