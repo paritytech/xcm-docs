@@ -1,5 +1,5 @@
 # Locking
-Xcm enables the locking of assets, meaning the restriction of the transfer or withdrawal of assets on a chain. 
+Assets can be locked via XCM, meaning, the transfer or withdrawal of assets can be restricted via messages.
 The XCM locking mechanism consists of four instructions: `LockAsset`, `UnlockAsset`, `NoteUnlockable`, and `RequestUnlock`. 
 Let's explore each instruction in detail:
 
@@ -49,12 +49,12 @@ The `RequestUnlock` instruction is used to send an `UnlockAsset` instruction to 
 The following parameters are required:
 
 - `asset`: The asset(s) to be unlocked.
-- `locker`: The location from which a previous NoteUnlockable was sent, and where the UnlockAsset instruction should be sent.
+- `locker`: The location from which a previous `NoteUnlockable` was sent, and where the `UnlockAsset` instruction should be sent.
 
 
 ## Example
 To get a better grasp on how these instructions work together, we give two examples in this section. 
-The examples use the xcm-executor with the pallet-xcm as the implementation for the `AssetLocker` xcm-executor config item. 
+The examples use the xcm-executor with the pallet-xcm as the implementation for the `AssetLocker` config item. 
 An important note of this implementation is that only one lock with ID `py/xcmlk` is set per account. 
 The pallet-xcm implementation keeps track of all the xcm-related locks that are placed on an account and sets the most restricting one with the `py/xcmlk` lock ID. 
 This principle becomes more clear in the second example.
@@ -74,18 +74,18 @@ Parachain B responds by sending an UnlockAssets instruction to the relay chain.
 ```rust,noplayground
 ParaA::execute_with(|| {
     let message = Xcm(vec![LockAsset {
-        asset: (Here, AMOUNT * 5).into(),
+        asset: (Here, CENTS * 5).into(),
         unlocker: (Parachain(2)).into(),
     }]);
     assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone()));
 });
 ```
 
-2. Parachain B receives this NoteUnlockable instruction from the relay chain.
+2. Parachain B receives this `NoteUnlockable` instruction from the relay chain.
 ```rust,noplayground
 NoteUnlockable {
     owner: (Parent, Parachain(1)).into(),
-    asset: (Parent, AMOUNT * 5).into()
+    asset: (Parent, CENTS * 5).into()
 }
 ```
 
@@ -93,7 +93,7 @@ NoteUnlockable {
 ```rust,noplayground
 ParaA::execute_with(|| {
     let message = Xcm(vec![RequestUnlock {
-        asset: (Parent, 3 * AMOUNT).into(),
+        asset: (Parent, 3 * CENTS).into(),
         locker: Parent.into(),
     }]);
     assert_ok!(ParachainPalletXcm::send_xcm(Here, (Parent, Parachain(2)), message.clone()));
@@ -104,7 +104,7 @@ ParaA::execute_with(|| {
 ```rust,noplayground
 assert_eq!(
     relay_chain::Balances::locks(&parachain_sovereign_account_id(1)),
-    vec![BalanceLock { id: *b"py/xcmlk", amount: 2 * AMOUNT, reasons: Reasons::All }]
+    vec![BalanceLock { id: *b"py/xcmlk", amount: 2 * CENTS, reasons: Reasons::All }]
 );
 ```
 
@@ -126,8 +126,8 @@ Note: The locks overlap.
 ```rust, noplayground
 ParaA::execute_with(|| {
     let message = Xcm(vec![
-        LockAsset { asset: (Here, AMOUNT * 10).into(), unlocker: (Parachain(2)).into() },
-        LockAsset { asset: (Here, AMOUNT * 5).into(), unlocker: (Parachain(3)).into() },
+        LockAsset { asset: (Here, CENTS * 10).into(), unlocker: (Parachain(2)).into() },
+        LockAsset { asset: (Here, CENTS * 5).into(), unlocker: (Parachain(3)).into() },
     ]);
     assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone()));
 });
@@ -135,7 +135,7 @@ ParaA::execute_with(|| {
 Relay::execute_with(|| {
     assert_eq!(
         relay_chain::Balances::locks(&parachain_sovereign_account_id(1)),
-        vec![BalanceLock { id: *b"py/xcmlk", amount: AMOUNT * 10, reasons: Reasons::All }]
+        vec![BalanceLock { id: *b"py/xcmlk", amount: CENTS * 10, reasons: Reasons::All }]
     );
 });
 ```
@@ -147,7 +147,7 @@ ParaB::execute_with(|| {
         parachain::MsgQueue::received_dmp(),
         vec![Xcm(vec![NoteUnlockable {
             owner: (Parent, Parachain(1)).into(),
-            asset: (Parent, AMOUNT * 10).into()
+            asset: (Parent, CENTS * 10).into()
         }])]
     );
 });
@@ -157,7 +157,7 @@ ParaC::execute_with(|| {
         parachain::MsgQueue::received_dmp(),
         vec![Xcm(vec![NoteUnlockable {
             owner: (Parent, Parachain(1)).into(),
-            asset: (Parent, AMOUNT * 5).into()
+            asset: (Parent, CENTS * 5).into()
         }])]
     );
 });
@@ -167,7 +167,7 @@ ParaC::execute_with(|| {
 ```rust, noplayground
 ParaA::execute_with(|| {
     let message = Xcm(vec![RequestUnlock {
-        asset: (Parent, 8 * AMOUNT).into(),
+        asset: (Parent, 8 * CENTS).into(),
         locker: Parent.into(),
     }]);
 
@@ -175,7 +175,7 @@ ParaA::execute_with(|| {
 });
 ```
 
-4. Parachain B Unlocks a part of the funds by sending a UnlockAsset to the relay chain. Check the lock in the balances-pallet. 
+4. Parachain B Unlocks a part of the funds by sending an `UnlockAsset` to the relay chain. we check the lock in the balances-pallet. 
 Unlockers: B, C; Funds registered in pallet-xcm: 2, 5. 
 Lock set in pallet-balances: 5.
 
@@ -183,7 +183,7 @@ Lock set in pallet-balances: 5.
 Relay::execute_with(|| {
     assert_eq!(
         relay_chain::Balances::locks(&parachain_sovereign_account_id(1)),
-        vec![BalanceLock { id: *b"py/xcmlk", amount: 5 * AMOUNT, reasons: Reasons::All }]
+        vec![BalanceLock { id: *b"py/xcmlk", amount: 5 * CENTS, reasons: Reasons::All }]
     );
 });
 ```
