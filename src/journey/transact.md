@@ -1,5 +1,5 @@
 # Transact
-XCM has an instruction that allows for the execution of calls (from a `RuntimeCall` in a Frame-based system, to a smart contract function call in an EVM-based system) in a consensus system.
+XCM contains an instruction that allows for the execution of calls (from a `RuntimeCall` in a FRAME-based system, to a smart contract function call in an EVM-based system) in a consensus system.
 It is the `Transact` instruction and it looks like this:
 
 ```rust,noplayground
@@ -30,25 +30,25 @@ pub struct DoubleEncoded<T> {
 
 XCM is consensus system agnostic; it does not know what is being encoded in the call field. 
 Hence, the field is a byte vector that can be freely interpreted in whatever form possible.
-However, the XCVM knows how to interpret this call field and how to decode it. 
+However, the XCVM does not inherently know how to interpret this call field nor how to decode it; it is reliant on the `T` type parameter to specify the proper codec for the byte vector.
 Instead of just using a `Vec<u8>` we use `DoubleEncoded` as a wrapper around a pre-encoded call (`Vec<u8>`) with extra functionalities such as caching of the decoded value. 
-We like to emphasize that the call in the `Transact` instruction can be anything from a `RuntimeCall` in a Frame-based system, to a smart contract function call in an EVM-based system.
+We like to emphasize that the call in the `Transact` instruction can be anything from a `RuntimeCall` in a FRAME-based system, to a smart contract function call in an EVM-based system.
 
 [//]: # (Todo: Move Transact Status explanation from expect to here.)
  
 Each XCVM has a Transact Status Register, to record the execution result of the call that is dispatched by the `Transact` instruction. 
 *Important note:* The execution of the XCM instruction does *not* error when the dispatched call errors.
 
-## Xcm-Executor
-In this section, we quickly look at how the Xcm-executor executes the `Transact` instruction.
+## XCM Executor
+In this section, we quickly look at how the XCM executor executes the `Transact` instruction.
 
 It executes, among other things, the following steps:
-1. Decoded the call field into the actual call that we want to dispatch.
-2. Checks with the [SafeCallFilter](../executor_config/index.html#safecallfilter) if the execution of this call is allowed.
+1. Decode the call field into the actual call that we want to dispatch.
+2. Check with the [SafeCallFilter](../executor_config/index.html#safecallfilter) on whether the execution of this call is allowed.
 3. Use the [OriginConverter](../executor_config/index.html#originconverter) to convert the `MultiLocation` origin into a `RuntimeOrigin`.
-4. Check if the call's weight does not exceed `require_weight_at_most`.
-5. Dispatch the call with the converted origin and set the `transact_status` register accordingly. 
-6. Calculate the weight that was actually used.
+4. Check whether the call weight does not exceed `require_weight_at_most`.
+5. Dispatch the call with the converted origin and set the `transact_status` register to be the result of the dispatch.
+6. Calculate the weight that was actually used during the dispatch.
 
 
 ## Example 1

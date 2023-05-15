@@ -1,6 +1,7 @@
 # Origins
-An XCMV needs context while executing Xcm instructions. To uses the `XcmContext` struct to provide contextual information while executing Xcm Instructions.
-It contains information such as the origin of the corresponding XCM, the hash of the message, and the topic of the XCM.
+An XCVM contains contextual information while executing XCM instructions. 
+It uses the `XcmContext` struct to provide them.
+`XcmContext` contains information such as the origin of the corresponding XCM, the hash of the message, and the topic of the XCM.
 
 ```rust
 pub struct XcmContext {
@@ -13,10 +14,10 @@ pub struct XcmContext {
 }
 ```
 
-In the XCMV, the origin field of the XcmContext expresses the `MultiLocation` with whose authority the current programme is running. 
+In the XCVM, the origin field of the XcmContext indicates which `MultiLocation`'s privilege level that the current programme is using to execute.
 The origin is important for enforcing restrictions and ensuring appropriate execution of the instructions. 
 
-There are multiple instructions in Xcm that can alter the XcmContext origin field:
+There are multiple instructions in XCM that can alter the XcmContext origin field:
 
 - `ClearOrigin`
 - `DescendOrigin`
@@ -28,18 +29,20 @@ There are multiple instructions in Xcm that can alter the XcmContext origin fiel
 ClearOrigin
 ```
 
-The `ClearOrigin` instruction clears the origin of the current XCM. Specifically, it sets the origin field of the XCM context to None. This ensures that subsequent instructions in the XCM cannot use the authority of the origin to execute operations.
+The `ClearOrigin` instruction clears the origin register in the XCVM. 
+Specifically, it sets the origin field of the XCM context to None. 
+This ensures that subsequent instructions in the XCM cannot use the privilege level of the cleared origin to execute operations.
 
 
 ## DescendOrigin
 ```rust,noplayground
 DescendOrigin(InteriorMultiLocation),
 ```
-The `DescendOrigin` instruction is used to change the XcmContext origin to an interior location or the current origin. 
+The `DescendOrigin` instruction is used to change the XcmContext origin to an interior location of the current origin. 
 
-This can be useful when executing instructions that need as context a specific location within the current origin.
+This can be useful when executing instructions that require a specific location within the current origin.
 
-Note that the XcmContext origin can hold up to a maximum of 8 `Junction`s, so when we try to append an `InteriorMultiLocation` that result in more than 8 `Junction`s, a `LocationFull` error is thrown. 
+Note that the XcmContext origin is a `MultiLocation` containing an `InteriorMultiLocation` enum; it can only hold up to a maximum of 8 `Junction`s, so when we try to execute multiple `DescendOrigin` instructions which would result in an `InteriorMultiLocation` containing more than 8 `Junction`s, a `LocationFull` error is thrown. 
 
 ## UniversalOrigin
 ```rust,noplayground
@@ -57,4 +60,3 @@ AliasOrigin(MultiLocation)
 The AliasOrigin instruction is similar to the UniversalOrigin instruction, but it is primarily used for account IDs. 
 When executed, it switches out the current origin for the given MultiLocation.
 THe AliasOrigin instruction would allow to remove certain prefix patterns such as Parent/Parachain(X)/ for certain values of X (thereby allowing sibling chains to use the same account IDs) or Parachain(X)/ (allowing a Relay-chain to use the account IDs native to its child parachains) or just Parent/ (allowing parachains to use AccountIds of the Relay-chain).
-The AliasOrigin currently does not yet have an implementation in the `xcm-executor`.
