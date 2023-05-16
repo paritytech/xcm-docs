@@ -28,6 +28,7 @@
   - [Origin]()
   - [Channels]()
   - [When all else fails]()
+  - [More register modifiers]()
   - [Misc]()
 - [Config Deep Dive](executor_config/README.md)
 - [Testing]()
