@@ -28,6 +28,7 @@
   - [Origin]()
   - [Channels]()
   - [When all else fails]()
+  - [More Holding Modifiers](./journey/holding-modifiers.md)
   - [Misc]()
 - [Config Deep Dive](executor_config/README.md)
 - [Testing]()
