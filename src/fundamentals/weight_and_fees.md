@@ -3,16 +3,16 @@
 The resources available to a blockchain are limited, so it's important to manage how operations on-chain use them.
 Not managing how resources are used can open an attack vector, known as DoS (Denial of Service), where an attacker floods the chain with operations in order to get it to stop producing blocks.
 In order to manage how resources are used and to protect against DoS attacks, XCM uses a concept of *weight*.
-This concept, that aims to quantify usage of blockchain resources, comes from the [Substrate](https://substrate.io/) world.
+This concept, that aims to quantify usage of blockchain resources, comes from the [Substrate](https://docs.substrate.io/build/tx-weights-fees/) world.
 
 Weight is two-dimensional, it tracks both time (execution time) and space (state accesses).
 Weight determines how much fees need to be paid in order to perform some operation.
-The good thing about having weight as an intermediate concept is that the logic for turning it into fees is configurable.
+The logic for turning it into fees is configurable.
 
 Some systems have the concept of *gas metering*, which is calculated during execution and only measures execution time.
-Weight, however, is static, defined beforehand, which lets XCM execution lighter by not including gas metering.
+Weight, however, is static, defined beforehand, which makes XCM execution lighter by not including gas metering.
 
-The main two stages of XCM where fees could need to be paid are *sending* the message and actually *executing* it.
+The main two stages of XCM where fees are paid are *sending* the message and actually *executing* it.
 The fees for sending need to be paid on the local system, usually by the origin of the message.
 The fees for execution, however, need to be paid in the destination system, via the `BuyExecution` instruction.
 We'll talk more about `BuyExecution` in the [fee handling chapter](TODO:add_link).
@@ -28,8 +28,9 @@ The executor has a `Weigher` [configuration item](TODO:add_link) that specifies 
 It then weighs the whole message by adding the weight of each instruction.
 There are two basic approaches for weighing, either you set a common weight for all instructions, or you benchmark each instruction and assign them their custom values.
 
-Another configuration item, `Trader`, turns weight into assets.
-There are two basic approaches, one is to just set a value in assets to each unit of weight, the other is to reuse some existing transaction payment method for XCM weight.
+Another configuration item, `Trader`, pays for the weight needed using into fees, which are represented as `MultiAsset`s.
+There are two basic approaches: one is to just assign a value (measured in assets) to each unit of weight; the other is to reuse some existing transaction payment method for XCM weight.
+Custom configurations allow for things like NFT coupons that give you a certain amount of weight for executing the XCM.
 
 ## XCM pallet
 
