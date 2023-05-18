@@ -13,17 +13,17 @@ SetErrorHandler(Xcm<Call>)
 ```
 The `SetErrorHandler` instructions is used to set the Error Handler Register. As discussed in the [XCVM chapter](TODO), the Error Handler is executed when an error is thrown during the regular instruction execution. 
 
-## SetAppendixHandler
+## SetAppendix
 ```rust
-SetAppendixHandler(Xcm<Call>)
+SetAppendix(Xcm<Call>)
 ```
-The `SetAppendixHandler` instruction is used to set the Appendix Handler Register. As discussed in the [XCVM chapter](TODO), the Appendix Handler instructions are executed after the regular and error handler instruction are executed. These instructions are executed regardless of whether an error occurred. 
+The `SetAppendix` instruction is used to set the Appendix Register. As discussed in the [XCVM chapter](TODO), the Appendix instructions are executed after the regular and error handler instruction are executed. These instructions are executed regardless of whether an error occurred. 
 
 ## ClearError
 ```rust
 ClearError
 ```
-The `ClearError` instruction clears the Error Register. More specifically, it sets the Error Register to None. 
+The `ClearError` instruction clears the Error Register by setting it to None. 
 
 ## ClearTransactStatus
 ```rust
