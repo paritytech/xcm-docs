@@ -24,6 +24,7 @@
   - [Transact: A general solution](journey/transact.md)
   - [Origin]()
   - [Fees]()
+  - [More register modifiers](journey/register-modifiers.md)
   - [Expectations](journey/expects.md)
   - [Queries](journey/queries.md)
   - [XCM Version](journey/version.md)
