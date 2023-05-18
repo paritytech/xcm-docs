@@ -38,3 +38,60 @@ Response::Assets((Parent, 6 * CENTS).into())
 
 
 ## ExchangeAsset
+```rust,noplayground
+ExchangeAsset { give: MultiAssetFilter, want: MultiAssets, maximal: bool }
+```
+The `ExchangeAsset` instruction allows us to remove asset(s) (`give`) from the Holding Register and replace them with alternative
+assets (`want`). The `ExchangeAsset` instruction has three fields.
+
+The `give` field indicates the maximum number of assets that can be removed from the Holding register. 
+
+The `want` field indicates the minimum amount of assets which `give` should be exchanged for. We should at a mimimum get the assets in `want` for the execution of the instruction not to fail. 
+
+If the `maximal` field is `true`, then we prefer to give as much as possible up to the limit of `give`
+and receive accordingly more assets then stated in `want`. If the `maximal` field is `false`, then we prefer to give as little as possible in
+order to receive as little as possible while receiving at least `want`.
+
+### Example
+The full example can be found [here](TODO).
+
+The scenario for the example is this:
+Scenario:
+The relay chain sends an XCM to Parachain A that:
+.1 Withdraws some native assets
+.2 Exchanges these assets for relay chain derivative tokens, with maximal set to true.
+.3 Deposit all the assets that are in the Holding in the account of Alice.
+
+NOTE: The implementation of the AssetExchanger is simple
+and in this case swaps all the assets in the exchange for the assets in `give`.
+Depending on the implementation of AssetExchanger, the test results could differ.
+
+The Assets in the exchange in Parachain(1). This is a custom exchange implementation just for testing purposes. 
+```rust,noplayground
+let assets_in_exchange = vec![(Parent, 10 * CENTS).into()];
+parachain::set_exchange_assets(assets_in_exchange);
+```
+
+The message that is send: 
+```rust,noplayground
+let message = Xcm(vec![
+    WithdrawAsset((Here, 10 * CENTS).into()),
+    BuyExecution { fees: (Here, CENTS).into(), weight_limit: WeightLimit::Unlimited },
+    // Maximal field set to true.
+    ExchangeAsset {
+        give: Definite((Here, 5 * CENTS).into()),
+        want: (Parent, 5 * CENTS).into(),
+        maximal: true,
+    },
+    DepositAsset {
+        assets: AllCounted(2).into(),
+        beneficiary: AccountId32 {
+            network: Some(parachain::RelayNetwork::get()),
+            id: ALICE.into(),
+        }
+        .into(),
+    },
+]);
+```
+
+Alice receives `5 CENTS` worth of native assets (`Here`) and `5 CENTS` worth of relay chain derivative assets (`Parent`).
