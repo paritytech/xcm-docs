@@ -21,7 +21,7 @@
   - [Transfers](journey/transfers/README.md)
     - [Asset teleportation](journey/transfers/teleports.md)
     - [Reserve-backed transfers](journey/transfers/reserve.md)
-  - [Transact: A general solution]()
+  - [Transact: A general solution](journey/transact.md)
   - [Origin]()
   - [Fees]()
   - [Expectations](journey/expects.md)
