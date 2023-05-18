@@ -117,7 +117,7 @@ The scenario of this example is as follows:
 Parachain A sets two locks on the relay chain with as unlockers Parachain B and Parachain C.
 Parachain A then requests Parachain B to partly unlock.
 
-Note: The locks overlap. When there are two or more locks, the total assets that are locked is equal to the most restrictive lock (the lock that locks the most assets). When the most restrictive lock is unlocked, the total locked assets is than equal to the second most restrictive lock. 
+Note: The locks overlap. When there are two or more locks, the total assets that are locked is equal to the most restrictive lock (the lock that locks the most assets). When the most restrictive lock is unlocked, the total locked assets is than equal to the next most restrictive lock. 
 
 ![Example](./images/Example2.png)
 
