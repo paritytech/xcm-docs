@@ -36,7 +36,9 @@ The locked assets can only be unlocked by receiving an `UnlockAsset` instruction
 This instruction requires the following parameters:
 
 - `asset`: The asset(s) which are now unlockable from this origin.
-- `owner`: The owner of the asset on the chain in which it was locked. This may be a location specific to the origin network.
+- `owner`: The owner of the asset on the chain in which it was locked. This may be a location specific to the origin network. 
+The owner can request this origin to unlock the assets using a `RequestUnlock` instruction. 
+However, the owner is not able to unlock the assets themselves.
 
 It is essential to trust the origin to have locked the corresponding asset before sending this message.
 
