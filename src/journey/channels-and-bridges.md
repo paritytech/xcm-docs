@@ -1,7 +1,8 @@
 # Channels
 XCM has instructions that aid in the establishment of a HRMP channel between parachains.
-HRMP channels are always one way, so every channel has a sender and a recipient.
-These instructions are related to system processes, and will normally not be used by developers, like the other instructions.
+HRMP channels are always unidirectional (one-way); every channel has a static sender and a static recipient. 
+To send messages in the opposite direction (i.e. from recipient to sender), another new HRMP channel must be opened.
+Unlike other XCM instructions, these HRMP instructions are related to the underlying transport mechanism, and will normally not be sent by developers.
 We still want to list them, as they are part of XCM:
 
 - `HrmpNewChannelOpenRequest`
@@ -75,7 +76,7 @@ Important to note is that both the sender and recipient can close the channel.
 XCM has an instruction that allows us to send an XCM to a Non-Local Consensus System, meaning to MultiLocation that is outside our current GlobalConsensus.
 For example, it allows us to send an XCM from Kusama to Polkadot or from Polkadot to an Ethereum-based chain.
 Exporting an XCM to another Non-Local Consensus System will tend to utilize some extra consensus layer/mechanism, the obvious one being a bridge.
-The instruction to export an XCM is called the `ExportMessage`.
+The instruction to export an XCM is called `ExportMessage`.
 
 ## ExportMessage
 ```rust,noplayground
