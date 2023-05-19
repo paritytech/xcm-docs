@@ -30,7 +30,7 @@
   - [Expectations](journey/expects.md)
   - [Queries](journey/queries.md)
   - [XCM Version](journey/version.md)
-  - [Locks]()
+  - [Locks](journey/locks/locks.md)
   - [Channels]()
   - [Misc]()
 - [Config Deep Dive](executor_config/README.md)
