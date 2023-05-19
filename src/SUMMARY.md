@@ -25,6 +25,8 @@
   - [Origin]()
   - [Fees]()
   - [More register modifiers](journey/register-modifiers.md)
+  - [More Holding Modifiers](./journey/holding-modifiers.md)
+  - [Trap and Claim assets](./journey/trap-and-claim.md)
   - [Expectations](journey/expects.md)
   - [Queries](journey/queries.md)
   - [XCM Version](journey/version.md)
