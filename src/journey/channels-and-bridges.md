@@ -84,8 +84,7 @@ ExportMessage { network: NetworkId, destination: InteriorMultiLocation, xcm: Xcm
 ```
 The `ExportMessage` instruction can be used to export a message to a Non-Local Consensus System.
 The message is sent to the bridge (or other consensus mechanism) that is able to export the message.
-It is possible that a fee is charged for exporting the message via the bridge and this may be determined based on the contents of the `xcm` being sent.
-These fees are taken from the Holding Register.
+A fee is charged for exporting the message via the bridge.
 
 The `network` field is the remote consensus system to which the message should be exported.
 
