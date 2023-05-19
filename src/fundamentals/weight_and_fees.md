@@ -26,11 +26,15 @@ There are security measures systems can put in place (see [barrier](TODO:add_lin
 
 The executor has a `Weigher` [configuration item](TODO:add_link) that specifies the weight of each instruction.
 It then weighs the whole message by adding the weight of each instruction.
-There are two basic approaches for weighing, either you set a common weight for all instructions, or you benchmark each instruction and assign them their custom values.
+A simple way of weighing instructions is to assign them a base weight value to all of them.
+This works, but is not the best, as different instructions use more resources when being executed.
+A better approach is benchmark each instruction and assigning them their custom weight.
 
 Another configuration item, `Trader`, pays for the weight needed using into fees, which are represented as `MultiAsset`s.
 There are two basic approaches: one is to just assign a value (measured in assets) to each unit of weight; the other is to reuse some existing transaction payment method for XCM weight.
 Custom configurations allow for things like NFT coupons that give you a certain amount of weight for executing the XCM.
+
+Of course, this configuration items allow for any approach you can think of for weighing messages and charging execution fees.
 
 ## XCM pallet
 

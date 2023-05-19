@@ -22,7 +22,7 @@
     - [Asset teleportation](journey/transfers/teleports.md)
     - [Reserve-backed transfers](journey/transfers/reserve.md)
   - [Transact: A general solution](journey/transact.md)
-  - [Fee handling]()
+  - [Fee handling](journey/fees/README.md)
   - [Origin]()
   - [More register modifiers](journey/register-modifiers.md)
   - [More Holding Modifiers](./journey/holding-modifiers.md)
