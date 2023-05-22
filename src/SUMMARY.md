@@ -31,7 +31,7 @@
   - [Queries](journey/queries.md)
   - [XCM Version](journey/version.md)
   - [Locks](journey/locks/locks.md)
-  - [Channels]()
+  - [Channels and Bridges](journey/channels-and-bridges.md)
   - [Misc]()
 - [Config Deep Dive](executor_config/README.md)
 - [Testing]()
