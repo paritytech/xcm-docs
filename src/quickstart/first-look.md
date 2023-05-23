@@ -1,10 +1,10 @@
 # First Look
 In this section, we take you through a simple example of an XCM. In this example, we withdraw the native token from the account of Alice and deposit this token in the account of Bob. This message simulates a transfer between two accounts in the same consensus system (`ParaA`). Find here the [code example]().
 ## Message
-```rust
+```rust,noplayground
  let message = Xcm(vec![
     WithdrawAsset((Here, amount).into()),
-    BuyExecution{fees: (Here, amount).into(), weight_limit: WeightLimit::Unlimited},
+    BuyExecution{ fees: (Here, amount).into(), weight_limit: WeightLimit::Unlimited },
     DepositAsset { 
         assets: All.into(), 
         beneficiary:  MultiLocation { 
