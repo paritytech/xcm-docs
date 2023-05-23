@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Config Deep Dive - XCM Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../xcm.html">XCM: Cross-Consensus Messaging</a></li><li class="chapter-item expanded "><a href="../overview/index.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../overview/interoperability.html"><strong aria-hidden="true">1.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../overview/format.html"><strong aria-hidden="true">1.2.</strong> A Format, not a Protocol</a></li><li class="chapter-item expanded "><a href="../overview/xcvm.html"><strong aria-hidden="true">1.3.</strong> The XCVM</a></li><li class="chapter-item expanded "><a href="../overview/architecture.html"><strong aria-hidden="true">1.4.</strong> Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="../quickstart/index.html"><strong aria-hidden="true">2.</strong> Quickstart</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quickstart/xcm-simulator.html"><strong aria-hidden="true">2.1.</strong> XCM Simulator</a></li><li class="chapter-item expanded "><a href="../quickstart/first-look.html"><strong aria-hidden="true">2.2.</strong> First Look at an XCM</a></li></ol></li><li class="chapter-item expanded "><a href="../fundamentals/index.html"><strong aria-hidden="true">3.</strong> Fundamentals</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../fundamentals/multilocation/index.html"><strong aria-hidden="true">3.1.</strong> MultiLocation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../fundamentals/multilocation/junction.html"><strong aria-hidden="true">3.1.1.</strong> Junction(s)</a></li><li class="chapter-item expanded "><a href="../fundamentals/multilocation/example.html"><strong aria-hidden="true">3.1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="../fundamentals/multiasset.html"><strong aria-hidden="true">3.2.</strong> MultiAsset</a></li><li class="chapter-item expanded "><a href="../fundamentals/xcvm.html"><strong aria-hidden="true">3.3.</strong> XCVM</a></li><li class="chapter-item expanded "><a href="../fundamentals/weight_and_fees.html"><strong aria-hidden="true">3.4.</strong> Weight and fees</a></li></ol></li><li class="chapter-item expanded "><a href="../journey/index.html"><strong aria-hidden="true">4.</strong> A Journey through XCM</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../journey/transfers/index.html"><strong aria-hidden="true">4.1.</strong> Transfers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../journey/transfers/teleports.html"><strong aria-hidden="true">4.1.1.</strong> Asset teleportation</a></li><li class="chapter-item expanded "><a href="../journey/transfers/reserve.html"><strong aria-hidden="true">4.1.2.</strong> Reserve-backed transfers</a></li></ol></li><li class="chapter-item expanded "><a href="../journey/transact.html"><strong aria-hidden="true">4.2.</strong> Transact: A general solution</a></li><li class="chapter-item expanded "><a href="../journey/fees/index.html"><strong aria-hidden="true">4.3.</strong> Fee handling</a></li><li class="chapter-item expanded "><a href="../journey/origins.html"><strong aria-hidden="true">4.4.</strong> Origin manipulation</a></li><li class="chapter-item expanded "><a href="../journey/register-modifiers.html"><strong aria-hidden="true">4.5.</strong> More register modifiers</a></li><li class="chapter-item expanded "><a href="../journey/holding-modifiers.html"><strong aria-hidden="true">4.6.</strong> More Holding Modifiers</a></li><li class="chapter-item expanded "><a href="../journey/trap-and-claim.html"><strong aria-hidden="true">4.7.</strong> Trap and Claim assets</a></li><li class="chapter-item expanded "><a href="../journey/expects.html"><strong aria-hidden="true">4.8.</strong> Expectations</a></li><li class="chapter-item expanded "><a href="../journey/queries.html"><strong aria-hidden="true">4.9.</strong> Queries</a></li><li class="chapter-item expanded "><a href="../journey/version.html"><strong aria-hidden="true">4.10.</strong> XCM Version</a></li><li class="chapter-item expanded "><a href="../journey/locks/locks.html"><strong aria-hidden="true">4.11.</strong> Locks</a></li><li class="chapter-item expanded "><a href="../journey/channels-and-bridges.html"><strong aria-hidden="true">4.12.</strong> Channels and Bridges</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.13.</strong> Misc</div></li></ol></li><li class="chapter-item expanded "><a href="../executor_config/index.html" class="active"><strong aria-hidden="true">5.</strong> Config Deep Dive</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Testing</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.</strong> Separation of concerns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.2.</strong> Simulating message execution</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.</strong> How to test my own configuration</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.4.</strong> Testing the full XCM Journey</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> Transport Protocols</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> VMP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> HRMP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> XCMP</div></li></ol></li><li class="chapter-item expanded "><li class="part-title">Reference</li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> Cookbook</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> All Instructions</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> All XCVM Registers</div></li><li class="chapter-item expanded affix "><div>Next Steps</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">XCM Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="executor-config"><a class="header" href="#executor-config">Executor Config</a></h1>
+<p>As previously mentioned, the xcm-executor is a Cross-Consensus Virtual Machine(XCVM) implementation.
+It provides an opinionated interpretation and execution of XCMs.
+Each chain that uses the xcm-executor, can configure it for their use case.
+In this chapter we will go over this configuration, explain each config item and give some examples of the tools and types that can be used to configure these items.</p>
+<h2 id="xcm-executor-configuration"><a class="header" href="#xcm-executor-configuration">XCM Executor Configuration</a></h2>
+<p>Below we list the <a href="https://paritytech.github.io/polkadot/doc/xcm_executor/trait.Config.html">Config</a> trait of the xcm-executor.
+The Config trait expects multiple associated types.
+Each type has a trait bound which the concrete type must implement.
+Some of these types will use a default implementation in most situations (e.g.
+RuntimeCall).
+Other types have a default implementation specified by the unit type <code>()</code>.
+Most types you'll want to carefully choose which implementation they get.
+For most of these types there are pre-defined solutions and building blocks you can use and adapt to your scenario.
+These solutions are listed in the xcm-builder <a href="https://github.com/paritytech/polkadot/tree/master/xcm/xcm-builder/src">folder</a>.</p>
+<p>We will now explain each type and go over some of the implementations of the type:</p>
+<pre><code class="language-rust  noplayground">/// The trait to parameterize the `XcmExecutor`.
+pub trait Config {
+	type RuntimeCall: Parameter + Dispatchable&lt;PostInfo = PostDispatchInfo&gt; + GetDispatchInfo;
+	type XcmSender: SendXcm;
+	type AssetTransactor: TransactAsset;
+	type OriginConverter: ConvertOrigin&lt;&lt;Self::RuntimeCall as Dispatchable&gt;::RuntimeOrigin&gt;;
+	type IsReserve: ContainsPair&lt;MultiAsset, MultiLocation&gt;;
+	type IsTeleporter: ContainsPair&lt;MultiAsset, MultiLocation&gt;;
+	type UniversalLocation: Get&lt;InteriorMultiLocation&gt;;
+	type Barrier: ShouldExecute;
+	type Weigher: WeightBounds&lt;Self::RuntimeCall&gt;;
+	type Trader: WeightTrader;
+	type ResponseHandler: OnResponse;
+	type AssetTrap: DropAssets;
+	type AssetClaims: ClaimAssets;
+	type AssetLocker: AssetLock;
+	type AssetExchanger: AssetExchange;
+	type SubscriptionService: VersionChangeNotifier;
+	type PalletInstancesInfo: PalletsInfoAccess;
+	type MaxAssetsIntoHolding: Get&lt;u32&gt;;
+	type FeeManager: FeeManager;
+	type MessageExporter: ExportXcm;
+	type UniversalAliases: Contains&lt;(MultiLocation, Junction)&gt;;
+	type CallDispatcher: CallDispatcher&lt;Self::RuntimeCall&gt;;
+	type SafeCallFilter: Contains&lt;Self::RuntimeCall&gt;;
+}</code></pre>
+<h2 id="how-to-use-multiple-implementations"><a class="header" href="#how-to-use-multiple-implementations">How to use multiple implementations.</a></h2>
+<p>Some associated types in the Config trait are highly configurable and in certain cases will have multiple implementations (e.g. Barrier).
+These implementations are then grouped using a tuple <code>(impl_1, impl_2, ..., impl_n)</code>.
+The execution of the tuple type is sequential, meaning that each item is executed one after another. Each item is checked to see whether it fails to pass, then the next item is checked, and so on. The execution is halted when one of these items returns positive (Ok or true, etc.). The next example of the Barrier type shows how the grouping works (understanding each item in the tuple is not necessary).</p>
+<pre><code class="language-rust noplayground">pub type Barrier = (
+	TakeWeightCredit,
+	AllowTopLevelPaidExecutionFrom&lt;Everything&gt;,
+	AllowKnownQueryResponses&lt;XcmPallet&gt;,
+	AllowSubscriptionsFrom&lt;Everything&gt;,
+);
+
+pub struct XcmConfig;
+impl xcm_executor::Config for XcmConfig {
+    ...
+	type Barrier = Barrier;
+    ...
+}</code></pre>
+<p>In the above example, when checking the barrier, we'll first check the TakeWeightCredit type. If it fails, we'll go on to check the AllowTopLevelPaidExecutionFrom<Everything> and so on until one of them gives a positive. If they all fail, a <code>Barrier</code> error is thrown.</p>
+<h2 id="config-items"><a class="header" href="#config-items">Config Items</a></h2>
+<p>We now go over each config item to explain what the associate type does and how it is used in the xcm-executor. Many of these types have pre-defined solutions that can be found in the xcm-builder and a good way to understand these configurations is to look at example configurations. On the bottom of this page we listed some examples. </p>
+<h3 id="runtimecall"><a class="header" href="#runtimecall">RuntimeCall</a></h3>
+<p>The <code>RuntimeCall</code> type is equal to the RuntimeCall created in the <code>construct_runtime!</code> macro. It is an enum of all the callable functions of each of the implemented pallets. </p>
+<h3 id="xcmsender"><a class="header" href="#xcmsender">XcmSender</a></h3>
+<p>The <code>XcmSender</code> type implements the <code>SendXcm</code> trait, and defines how the xcm_executor can send XCMs (which transport layer it can use for the XCMs).
+This type normally implements a tuple for one or more [transport layer(s)](Todo Transport Layer Link).
+For example a parachain can implement the XcmSender as: </p>
+<pre><code class="language-rust noplayground"> (
+	// Two routers - use UMP to communicate with the relay chain:
+	cumulus_primitives_utility::ParentAsUmp&lt;ParachainSystem, PolkadotXcm, ()&gt;,
+	// ..and XCMP to communicate with the sibling chains.
+	XcmpQueue,
+);</code></pre>
+<p>If a runtime does not contain the XcmpQueue pallet as a config item for XcmSender, it will not be able to send messages to other parachains.
+This can be useful for controlling the destinations that an XCM can be sent to.</p>
+<h3 id="assettransactor"><a class="header" href="#assettransactor">AssetTransactor</a></h3>
+<p>The <code>AssetTransactor</code> type implements the <code>TransactAsset</code> trait and defines how the xcm-executor can convert <code>MultiAsset</code>s from and to on chain assets and how to transfer these assets between accounts, or from and to the holding register.
+As chains can support different types of currencies (native tokens), fungibles and non-fungibles, we can configure the AssetTransactor in different ways, depending on the chains implementation fo these types.
+Three default implementations are provided in the xcm-builder, namely the <code>CurrencyAdapter</code>, <code>FungiblesAdapter</code> and <code>NonFungiblesAdapter</code>.</p>
+<h3 id="originconverter"><a class="header" href="#originconverter">OriginConverter</a></h3>
+<p>The <code>OriginConverter</code> type implements the <code>ConvertOrigin</code> trait and defines how the xcm-executor can convert a <code>MultiLocation</code> into a <code>RuntimeOrigin</code>.
+Most xcm-executors take multiple implementations in a tuple for this configuration as there are many different MLs we would like to convert.
+When multiple <code>OriginConverter</code>s conflict, the <a href="https://paritytech.github.io/polkadot/doc/xcm/v2/enum.OriginKind.html">OriginKind</a> that is passed to the <code>convert_origin</code> function is used to distingues which <code>OriginConverter</code> to use. There are four different <code>OriginKind</code>s :</p>
+<pre><code class="language-rust noplayground">pub enum OriginKind {
+	Native,
+	SovereignAccount,
+	Superuser,
+	Xcm,
+}</code></pre>
+<p>An example of the use of <code>OriginKind</code>s are the <code>SovereignSignedViaLocation</code> and <code>SignedAccountId32AsNative</code> OriginConverters (defined in xcm-builder). The first converts an sovereign account into a <code>Signed</code> RuntimeOrigin (uses <code>SovereignAccount</code> OriginKind) while the second converts a local native account into a <code>Signed</code> RuntimeOrigin (uses <code>Native</code> OriginKind). </p>
+<pre><code class="language-rust noplayground">pub type SovereignAccountOf = AccountId32Aliases&lt;ThisNetwork, AccountId&gt;;
+(
+	// A `Signed` origin of the sovereign account that the original location controls.
+	SovereignSignedViaLocation&lt;SovereignAccountOf, RuntimeOrigin&gt;,
+	// The AccountId32 location type can be expressed natively as a `Signed` origin.
+	SignedAccountId32AsNative&lt;ThisNetwork, RuntimeOrigin&gt;,
+);
+</code></pre>
+<h3 id="isreserve"><a class="header" href="#isreserve">IsReserve</a></h3>
+<p>The <code>IsReserve</code> type must be set to specify which <code>&lt;MultiAsset, MultiLocation&gt;</code> pair we trust to deposit reserve assets on our chain.
+We can also use the unit type <code>()</code> to block <code>ReserveAssetDeposited</code> instructions.
+An example implementation is the <code>NativeAsset</code> struct, that accepts an asset iff it is a native asset.</p>
+<h3 id="isteleporter"><a class="header" href="#isteleporter">IsTeleporter</a></h3>
+<p>The <code>IsTeleporter</code> type must be set to specify which <code>&lt;MultiAsset, MultiLocation&gt;</code> pair we trust to teleport assets to our chain.
+We can also use the unit type <code>()</code> to block <code>ReceiveTeleportedAssets</code> instruction.
+An example implementation is the <code>NativeAsset</code> struct, that accepts an asset iff it is a native asset.</p>
+<h3 id="universallocation"><a class="header" href="#universallocation">UniversalLocation</a></h3>
+<p>The <code>UniversalLocation</code> type describes the location of the runtime implementing the xcm-executor in the consensus universe.
+Below we give some examples of <code>UniversalLocation</code> implementations.</p>
+<pre><code class="language-rust noplayground">//Polkadot
+X1(GlobalConsensus(NetworkId::Polkadot))
+//Kusama
+X1(GlobalConsensus(NetworkId::Kusama))
+//Statemint
+X2(GlobalConsensus(NetworkId::Polkadot), Parachain(1000))</code></pre>
+<h3 id="barrier"><a class="header" href="#barrier">Barrier</a></h3>
+<p>Before any XCMs are executed in the XCM executor, they need to pass the <code>Barrier</code>.
+The <code>Barrier</code> type implements the <code>ShouldExecute</code> trait and can be seen as the firewall of the xcm-executor.
+Each time the xcm-executor receives an XCM, it check with the barrier if the XCM should be executed.
+We can also define multiple barriers for our <code>Barrier</code> type by using a tuple.
+During execution, each barrier is checks, and if one of them succeed, the XCM is executed.
+Example of a <code>Barrier</code> implementations is <code>AllowTopLevelPaidExecutionFrom&lt;T&gt;</code> that accepts the XCM if the <code>T</code> contains the origin of the XCM and the XCM contains the <code>BuyExecution</code> instruction.
+To accept all XCMs that pay for execution we could set the barrier to <code>AllowTopLevelPaidExecutionFrom&lt;Everything&gt;</code>.
+There are multiple pre-defined barrier implementations in the xcm-builder.</p>
+<h3 id="weigher"><a class="header" href="#weigher">Weigher</a></h3>
+<p>The <code>Weigher</code> is responsible for weighing full XCMs and individual instructions.
+This weight is calculated before the XCM execution, and this calculated weight is checked against the weight_limit.
+If the weight is more than weight_limit, the xcm will not be executed.
+The weight is also passed to each <code>Barrier</code>, as certain barriers execute weight-based checks.
+After the execution of the XCM, unused weight is refunded (if possible).
+There are pre-defined <code>Weigher</code> solutions in the xcm-builder.
+The most used is the <code>FixedWeightBounds</code>:</p>
+<pre><code class="language-rust noplayground">// BaseXcmWeight is a const weight.
+FixedWeightBounds&lt;BaseXcmWeight, RuntimeCall, MaxInstructions&gt;;</code></pre>
+<p>Note: <a href="Todo">More information</a> about weight.</p>
+<h3 id="trader"><a class="header" href="#trader">Trader</a></h3>
+<p>The <code>Trader</code> type is responsible for buying weight in the <code>BuyExecution</code> instruction using assets in the holding register and to refund unspend weight.
+One of the first implementations of the <code>Trader</code> is defined in the xcm-builder, namely the <code>UsingComponents</code> trader.</p>
+<h3 id="responsehandler"><a class="header" href="#responsehandler">ResponseHandler</a></h3>
+<p>The <code>ResponseHandler</code> type is responsible for handling the <code>QueryResponse</code> instructions.
+A <code>ResponseHandler</code> implementation has to implement the <code>OnResponse</code> trait.
+One of the implementations of the <code>ResponseHandler</code> is the <code>pallet-xcm</code>.
+This will be the main implementation for most FRAME-based systems that implement the XCM-executor.
+Another option is to use the unit type <code>()</code> if you do not want to support <code>QueryResponse</code>.</p>
+<h3 id="assettrap"><a class="header" href="#assettrap">AssetTrap</a></h3>
+<p>The <code>AssetTrap</code> type is responsible for handling the funds left over in holding after the execution of the XCM.
+The assets are stored in the AssetTrap and can be claimed using the ClaimAsset instruction.
+One of the implementations of the <code>AssetTrap</code> type is the <code>pallet-xcm</code>.
+Another option is to use the unit type <code>()</code> if you do not want to support asset trapping.
+In this case, the assets that are left in holding are burned.</p>
+<h3 id="assetclaims"><a class="header" href="#assetclaims">AssetClaims</a></h3>
+<p>The <code>AssetClaims</code> type is responsible for claiming trapped assets.
+It is during execution of the <code>ClaimAsset</code> instruction.
+One of the implementations of the <code>AssetClaims</code> type is the <code>pallet-xcm</code>.
+Another option is to use the unit type <code>()</code> if you do not want to support asset claiming.</p>
+<h3 id="assetlocker"><a class="header" href="#assetlocker">AssetLocker</a></h3>
+<p>The <code>AssetLocker</code> type is responsible with handling locking and unlocking assets.
+One of the implementations of the <code>AssetLocker</code> type is the <code>pallet-xcm</code>.
+Another option is to use the unit type <code>()</code> if you do not want to support asset locking.</p>
+<h3 id="assetexchanger"><a class="header" href="#assetexchanger">AssetExchanger</a></h3>
+<p>The <code>AssetExchanger</code> type implements the <code>AssetExchange</code> trait and handles the exchange of assets for the ExchangeAsset instruction.
+An option is to use the unit type <code>()</code> if you do not want to support asset exchanging.</p>
+<h3 id="subscriptionservice"><a class="header" href="#subscriptionservice">SubscriptionService</a></h3>
+<p>The <code>SubscriptionService</code> type implements the <code>VersionChangeNotifier</code> trait and is used for the execution of the (Un)SubscribeVersion instructions.
+When a chain receives the <code>SubscribeVersion</code> instruction, the <code>SubscriptionService</code> should send back a <code>QueryResponse</code> with the XCM version that the chain uses.
+One of the implementations of the <code>SubscriptionService</code> is the <code>pallet-xcm</code>.
+This will be the main implementation for most FRAME-based systems that implement the XCM-executor.</p>
+<h3 id="palletinstancesinfo"><a class="header" href="#palletinstancesinfo">PalletInstancesInfo</a></h3>
+<p>The <code>PalletInstancesInfo</code> type implements the <code>PalletsInfoAccess</code> trait and is used in the <code>QueryPallet</code> and <code>ExpectPallet</code> instructions.
+It supplies the information of all the pallets in the Runtime, and is therefore FRAME specific.
+The unit type <code>()</code> can be used if you do not want to support pallet information.</p>
+<h3 id="maxassetsintoholding"><a class="header" href="#maxassetsintoholding">MaxAssetsIntoHolding</a></h3>
+<p>The <code>MaxAssetsIntoHolding</code> type is used to set a limit on the number of assets in the Holding Register.
+In the worse case, the Holding Register may contain up to twice as many assets as this limit.</p>
+<h3 id="feemanager"><a class="header" href="#feemanager">FeeManager</a></h3>
+<p>The <code>FeeManager</code> type is used to manage what happens with the fees that need to be paid for certain XCM instructions.
+A <code>FeeManager</code> implementation implements the <code>FeeManager</code> trait.
+The FeeManager determines if fees should be paid (or if they are waived) and what to do with the paid fees.
+The unit type <code>()</code> can be used if you want to waive every fee.</p>
+<h3 id="messageexporter"><a class="header" href="#messageexporter">MessageExporter</a></h3>
+<p>The <code>MessageExporter</code> type implements the <code>ExportXcm</code> trait and is used to export a message to another consensus system.
+The <code>MessageExporter</code> is different from the <code>XcmSender</code>.
+The <code>MessageExporter</code> is able to spoof the origin of the message, meaning it can represent a different origin then the local (i.e.
+the caller chain's) location.
+The MessageExporter will mainly be used to send XCMs over bridges.
+For a more in depth explanation, see the <a href="https://paritytech.github.io/polkadot/doc/xcm_executor/traits/trait.ExportXcm.html">ExportXcm trait</a>.
+The unit type <code>()</code> can be used if you do not want to support XCM exporting.</p>
+<h3 id="universalaliases"><a class="header" href="#universalaliases">UniversalAliases</a></h3>
+<p>The <code>UniversalAliases</code> type is used to list the origin locations and specific universal junctions to which they are allowed to elevate
+themselves.
+<code>UniversalAliases</code> is used in the <code>UniversalOrigin</code> instruction.
+To not allow any alliasing of origins, <code>Nothing</code> can be used.</p>
+<h3 id="calldispatcher"><a class="header" href="#calldispatcher">CallDispatcher</a></h3>
+<p>The <code>CallDispatcher</code> type is used by xcm-executor to dispatch calls that are passed in the <code>Transact</code> instruction with the given origin.
+When no special call dispatcher is required, this can be set to the same type as <code>RuntimeCall</code>.
+However, <code>CallDispatcher</code> can be used to customize call dispatch, such as adapting the origin based on the call or modifying the call.</p>
+<h3 id="safecallfilter"><a class="header" href="#safecallfilter">SafeCallFilter</a></h3>
+<p>The <code>SafeCallFilter</code> type is used by the xcm-executor to whitelist calls that can be made in the <code>Transact</code> instruction.
+This is a
+temporary measure until proof size weights for XCM instructions are properly account for.
+If you want to allow all calls in <code>Tansact</code>, use <code>Everything</code>.</p>
+<h2 id="what-next"><a class="header" href="#what-next">What Next</a></h2>
+<p>Check out the <a href="https://github.com/paritytech/polkadot/blob/master/runtime/kusama/src/xcm_config.rs">Kusama</a>, <a href="https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/assets/statemine/src/xcm_config.rs">Statemine</a>, or <a href="https://github.com/paritytech/trappist/blob/main/runtime/trappist/src/xcm_config.rs">Trappist</a> for examples of how to implement the xcm-executor config.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../journey/channels-and-bridges.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../journey/channels-and-bridges.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

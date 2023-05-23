@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Junction(s) - XCM Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../xcm.html">XCM: Cross-Consensus Messaging</a></li><li class="chapter-item expanded "><a href="../../overview/index.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../overview/interoperability.html"><strong aria-hidden="true">1.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../overview/format.html"><strong aria-hidden="true">1.2.</strong> A Format, not a Protocol</a></li><li class="chapter-item expanded "><a href="../../overview/xcvm.html"><strong aria-hidden="true">1.3.</strong> The XCVM</a></li><li class="chapter-item expanded "><a href="../../overview/architecture.html"><strong aria-hidden="true">1.4.</strong> Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="../../quickstart/index.html"><strong aria-hidden="true">2.</strong> Quickstart</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../quickstart/xcm-simulator.html"><strong aria-hidden="true">2.1.</strong> XCM Simulator</a></li><li class="chapter-item expanded "><a href="../../quickstart/first-look.html"><strong aria-hidden="true">2.2.</strong> First Look at an XCM</a></li></ol></li><li class="chapter-item expanded "><a href="../../fundamentals/index.html"><strong aria-hidden="true">3.</strong> Fundamentals</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fundamentals/multilocation/index.html"><strong aria-hidden="true">3.1.</strong> MultiLocation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fundamentals/multilocation/junction.html" class="active"><strong aria-hidden="true">3.1.1.</strong> Junction(s)</a></li><li class="chapter-item expanded "><a href="../../fundamentals/multilocation/example.html"><strong aria-hidden="true">3.1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="../../fundamentals/multiasset.html"><strong aria-hidden="true">3.2.</strong> MultiAsset</a></li><li class="chapter-item expanded "><a href="../../fundamentals/xcvm.html"><strong aria-hidden="true">3.3.</strong> XCVM</a></li><li class="chapter-item expanded "><a href="../../fundamentals/weight_and_fees.html"><strong aria-hidden="true">3.4.</strong> Weight and fees</a></li></ol></li><li class="chapter-item expanded "><a href="../../journey/index.html"><strong aria-hidden="true">4.</strong> A Journey through XCM</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../journey/transfers/index.html"><strong aria-hidden="true">4.1.</strong> Transfers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../journey/transfers/teleports.html"><strong aria-hidden="true">4.1.1.</strong> Asset teleportation</a></li><li class="chapter-item expanded "><a href="../../journey/transfers/reserve.html"><strong aria-hidden="true">4.1.2.</strong> Reserve-backed transfers</a></li></ol></li><li class="chapter-item expanded "><a href="../../journey/transact.html"><strong aria-hidden="true">4.2.</strong> Transact: A general solution</a></li><li class="chapter-item expanded "><a href="../../journey/fees/index.html"><strong aria-hidden="true">4.3.</strong> Fee handling</a></li><li class="chapter-item expanded "><a href="../../journey/origins.html"><strong aria-hidden="true">4.4.</strong> Origin manipulation</a></li><li class="chapter-item expanded "><a href="../../journey/register-modifiers.html"><strong aria-hidden="true">4.5.</strong> More register modifiers</a></li><li class="chapter-item expanded "><a href="../../journey/holding-modifiers.html"><strong aria-hidden="true">4.6.</strong> More Holding Modifiers</a></li><li class="chapter-item expanded "><a href="../../journey/trap-and-claim.html"><strong aria-hidden="true">4.7.</strong> Trap and Claim assets</a></li><li class="chapter-item expanded "><a href="../../journey/expects.html"><strong aria-hidden="true">4.8.</strong> Expectations</a></li><li class="chapter-item expanded "><a href="../../journey/queries.html"><strong aria-hidden="true">4.9.</strong> Queries</a></li><li class="chapter-item expanded "><a href="../../journey/version.html"><strong aria-hidden="true">4.10.</strong> XCM Version</a></li><li class="chapter-item expanded "><a href="../../journey/locks/locks.html"><strong aria-hidden="true">4.11.</strong> Locks</a></li><li class="chapter-item expanded "><a href="../../journey/channels-and-bridges.html"><strong aria-hidden="true">4.12.</strong> Channels and Bridges</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.13.</strong> Misc</div></li></ol></li><li class="chapter-item expanded "><a href="../../executor_config/index.html"><strong aria-hidden="true">5.</strong> Config Deep Dive</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Testing</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.</strong> Separation of concerns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.2.</strong> Simulating message execution</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.</strong> How to test my own configuration</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.4.</strong> Testing the full XCM Journey</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> Transport Protocols</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> VMP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> HRMP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> XCMP</div></li></ol></li><li class="chapter-item expanded "><li class="part-title">Reference</li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> Cookbook</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> All Instructions</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> All XCVM Registers</div></li><li class="chapter-item expanded affix "><div>Next Steps</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">XCM Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="junctions"><a class="header" href="#junctions">Junction(s)</a></h1>
+<p>In the section on <a href="README.html">MultiLocations</a>, we looked at the MultiLocation struct.
+We talked about the Multilocation being a way to describe moving from one place in the system hierarchy to another.
+The <code>parents</code> parameter expresses the number of steps up in the hierarchy.
+In this section, we dive further into the MultiLocation struct and explain how we can use the Junctions type to describe steps in the system hierarchy.
+Take a look at the MultiLocation struct again: </p>
+<pre><code class="language-rust noplayground">pub struct MultiLocation {
+    pub parents: u8,
+    pub interior: Junctions,
+}</code></pre>
+<p>The system hierarchy consists of 1-to-n relations.
+Each place in the system hierarchy can only ever have one parent, so there is only one way up the hierarchy.
+That is why we can use a <code>u8</code> to describe the number of <code>parents</code> we want to move up.
+But moving down is a bit more difficult, as one consensus system can encapsulate multiple other consensus systems(e.g. a relay chain can have multiple parachains).
+So to describe the correct steps down the hierarchy, we use the <code>Junctions</code> <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/enum.Junctions.html">type</a>.</p>
+<h2 id="junctions-type"><a class="header" href="#junctions-type">Junctions Type</a></h2>
+<pre><code class="language-rust noplayground">pub enum Junctions {
+    /// The interpreting consensus system.
+    Here,
+    /// A relative path comprising 1 junction.
+    X1(Junction),
+    ...
+    /// A relative path comprising 8 junctions.
+    X8(Junction, Junction, Junction, Junction, Junction, Junction, Junction, Junction),
+}</code></pre>
+<p>The <code>Junctions</code> enum can represent zero to eight steps down the hierarchy.
+When the <code>Here</code> variant is used, it means that we do not have to take steps down the hierarchy.
+We can for example describe the current location with <code>{parents: 0, interior: Here}</code> or the Parent location with <code>{parents: 1, interior: Here}</code>.
+If we want to take steps down the hierarchy, we express each step as a Junction.</p>
+<h2 id="junction-type"><a class="header" href="#junction-type">Junction Type</a></h2>
+<p>A <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/enum.Junction.html">Junction</a> describes a step down in the Hierarchy.
+The <code>Junction</code>s are defined as follows: </p>
+<pre><code class="language-rust noplayground">pub enum Junction {
+    Parachain(u32),
+    AccountId32 {
+        network: Option&lt;NetworkId&gt;,
+        id: [u8; 32],
+    },
+    AccountIndex64 {
+        network: Option&lt;NetworkId&gt;,
+        index: u64,
+    },
+    AccountKey20 {
+        network: Option&lt;NetworkId&gt;,
+        key: [u8; 20],
+    },
+    PalletInstance(u8),
+    GeneralIndex(u128),
+    GeneralKey {
+        length: u8,
+        data: [u8; 32],
+    },
+    OnlyChild,
+    Plurality {
+        id: BodyId,
+        part: BodyPart,
+    },
+    GlobalConsensus(NetworkId),
+}</code></pre>
+<h4 id="parachain"><a class="header" href="#parachain">Parachain</a></h4>
+<p>The <code>Parachain</code> junction is used to describe a parachain from the point of a relay chain.
+Each parachain has an Id, e.g. Statemine in the Kusama network has Id 1000.</p>
+<h4 id="palletinstance"><a class="header" href="#palletinstance">PalletInstance</a></h4>
+<p>The <code>PalletInstance</code> junction is used to describe a pallet in one of the parachains or relay chain.
+Each pallet has an Id that can be used for the <code>PalletInstance</code>. 
+This junction is mainly used for FRAME based systems.</p>
+<h4 id="accountid32-and-accountkey20"><a class="header" href="#accountid32-and-accountkey20">AccountId32 and AccountKey20</a></h4>
+<p>Each of these junctions can be used to describe an account located in the current consensus system.
+The <code>AccountId32</code> is used to describe substrate-based accounts, while the <code>AccountKey20</code> is mainly used to describe Ethereum or Bitcoin-based accounts or smart contracts.
+Both junctions express an account based on the context they are used in.
+If the current location is the relay chain, then the junctions describe an account in the relay chain.
+The same is true for each parachain location.</p>
+<h4 id="generalindex-and-generalkey"><a class="header" href="#generalindex-and-generalkey">GeneralIndex and GeneralKey</a></h4>
+<p>Non-descript indices and keys within the current context location.
+The usage will vary widely owing to its generality.
+An example use case for the <code>GeneralIndex</code> is to describe an Asset within an Assets Parachain.</p>
+<p>NOTE: If possible, try to avoid using this and instead use a more specific junction.</p>
+<h4 id="accountindex64"><a class="header" href="#accountindex64">AccountIndex64</a></h4>
+<p>The <code>AccountIndex64</code> can be used to describe an account index. 
+This may be used when the context is a Frame-based chain and includes e.g. an indices pallet.</p>
+<h4 id="onlychild"><a class="header" href="#onlychild">OnlyChild</a></h4>
+<p>The <code>OnlyChild</code> junction can be used to describe the child of a location if there exists a 1-to-1 relation between the parent and child in the system hierarchy.
+The <code>OnlyChild</code> junction is currently not used except as a fallback when deriving context.</p>
+<h4 id="plurality"><a class="header" href="#plurality">Plurality</a></h4>
+<p>The <code>Plurality</code> junction is used to describe a pluralistic body existing within the current consensus location.
+Typical to be used to represent a governance origin of a chain, but could in principle be used to represent
+things such as multisigs also.
+See the <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/enum.BodyId.html">BodyId documentation</a> for a better understanding of the bodies that the <code>Plurality</code> junction can represent.</p>
+<h4 id="globalconsensus"><a class="header" href="#globalconsensus">GlobalConsensus</a></h4>
+<p>A global network (e.g. Polkadot or Kusama) is capable of externalizing its own consensus.
+This is not generally meaningful outside of the universal level.
+An example would be describing the Kusama relay chain from the perspective of the Polkadot relay chain as <code>{parents: 1, interior: GlobalConsensus(Kusama)}</code>.
+An example use case could be routing XCMs between global consensus networks using bridges.</p>
+<h2 id="multiple-ways-to-create-a-multilocation"><a class="header" href="#multiple-ways-to-create-a-multilocation">Multiple ways to create a MultiLocation</a></h2>
+<pre><code class="language-rust noplayground">// Current Location
+MultiLocation {parents: 0, interior: Here};
+MultiLocation::new(0, Here);
+MultiLocation::here();
+MultiLocation::default();
+let _: MultiLocation = Here.into();
+
+// Parent Location
+MultiLocation {parents: 1, interior: Here};
+MultiLocation::parent();
+let _: MultiLocation = Parent.into();
+
+// Conversion
+MultiLocation { parents: 2, interior: X2(Parachain(1), GeneralIndex(1))};
+let _: MultiLocation = (Parent, Parent, Parachain(1), GeneralIndex(1)).into();</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../fundamentals/multilocation/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../fundamentals/multilocation/example.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../fundamentals/multilocation/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../fundamentals/multilocation/example.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

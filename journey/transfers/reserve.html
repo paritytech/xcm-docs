@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Reserve-backed transfers - XCM Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../xcm.html">XCM: Cross-Consensus Messaging</a></li><li class="chapter-item expanded "><a href="../../overview/index.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../overview/interoperability.html"><strong aria-hidden="true">1.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../overview/format.html"><strong aria-hidden="true">1.2.</strong> A Format, not a Protocol</a></li><li class="chapter-item expanded "><a href="../../overview/xcvm.html"><strong aria-hidden="true">1.3.</strong> The XCVM</a></li><li class="chapter-item expanded "><a href="../../overview/architecture.html"><strong aria-hidden="true">1.4.</strong> Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="../../quickstart/index.html"><strong aria-hidden="true">2.</strong> Quickstart</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../quickstart/xcm-simulator.html"><strong aria-hidden="true">2.1.</strong> XCM Simulator</a></li><li class="chapter-item expanded "><a href="../../quickstart/first-look.html"><strong aria-hidden="true">2.2.</strong> First Look at an XCM</a></li></ol></li><li class="chapter-item expanded "><a href="../../fundamentals/index.html"><strong aria-hidden="true">3.</strong> Fundamentals</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fundamentals/multilocation/index.html"><strong aria-hidden="true">3.1.</strong> MultiLocation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fundamentals/multilocation/junction.html"><strong aria-hidden="true">3.1.1.</strong> Junction(s)</a></li><li class="chapter-item expanded "><a href="../../fundamentals/multilocation/example.html"><strong aria-hidden="true">3.1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="../../fundamentals/multiasset.html"><strong aria-hidden="true">3.2.</strong> MultiAsset</a></li><li class="chapter-item expanded "><a href="../../fundamentals/xcvm.html"><strong aria-hidden="true">3.3.</strong> XCVM</a></li><li class="chapter-item expanded "><a href="../../fundamentals/weight_and_fees.html"><strong aria-hidden="true">3.4.</strong> Weight and fees</a></li></ol></li><li class="chapter-item expanded "><a href="../../journey/index.html"><strong aria-hidden="true">4.</strong> A Journey through XCM</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../journey/transfers/index.html"><strong aria-hidden="true">4.1.</strong> Transfers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../journey/transfers/teleports.html"><strong aria-hidden="true">4.1.1.</strong> Asset teleportation</a></li><li class="chapter-item expanded "><a href="../../journey/transfers/reserve.html" class="active"><strong aria-hidden="true">4.1.2.</strong> Reserve-backed transfers</a></li></ol></li><li class="chapter-item expanded "><a href="../../journey/transact.html"><strong aria-hidden="true">4.2.</strong> Transact: A general solution</a></li><li class="chapter-item expanded "><a href="../../journey/fees/index.html"><strong aria-hidden="true">4.3.</strong> Fee handling</a></li><li class="chapter-item expanded "><a href="../../journey/origins.html"><strong aria-hidden="true">4.4.</strong> Origin manipulation</a></li><li class="chapter-item expanded "><a href="../../journey/register-modifiers.html"><strong aria-hidden="true">4.5.</strong> More register modifiers</a></li><li class="chapter-item expanded "><a href="../../journey/holding-modifiers.html"><strong aria-hidden="true">4.6.</strong> More Holding Modifiers</a></li><li class="chapter-item expanded "><a href="../../journey/trap-and-claim.html"><strong aria-hidden="true">4.7.</strong> Trap and Claim assets</a></li><li class="chapter-item expanded "><a href="../../journey/expects.html"><strong aria-hidden="true">4.8.</strong> Expectations</a></li><li class="chapter-item expanded "><a href="../../journey/queries.html"><strong aria-hidden="true">4.9.</strong> Queries</a></li><li class="chapter-item expanded "><a href="../../journey/version.html"><strong aria-hidden="true">4.10.</strong> XCM Version</a></li><li class="chapter-item expanded "><a href="../../journey/locks/locks.html"><strong aria-hidden="true">4.11.</strong> Locks</a></li><li class="chapter-item expanded "><a href="../../journey/channels-and-bridges.html"><strong aria-hidden="true">4.12.</strong> Channels and Bridges</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.13.</strong> Misc</div></li></ol></li><li class="chapter-item expanded "><a href="../../executor_config/index.html"><strong aria-hidden="true">5.</strong> Config Deep Dive</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Testing</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.</strong> Separation of concerns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.2.</strong> Simulating message execution</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.</strong> How to test my own configuration</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.4.</strong> Testing the full XCM Journey</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> Transport Protocols</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> VMP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> HRMP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> XCMP</div></li></ol></li><li class="chapter-item expanded "><li class="part-title">Reference</li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> Cookbook</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> All Instructions</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> All XCVM Registers</div></li><li class="chapter-item expanded affix "><div>Next Steps</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">XCM Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="reserve-backed-transfers"><a class="header" href="#reserve-backed-transfers">Reserve-backed transfers</a></h1>
+<p>For consensus systems that don't have the level of trust required for asset teleportation, they can instead opt for trusting a third party called a reserve to store the real assets (think Statemine on Kusama, or Statemint on Polkadot).
+The source and the destination need a way to keep track of the real assets they own on the reserve, this is usually done by minting a new derivative token.
+Both source and destination now need accounts on the reserve to hold their assets, we call these their sovereign accounts on that system.</p>
+<h2 id="process"><a class="header" href="#process">Process</a></h2>
+<p><img src="images/reserve_asset_transfer.png" alt="Reserve Backed Transfer diagram" /></p>
+<p>The flow in this diagram is further explained below:</p>
+<h3 id="1-initiatereservewithdraw"><a class="header" href="#1-initiatereservewithdraw">1. InitiateReserveWithdraw</a></h3>
+<p>The source gathers the derivative assets to be transferred from the sending account and burns them, taking note of the amount of derivatives that were burned.</p>
+<h3 id="2-withdrawasset"><a class="header" href="#2-withdrawasset">2. WithdrawAsset</a></h3>
+<p>The source sends a <code>WithdrawAsset</code> instruction to the reserve, instructing it to withdraw real assets equivalent to the amount of derivatives burned from the source chain.</p>
+<h3 id="3-depositreserveasset"><a class="header" href="#3-depositreserveasset">3. DepositReserveAsset</a></h3>
+<p>The reserve deposits the assets withdrawn from the previous step to the destination's sovereign account, taking note of the amount of assets deposited.</p>
+<h3 id="4-reserveassetdeposited"><a class="header" href="#4-reserveassetdeposited">4. ReserveAssetDeposited</a></h3>
+<p>The reserve creates a <code>ReserveAssetDeposited</code> instruction with the amount of assets deposited to the destination's sovereign account, and sends this instruction onwards to the destination.
+The destination receives the instruction and processes it, minting the correct amount of derivative assets.</p>
+<h3 id="5-depositasset"><a class="header" href="#5-depositasset">5. DepositAsset</a></h3>
+<p>The destination deposits the derivative assets minted to the receiving account.</p>
+<h3 id="thoughts"><a class="header" href="#thoughts">Thoughts</a></h3>
+<p>The addition of a third consensus system is already a hint of the disadvantages of a reserve asset transfer model.
+Firstly, the reserve could easily become a point of centralization when too many consensus systems rely on it to be the reserve of choice for their assets.
+Secondly, the sheer amount of steps required necessarily makes it more prone to errors, and as such, implementors will have to consider more possible pitfalls and provide technical support accordingly when an end user encounters issues arising from these steps.
+Last, but not least, either the source or destination can opt to designate multiple consensus systems to be their reserves.
+In such a situation, care must be taken in order to ensure that the sovereign accounts on the reserves are balanced, so that one doesn't get drained while the others still contain a healthy balance.</p>
+<h3 id="a-note-on-trust"><a class="header" href="#a-note-on-trust">A note on trust</a></h3>
+<p>We mentioned that reserve-backed transfers require the sender and the destination to trust a third party, the reserve, and not each other.
+This is true, but it doesn't mean the sender and destination have to trust ONLY the reserve, they also have to trust the issuer of the token.
+Whenever you are dealing with a particular asset, you are always trusting the issuer of said asset, because at any point they could mint a huge amount of that asset, wreaking havoc.
+You have to make sure you trust the asset, based on the security mechanisms used to protect its issuance.
+For this reason, reserves work best when they are the issuers of the asset being transacted.
+In that scenario, you only have to trust the reserve, period.</p>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<p>We'll create a program for the scenario in the diagram.
+Let's assume that the reserve is a relay chain and both source and destination are parachains 1 and 2 respectively.
+Let's also say that an account ALICE in parachain 1 wants to transfer the relay chain's native token to their other account (also ALICE) on parachain 2.
+The program might look like this:</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((Parent, amount).into()),
+  InitiateReserveWithdraw {
+    assets: All.into(),
+    reserve: Parent.into(),
+    xcm: Xcm(vec![DepositReserveAsset {
+      assets: All.into(),
+      dest: Parachain(2).into(),
+      xcm: Xcm(vec![DepositAsset {
+        assets: All.into(),
+        beneficiary: AccountId32 { id: ALICE.into(), network: None }.into(),
+      }]),
+    }]),
+  },
+]);</code></pre>
+<p>This program should be executed on the source, so on parachain 1.
+We start, as usual, with a <code>WithdrawAsset</code> instruction.
+The <code>MultiAsset</code> here references the relay chain's native token, which means we'll be gathering the derivative on this chain.</p>
+<h3 id="initiatereservewithdraw"><a class="header" href="#initiatereservewithdraw">InitiateReserveWithdraw</a></h3>
+<pre><code class="language-rust noplayground">InitiateReserveWithdraw { assets: MultiAssetFilter, reserve: MultiLocation, xcm: Xcm&lt;()&gt; }</code></pre>
+<p>The <code>InitiateReserveWithdraw</code> instruction takes the derivative token from the holding register and burns it.
+Then it sends a new XCM to the specified <code>reserve</code>, in this example, the relay chain.
+This new XCM contains the following instructions, in order:</p>
+<ol>
+<li>WithdrawAsset</li>
+<li>ClearOrigin</li>
+<li>All instructions specified in the <code>xcm</code> operand, in this case <code>DepositReserveAsset</code></li>
+</ol>
+<p>As was the case with <a href="../teleports.html">teleports</a>, instructions 1. and 2. are added automatically by the executor when using <code>InitiateReserveWithdraw</code>.</p>
+<p>Upon receiving this XCM, the reserve will withdraw the asset from parachain 1's sovereign account (where the real asset is stored), and deposit it on parachain 2's sovereign account.</p>
+<h3 id="depositreserveasset"><a class="header" href="#depositreserveasset">DepositReserveAsset</a></h3>
+<pre><code class="language-rust noplayground">DepositReserveAsset { assets: MultiAssetFilter, dest: MultiLocation, xcm: Xcm&lt;()&gt; }</code></pre>
+<p>This instruction is used in this example instead of <code>DepositAsset</code>, because as well as depositing the assets to parachain 2's sovereign account, this instruction will send another XCM to parachain 2.
+This new XCM has the following instructions:</p>
+<ol>
+<li>ReserveAssetDeposited</li>
+<li>ClearOrigin</li>
+<li>All instructions specified in the <code>xcm</code> operand, in this case, only <code>DepositAsset</code></li>
+</ol>
+<h3 id="reserveassetdeposited"><a class="header" href="#reserveassetdeposited">ReserveAssetDeposited</a></h3>
+<pre><code class="language-rust noplayground">ReserveAssetDeposited(MultiAssets)</code></pre>
+<p>Parachain 2 receives the XCM, mints new derivative tokens and deposit them locally to the beneficiary account.
+<code>ReserveAssetDeposited</code> is a <em>trusted indication</em>.
+As is the case with teleporting, you need to trust the reserve to have actually put the specified amount of assets in the sovereign account of this system.
+You can specify which systems you trust as reserves for which assets by configuring the <a href="TODO:add_link">IsReserve</a> type in the executor.
+In our example, both parachains trust the relay chain as a reserve for its own native token.</p>
+<h2 id="another-example"><a class="header" href="#another-example">Another example</a></h2>
+<p>We now know this type of transfers requires 3 actors: the source, the reserve, and the destination.
+However, the source and reserve don't have to be different systems, they could be one and the same, as in the following diagram.</p>
+<p><img src="images/source_is_reserve.png" alt="Source is reserve" /></p>
+<p>In this case the message is the following:</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((Parent, amount).into()),
+  DepositReserveAsset {
+    assets: All.into(),
+    dest: Parachain(2).into(),
+    xcm: Xcm(vec![DepositAsset {
+      assets: All.into(),
+      beneficiary: AccountId32 { id: ALICE.into(), network: None }.into(),
+    }]),
+  },
+]);</code></pre>
+<p>This simplifies the reserve-backed transfer.
+However, the destination still needs to:</p>
+<ul>
+<li>Recognize the source as the proper reserve for the tokens that are being sent over and</li>
+<li>Support minting derivatives of the tokens being sent over</li>
+</ul>
+<p>It's also possible to skip the <code>WithdrawAsset</code> instruction.
+The <code>TransferReserveAsset</code> instruction handles the withdrawal already.
+It can be called like so:</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  TransferReserveAsset {
+    assets: (Parent, amount).into(),
+    dest: Parachain(2).into(),
+    xcm: Xcm(vec![DepositAsset {
+      assets: All.into(),
+      beneficiary: AccountId32 { id: ALICE.into(), network: None }.into(),
+    }]),
+  },
+]);</code></pre>
+<h3 id="another-note-on-trust"><a class="header" href="#another-note-on-trust">Another note on trust</a></h3>
+<p>In this model, where the sender is the reserve, the destination is trusting the sender entirely.
+It's the sender the one who doesn't need to trust the destination, since it'll ever only be minting derivatives anyway, the sender/reserve controls the real assets and issuance.</p>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next steps</a></h2>
+<p>Next, we'll talk about a very important topic we mentioned before but skipped in this chapter, paying fees for the effects our XCMs have.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../journey/transfers/teleports.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../journey/transact.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../journey/transfers/teleports.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../journey/transact.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

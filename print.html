@@ -1,0 +1,2086 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>XCM Documentation</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="xcm.html">XCM: Cross-Consensus Messaging</a></li><li class="chapter-item expanded "><a href="overview/index.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="overview/interoperability.html"><strong aria-hidden="true">1.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="overview/format.html"><strong aria-hidden="true">1.2.</strong> A Format, not a Protocol</a></li><li class="chapter-item expanded "><a href="overview/xcvm.html"><strong aria-hidden="true">1.3.</strong> The XCVM</a></li><li class="chapter-item expanded "><a href="overview/architecture.html"><strong aria-hidden="true">1.4.</strong> Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="quickstart/index.html"><strong aria-hidden="true">2.</strong> Quickstart</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="quickstart/xcm-simulator.html"><strong aria-hidden="true">2.1.</strong> XCM Simulator</a></li><li class="chapter-item expanded "><a href="quickstart/first-look.html"><strong aria-hidden="true">2.2.</strong> First Look at an XCM</a></li></ol></li><li class="chapter-item expanded "><a href="fundamentals/index.html"><strong aria-hidden="true">3.</strong> Fundamentals</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fundamentals/multilocation/index.html"><strong aria-hidden="true">3.1.</strong> MultiLocation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fundamentals/multilocation/junction.html"><strong aria-hidden="true">3.1.1.</strong> Junction(s)</a></li><li class="chapter-item expanded "><a href="fundamentals/multilocation/example.html"><strong aria-hidden="true">3.1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="fundamentals/multiasset.html"><strong aria-hidden="true">3.2.</strong> MultiAsset</a></li><li class="chapter-item expanded "><a href="fundamentals/xcvm.html"><strong aria-hidden="true">3.3.</strong> XCVM</a></li><li class="chapter-item expanded "><a href="fundamentals/weight_and_fees.html"><strong aria-hidden="true">3.4.</strong> Weight and fees</a></li></ol></li><li class="chapter-item expanded "><a href="journey/index.html"><strong aria-hidden="true">4.</strong> A Journey through XCM</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="journey/transfers/index.html"><strong aria-hidden="true">4.1.</strong> Transfers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="journey/transfers/teleports.html"><strong aria-hidden="true">4.1.1.</strong> Asset teleportation</a></li><li class="chapter-item expanded "><a href="journey/transfers/reserve.html"><strong aria-hidden="true">4.1.2.</strong> Reserve-backed transfers</a></li></ol></li><li class="chapter-item expanded "><a href="journey/transact.html"><strong aria-hidden="true">4.2.</strong> Transact: A general solution</a></li><li class="chapter-item expanded "><a href="journey/fees/index.html"><strong aria-hidden="true">4.3.</strong> Fee handling</a></li><li class="chapter-item expanded "><a href="journey/origins.html"><strong aria-hidden="true">4.4.</strong> Origin manipulation</a></li><li class="chapter-item expanded "><a href="journey/register-modifiers.html"><strong aria-hidden="true">4.5.</strong> More register modifiers</a></li><li class="chapter-item expanded "><a href="journey/holding-modifiers.html"><strong aria-hidden="true">4.6.</strong> More Holding Modifiers</a></li><li class="chapter-item expanded "><a href="journey/trap-and-claim.html"><strong aria-hidden="true">4.7.</strong> Trap and Claim assets</a></li><li class="chapter-item expanded "><a href="journey/expects.html"><strong aria-hidden="true">4.8.</strong> Expectations</a></li><li class="chapter-item expanded "><a href="journey/queries.html"><strong aria-hidden="true">4.9.</strong> Queries</a></li><li class="chapter-item expanded "><a href="journey/version.html"><strong aria-hidden="true">4.10.</strong> XCM Version</a></li><li class="chapter-item expanded "><a href="journey/locks/locks.html"><strong aria-hidden="true">4.11.</strong> Locks</a></li><li class="chapter-item expanded "><a href="journey/channels-and-bridges.html"><strong aria-hidden="true">4.12.</strong> Channels and Bridges</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.13.</strong> Misc</div></li></ol></li><li class="chapter-item expanded "><a href="executor_config/index.html"><strong aria-hidden="true">5.</strong> Config Deep Dive</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Testing</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.</strong> Separation of concerns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.2.</strong> Simulating message execution</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.</strong> How to test my own configuration</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.4.</strong> Testing the full XCM Journey</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> Transport Protocols</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> VMP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> HRMP</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> XCMP</div></li></ol></li><li class="chapter-item expanded "><li class="part-title">Reference</li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> Cookbook</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> All Instructions</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> All XCVM Registers</div></li><li class="chapter-item expanded affix "><div>Next Steps</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">XCM Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="xcm-cross-consensus-messaging"><a class="header" href="#xcm-cross-consensus-messaging">XCM: Cross-Consensus Messaging</a></h1>
+<p>This is the place where we will brainstorm XCM documentation and tutorial ideas.
+It will eventually be in a public centralized place for everyone to find and use.</p>
+<h2 id="draft-intro"><a class="header" href="#draft-intro">Draft intro</a></h2>
+<p>Welcome to the Cross-Consensus Message Format (XCM) documentation!
+Whether you're a developer, a blockchain enthusiast, or just interested in Polkadot, this guide aims to provide you with an easy-to-understand and comprehensive introduction to XCM.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overview"><a class="header" href="#overview">Overview</a></h1>
+<p>XCM allows for different consensus systems to communicate with each other.
+This allows things like:</p>
+<ul>
+<li>Sending tokens from one chain to another</li>
+<li>Locking assets on one chain in order to gain some benefit on a smart contract on another chain</li>
+<li>Calling extrinsics on another chain</li>
+</ul>
+<p>But that's just the beginning.
+The true power of XCM comes from its composability.
+Once you can communicate with other consensus systems, you can get creative and implement whatever use case you need.
+This is especially true in the context of an ecosystem of highly specialized chains, like Polkadot.</p>
+<p>In this chapter, we will cover what XCM is, what it isn't, why it matters, and delve into the different components that make up the XCM ecosystem.</p>
+<p>Let's begin.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>XCM is a messaging format, a language, designed to enable seamless communication between different consensus systems, for example blockchains and smart contracts.
+XCM was originally developed for the <a href="https://polkadot.network/">Polkadot</a> ecosystem, but was designed to provide a common language for cross-consensus communication that can be used anywhere.</p>
+<p>XCM is a language in which interactions (programs) can be written.
+It aims to provide better interoperability between consensus systems, both more features and a better user and developer experience.</p>
+<p>Its goal is to let blockchain ecosystems thrive via specialization instead of generalization.
+If there's no interoperability, a chain is forced to do everything on its own.
+With XCM, a chain can specialize and do what it does best, while still getting the benefits from interacting with others.</p>
+<p>XCM has four high-level core design principles which it stands to follow:</p>
+<ol>
+<li>Asynchronous: XCM messages in no way assume that the sender will be blocking on its completion</li>
+<li>Absolute: XCM messages are guaranteed to be delivered and interpreted accurately, in order and in a timely fashion. Once a message is sent, one can be sure it will be processed as it was intended to be.</li>
+<li>Asymmetric: XCM messages, by default, do not have results that let the sender know that the message was received - they follow the 'fire and forget' paradigm. Any results must be separately communicated to the sender with an additional message back to the origin.</li>
+<li>Agnostic: XCM makes no assumptions about the nature of the consensus systems between which the messages are being passed. XCM as a message format should be usable in any system that derives finality through consensus.</li>
+</ol>
+<p>XCM is a work-in-progress, the format is expected to change over time.
+It has an RFC process to propose changes, which end up in newer versions, the current one being v3.
+To keep up with the development of the format, or to propose changes, go to <a href="https://github.com/paritytech/xcm-format">the XCM format repository</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="a-format-not-a-protocol"><a class="header" href="#a-format-not-a-protocol">A Format, Not a Protocol</a></h1>
+<p>It's essential to understand that XCM is a format, not a protocol.
+It describes how messages should be structured and contains instructions relevant to the on-chain actions the message intends to perform.
+However, XCM does not dictate how messages are delivered.
+That responsibility falls on <a href="overview/TODO:link">transport layer protocols</a> such as XCMP (Cross Chain Message Passing) and VMP (Vertical Message Passing) in the Polkadot ecosystem, or any others to come.</p>
+<p>XCM is similar to how RESTful services use REST as an architectural style of development, where HTTP requests contain specific parameters to perform some action.
+Similar to UDP, out of the box XCM is a &quot;fire and forget&quot; model, unless there is a separate XCM message designed to be a response message which can be sent from the recipient to the sender. All error handling should also be done on the recipient side.</p>
+<p>XCM is not designed in a way where every system supporting the format is expected to be able to interpret any possible XCM message. Practically speaking, one can imagine that some messages will not have reasonable interpretations under some systems or will be intentionally unsupported.</p>
+<p>Furthermore, it's essential to realize that XCM messages by themselves are not considered transactions. XCM describes how to change the state of the target network, but the message by itself doesn't perform the state change.
+This partly ties to what is called asynchronous composability, which allows XCM messages to bypass the concept of time-constrained mechanisms, like on-chain scheduling and execution over time in the correct order in which it was intended.</p>
+<p>XCM is a language in which rich interactions between systems can be written.
+Both simple and more complex scenarios can be expressed, and developers are encouraged to design and implement diverse cross-consensus communication solutions.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-xcvm"><a class="header" href="#the-xcvm">The XCVM</a></h1>
+<p>At the core of XCM lies the XCVM (Cross-Consensus Virtual Machine).
+A message in XCM (referred to as an XCM, cross-consensus message, or XCMs for more than one) is an XCVM program.
+The XCVM is a register-based state machine that executes every program by processing its instructions one at a time.
+During execution, state is tracked in domain-specific registers, and is constantly being used and updated.
+Most of the XCM format comprises these registers and the instructions used to compose XCVM programs.</p>
+<p>Like XCM, the XCVM is also a specification.
+The first implementation is <a href="https://github.com/paritytech/polkadot/tree/master/xcm/xcm-executor">xcm-executor</a>, provided by Parity.
+It's built to be highly configurable, with its building blocks available in <a href="https://github.com/paritytech/polkadot/tree/master/xcm/xcm-builder">xcm-builder</a>.
+Configuring the executor is an important and extensive topic, one we will dive into further in <a href="overview/TODO:link">Config Deep Dive</a>.
+It's entirely possible to create another implementation of the XCVM if desired.</p>
+<p>Typically, an XCM takes the following path through the XCVM:</p>
+<ul>
+<li>Instructions within an XCM are read one-by-one by the XCVM. An XCM may contain one or more instructions.</li>
+<li>The instruction is executed. This means that the current values of the XCVM registers, the instruction type, and the instruction operands are all used to execute some operation, which might result in some registers changing their value, or in an error being thrown, which would halt execution.</li>
+<li>Each subsequent instruction within the XCM is read until the end of the message has been reached.</li>
+</ul>
+<p>The XCVM register you will hear most about is the <code>Holding</code> register.
+An XCVM program that handles assets (which means most of them) will be putting them in and taking them out of this register.
+Instructions we'll see later like <code>DepositAsset</code>, <code>WithdrawAsset</code> and many more, make use of this register.
+You can see all registers in the <a href="overview/TODO:link">All XCVM Registers</a> section.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="architecture"><a class="header" href="#architecture">Architecture</a></h1>
+<p>XCM is a <a href="https://github.com/paritytech/xcm-format">format</a>, which means anyone is free to create an implementation for it.
+The first one is made in <a href="https://www.rust-lang.org/">Rust</a>, primarily for <a href="https://substrate.io/">Substrate</a>-based chains in the <a href="https://polkadot.network/">Polkadot</a> ecosystem.
+We'll be looking at this first implementation to tinker with different types of messages in the next sections.
+For now, we'll take a look at how it's structured.</p>
+<p>All the code lives in the <a href="https://github.com/paritytech/polkadot/tree/master/xcm">Polkadot repo</a>.
+The main structure is as follows:</p>
+<ul>
+<li>XCM: Defines the fundamental constructs used in XCM and an enum with all the instructions available.</li>
+<li>Executor: Implements the XCVM, capable of executing XCMs. Highly configurable.</li>
+<li>Builder: Offers common configuration building blocks for the executor.</li>
+<li>Pallet: FRAME pallet that provides extrinsics with specific XCM programs.</li>
+<li>Simulator: Allows for testing of XCM programs.</li>
+</ul>
+<h2 id="executor"><a class="header" href="#executor">Executor</a></h2>
+<p>The XCM executor is responsible for interpreting and executing XCM messages.
+It is the core engine that processes and handles XCM instructions, ensuring that they are carried out accurately and in the correct order.
+The XCM executor follows the Cross-Consensus Virtual Machine (XCVM) specification and can be extended, customized, or even replaced with an alternative construct that adheres to the XCVM spec.</p>
+<h2 id="builder"><a class="header" href="#builder">Builder</a></h2>
+<p>The XCM executor is highly configurable.
+XCM builder provides building blocks people can use to configure their executor according to their needs.</p>
+<h2 id="pallet"><a class="header" href="#pallet">Pallet</a></h2>
+<p>The XCM pallet is a FRAME pallet that can be used to execute XCMs locally or send them to a different system.
+It also has extrinsics for specific use cases such as teleporting assets or doing reserve asset transfers, which we'll talk about later.
+It's the glue between XCM and FRAME, which is highly used in the Polkadot ecosystem.</p>
+<h2 id="simulator"><a class="header" href="#simulator">Simulator</a></h2>
+<p>The simulator allows for testing XCMs fast, without needing to boot up several different nodes in a network, or test in production.
+It's a very useful tool which we'll use later to build and test different XCMs.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="quickstart"><a class="header" href="#quickstart">Quickstart</a></h1>
+<p>The XCM code can be found in <a href="https://github.com/paritytech/polkadot/tree/master/xcm">polkadot repository</a>.</p>
+<h2 id="rust--cargo"><a class="header" href="#rust--cargo">Rust &amp; Cargo</a></h2>
+<p>A pre-requisite for using XCM is to have a stable Rust version and Cargo installed. Here's an <a href="https://docs.substrate.io/install/">installation guide</a> on how to install rust and cargo.</p>
+<h2 id="running-the-examples"><a class="header" href="#running-the-examples">Running the Examples</a></h2>
+<p>All examples in the documentation are located in the <a href="quickstart/">examples repository</a>. Follow these steps to run the <code>first-look</code> example. First clone the repository:</p>
+<pre><code class="language-shell">git clone git@github.com:vstam1/xcm-examples.git
+cd xcm-examples
+</code></pre>
+<p>To run the first-look example, run the following line:</p>
+<pre><code class="language-shell">cargo test -p xcm-examples para_a_simple_transfer -- --nocapture
+</code></pre>
+<p>It should show you the following output: </p>
+<pre><code class="language-shell">running 1 test
+test first_look::tests::para_a_simple_transfer ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.01s
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="xcm-simulator"><a class="header" href="#xcm-simulator">XCM Simulator</a></h1>
+<p>Setting up a live network with multiple connected parachains for testing XCM is not straight forward. The <code>XCM-simulator</code> was created as a solution to this problem. The XCM-simulator is a network simulator specifically designed for testing and playing around with XCM. It uses mock relay chain and parachain runtime. </p>
+<p>For testing xcm configurations for live runtime environments we use the <code>XCM-emulator</code>. The XCM-emulator can use production relay chain and parachain runtimes. Users can plug in Kusama, Statemine, or their custom runtime etc. With up-to-date chain specs, it's able to verify if specific XCM messages work in live networks. The specific use cases will be further explained in the chapter on <a href="quickstart/testing/README.html">testing</a>.</p>
+<p>In the next section we will take a first look at an XCM. The XCM-simulator is used for the example code.</p>
+<p><a href="quickstart/first-look.html">Next: First Look at an XCM</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="first-look"><a class="header" href="#first-look">First Look</a></h1>
+<p>In this section, we take you through a simple example of an XCM. In this example, we withdraw the native token from the account of Alice and deposit this token in the account of Bob. This message simulates a transfer between two accounts in the same consensus system (<code>ParaA</code>). Find here the <a href="quickstart/">code example</a>.</p>
+<h2 id="message"><a class="header" href="#message">Message</a></h2>
+<pre><code class="language-rust noplayground"> let message = Xcm(vec![
+    WithdrawAsset((Here, amount).into()),
+    BuyExecution{ fees: (Here, amount).into(), weight_limit: WeightLimit::Unlimited },
+    DepositAsset { 
+        assets: All.into(), 
+        beneficiary:  MultiLocation { 
+            parents: 0,
+            interior: Junction::AccountId32 { 
+                network: None, 
+                id: BOB.clone().into() 
+            }.into(),
+        }.into()
+    }   
+]);</code></pre>
+<p>The message consists of three instructions: WithdrawAsset, BuyExecution, and DepositAsset. In the following sections we will go over each of these instructions. </p>
+<h3 id="withdrawasset"><a class="header" href="#withdrawasset">WithdrawAsset</a></h3>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>WithdrawAsset((Here, amount).into())
+<span class="boring">}</span></code></pre></pre>
+<p>The first instruction takes as an input the <a href="quickstart/">MultiAsset</a> that should be withdrawn. The MultiAsset describes the native parachain token with the <code>Here</code> keyword. The <code>amount</code> parameter is the number of tokens that are transferred. The withdrawal account depends on the Origin of the message. In this example the Origin of the message is Alice.
+The WithdrawAsset instruction moves <code>amount</code> number of native tokens from Alice's account into the <code>Holding register</code>. </p>
+<h3 id="buyexecution"><a class="header" href="#buyexecution">BuyExecution</a></h3>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>BuyExecution{fees: (Here, amount).into(), weight_limit: WeightLimit::Unlimited}
+<span class="boring">}</span></code></pre></pre>
+<p>To execute XCM instructions, weight (some kind of resources) has to be bought. The amount of weight depends on the number and type of instructions in the XCM. The <code>BuyExecution</code> instruction pays for the weight using the <code>fees</code>. The <code>fees</code> parameter describes the asset in the <code>Holding register</code> that should be used for paying for the weight. The <code>weight_limit</code> defines the maximum amount of fees that can be used for buying weight. There are special occasions where it is not necessary to buy weight. See <a href="quickstart/">fees</a> for more information about the fees in XCM.</p>
+<h3 id="depositasset"><a class="header" href="#depositasset">DepositAsset</a></h3>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>DepositAsset { 
+    assets: All.into(), 
+    beneficiary:  MultiLocation { 
+        parents: 0,
+        interior: Junction::AccountId32 { 
+            network: None, 
+            id: BOB.clone().into() 
+        }.into(),
+    }.into()
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The DepositAsset instruction is used to deposit funds from the holding register into the account of the <code>beneficiary</code>. We don’t actually know how much is remaining in the Holding Register after the BuyExecution instruction, but that doesn’t matter since we specify a wildcard for the asset(s) which should be deposited. In this case, the wildcard is <code>All</code>, meaning that all assets in the Holding register should be deposited. The <code>beneficiary</code> in this case is the account of Bob in the current consensus system. </p>
+<p>When the three instructions are combined, we withdraw <code>amount</code> native tokens from the account of Alice, pay for the execution of the instructions, and deposit the remaining tokens in the account of Bob. </p>
+<h2 id="what-next"><a class="header" href="#what-next">What next?</a></h2>
+<p>Now that we have taken a first look at an XCM, we can dive deeper into all the XCM instructions. 
+For an overview of the instructions check out the <a href="https://github.com/paritytech/xcm-format#5-the-xcvm-instruction-set">xcm-format</a>.
+Or check out examples for each of the instruction in <a href="quickstart/">A Journey through XCM</a>.
+To get a better understanding about MultiLocations, MultiAssets, and other fundamental concepts in XCM, check out the <a href="quickstart/fundamentals/README.html">fundamentals chapter</a>. </p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="fundamentals"><a class="header" href="#fundamentals">Fundamentals</a></h1>
+<p>In this chapter we explore all the fundamentals that you should understand before diving deeper into XCM:</p>
+<ul>
+<li><a href="fundamentals/./multilocation/index.html">MultiLocation</a></li>
+<li><a href="fundamentals/./multiasset.html">MultiAsset</a></li>
+<li><a href="fundamentals/./responses.html">Responses</a></li>
+<li><a href="fundamentals/./fees.html">Fees</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="multilocation"><a class="header" href="#multilocation">MultiLocation</a></h1>
+<p>The <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/struct.MultiLocation.html">MultiLocation</a> type identifies any single location that exists within the world of consensus.
+It can represent all manner of things that exist within consensus, from a scalable multi-shard blockchain such as Polkadot down to an ERC-20 asset account on a parachain.
+MultiLocations are used to identify places to send XCMs, places that can receive assets, and can even help describe the type of an asset itself, as we will see in <a href="fundamentals/multilocation/../multiasset.html">MultiAsset</a>.</p>
+<h3 id="location-is-relative"><a class="header" href="#location-is-relative">Location is relative</a></h3>
+<p>MultiLocation always expresses a location relative to the current location.
+It can be thought of as a file system path, without the ability to directly express the “root” of the file system tree.
+This is for a simple reason: In the world of Polkadot, blockchains can be merged into, and split from other blockchains.
+A blockchain can begin as a standalone sovereign chain, and could eventually be elevated to become a parachain within a larger consensus.
+If it did that, then the meaning of “root” would change overnight and this could spell chaos for XCMs and anything else using MultiLocation.
+To keep things simple, we exclude this possibility altogether.</p>
+<h3 id="hierarchical-structure"><a class="header" href="#hierarchical-structure">Hierarchical structure</a></h3>
+<p>Locations in XCM are hierarchical; some places in consensus are wholly encapsulated within other places in consensus.
+A parachain of Polkadot exists wholly within the overall Polkadot consensus; we call this an interior location.
+Or a pallet exists wholly within a parachain or relay chain.
+Putting it more strictly, say we have two consensus systems, A and B.
+If any change in A implies a change in B, then we say A is interior to B.</p>
+<h3 id="so-what-is-a-multilocation-simple-example"><a class="header" href="#so-what-is-a-multilocation-simple-example">So what is a MultiLocation: Simple example</a></h3>
+<p>A quick summary of the previous points:</p>
+<ul>
+<li>A MultiLocation identifies any single location that exists within the world of consensus.</li>
+<li>A MultiLocation is always relative to the current location.</li>
+<li>MultiLocations in XCM are hierarchical.</li>
+</ul>
+<p>Now take a look at the MultiLocation struct: </p>
+<pre><code class="language-rust noplayground">pub struct MultiLocation {
+    pub parents: u8,
+    pub interior: Junctions,
+}</code></pre>
+<p>As we have already discussed, locations in XCM are hierarchical.
+The following image shows an example of such a Hierarchy.</p>
+<p><img src="fundamentals/multilocation/./../images/MultiLocation_simple_example.png" alt="Simple Example" /></p>
+<p>Relay chain A completely encapsulates Parachain A and B (indicated by the arrows) and parachain A encapsulates an account <code>0x00...</code>.
+So RelayA is higher in the hierarchy than ParaA and ParaB and can be described as the <code>parent</code> of these parachains.
+The <code>parents: u8</code> in the MultiLocation struct describes the number of steps in the hierarchy we want to move up.
+The <code>interior: Junctions</code> express the steps in the hierarchy we want to move down.
+The <code>Junctions</code> type will be further discussed in the next chapter about <a href="fundamentals/multilocation/junction.html">Junctions</a>, but for now, it's just a way to express a way down the hierarchy.
+As all MultiLocations are relative to the current location, Parachain B relative to Parachain A is one step up and one step down in the hierarchy.</p>
+<p>To get a better understanding of this concept, we show some simple MultiLocations in the code example below.
+The first two examples are relative to RelayA and the second set of examples is relative to ParaB.
+In the <code>Location</code> comments, we expressed the locations in text.
+The <code>..</code> express a step up in the hierarchical structure (the “parent” or the encapsulating consensus system).
+The <code>..</code> are followed by some number of <a href="fundamentals/multilocation/junction.html">Junctions</a>, all separated by <code>/</code>.
+The <code>X1</code> and <code>X2</code> variants are expressing the number of <code>Junction</code>s that we step down in the hierarchical structure (see <a href="fundamentals/multilocation/junction.html">Junctions</a> for an explanation).</p>
+<pre><code class="language-rust noplayground">// From: RelayA
+// To: ParaB
+// Location: Parachain(2000)
+MultiLocation {parents: 0, interior: X1(Parachain(2000))};
+// To: Account in ParaA
+// Location: Parachain(1000)/AccountId32(0x00..)
+MultiLocation {
+    parents: 0, 
+    interior: X2(
+        Parachain(1000), 
+        AccountId32{network: None, id: [0u8; 32]}
+    )
+};
+
+// From: ParaB
+// To: RelayA
+// Location: ../Here
+MultiLocation {parents: 1, interior: Here};
+// To: Account in ParaA
+// Location: ../Parachain(1000)/AccountId32(0x00..)
+MultiLocation {
+    parents: 1, 
+    interior: X2(
+        Parachain(1000), 
+        AccountId32{network: None, id: [0u8; 32]}
+    )
+};</code></pre>
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next:</a></h2>
+<ul>
+<li>More information about <a href="fundamentals/multilocation/junction.html">junctions</a></li>
+<li>More MultiLocation <a href="fundamentals/multilocation/example.html">examples</a></li>
+<li>Expressing assets using Multilocations: [MultiAsset][../multiasset.md]</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="junctions"><a class="header" href="#junctions">Junction(s)</a></h1>
+<p>In the section on <a href="fundamentals/multilocation/README.html">MultiLocations</a>, we looked at the MultiLocation struct.
+We talked about the Multilocation being a way to describe moving from one place in the system hierarchy to another.
+The <code>parents</code> parameter expresses the number of steps up in the hierarchy.
+In this section, we dive further into the MultiLocation struct and explain how we can use the Junctions type to describe steps in the system hierarchy.
+Take a look at the MultiLocation struct again: </p>
+<pre><code class="language-rust noplayground">pub struct MultiLocation {
+    pub parents: u8,
+    pub interior: Junctions,
+}</code></pre>
+<p>The system hierarchy consists of 1-to-n relations.
+Each place in the system hierarchy can only ever have one parent, so there is only one way up the hierarchy.
+That is why we can use a <code>u8</code> to describe the number of <code>parents</code> we want to move up.
+But moving down is a bit more difficult, as one consensus system can encapsulate multiple other consensus systems(e.g. a relay chain can have multiple parachains).
+So to describe the correct steps down the hierarchy, we use the <code>Junctions</code> <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/enum.Junctions.html">type</a>.</p>
+<h2 id="junctions-type"><a class="header" href="#junctions-type">Junctions Type</a></h2>
+<pre><code class="language-rust noplayground">pub enum Junctions {
+    /// The interpreting consensus system.
+    Here,
+    /// A relative path comprising 1 junction.
+    X1(Junction),
+    ...
+    /// A relative path comprising 8 junctions.
+    X8(Junction, Junction, Junction, Junction, Junction, Junction, Junction, Junction),
+}</code></pre>
+<p>The <code>Junctions</code> enum can represent zero to eight steps down the hierarchy.
+When the <code>Here</code> variant is used, it means that we do not have to take steps down the hierarchy.
+We can for example describe the current location with <code>{parents: 0, interior: Here}</code> or the Parent location with <code>{parents: 1, interior: Here}</code>.
+If we want to take steps down the hierarchy, we express each step as a Junction.</p>
+<h2 id="junction-type"><a class="header" href="#junction-type">Junction Type</a></h2>
+<p>A <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/enum.Junction.html">Junction</a> describes a step down in the Hierarchy.
+The <code>Junction</code>s are defined as follows: </p>
+<pre><code class="language-rust noplayground">pub enum Junction {
+    Parachain(u32),
+    AccountId32 {
+        network: Option&lt;NetworkId&gt;,
+        id: [u8; 32],
+    },
+    AccountIndex64 {
+        network: Option&lt;NetworkId&gt;,
+        index: u64,
+    },
+    AccountKey20 {
+        network: Option&lt;NetworkId&gt;,
+        key: [u8; 20],
+    },
+    PalletInstance(u8),
+    GeneralIndex(u128),
+    GeneralKey {
+        length: u8,
+        data: [u8; 32],
+    },
+    OnlyChild,
+    Plurality {
+        id: BodyId,
+        part: BodyPart,
+    },
+    GlobalConsensus(NetworkId),
+}</code></pre>
+<h4 id="parachain"><a class="header" href="#parachain">Parachain</a></h4>
+<p>The <code>Parachain</code> junction is used to describe a parachain from the point of a relay chain.
+Each parachain has an Id, e.g. Statemine in the Kusama network has Id 1000.</p>
+<h4 id="palletinstance"><a class="header" href="#palletinstance">PalletInstance</a></h4>
+<p>The <code>PalletInstance</code> junction is used to describe a pallet in one of the parachains or relay chain.
+Each pallet has an Id that can be used for the <code>PalletInstance</code>. 
+This junction is mainly used for FRAME based systems.</p>
+<h4 id="accountid32-and-accountkey20"><a class="header" href="#accountid32-and-accountkey20">AccountId32 and AccountKey20</a></h4>
+<p>Each of these junctions can be used to describe an account located in the current consensus system.
+The <code>AccountId32</code> is used to describe substrate-based accounts, while the <code>AccountKey20</code> is mainly used to describe Ethereum or Bitcoin-based accounts or smart contracts.
+Both junctions express an account based on the context they are used in.
+If the current location is the relay chain, then the junctions describe an account in the relay chain.
+The same is true for each parachain location.</p>
+<h4 id="generalindex-and-generalkey"><a class="header" href="#generalindex-and-generalkey">GeneralIndex and GeneralKey</a></h4>
+<p>Non-descript indices and keys within the current context location.
+The usage will vary widely owing to its generality.
+An example use case for the <code>GeneralIndex</code> is to describe an Asset within an Assets Parachain.</p>
+<p>NOTE: If possible, try to avoid using this and instead use a more specific junction.</p>
+<h4 id="accountindex64"><a class="header" href="#accountindex64">AccountIndex64</a></h4>
+<p>The <code>AccountIndex64</code> can be used to describe an account index. 
+This may be used when the context is a Frame-based chain and includes e.g. an indices pallet.</p>
+<h4 id="onlychild"><a class="header" href="#onlychild">OnlyChild</a></h4>
+<p>The <code>OnlyChild</code> junction can be used to describe the child of a location if there exists a 1-to-1 relation between the parent and child in the system hierarchy.
+The <code>OnlyChild</code> junction is currently not used except as a fallback when deriving context.</p>
+<h4 id="plurality"><a class="header" href="#plurality">Plurality</a></h4>
+<p>The <code>Plurality</code> junction is used to describe a pluralistic body existing within the current consensus location.
+Typical to be used to represent a governance origin of a chain, but could in principle be used to represent
+things such as multisigs also.
+See the <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/enum.BodyId.html">BodyId documentation</a> for a better understanding of the bodies that the <code>Plurality</code> junction can represent.</p>
+<h4 id="globalconsensus"><a class="header" href="#globalconsensus">GlobalConsensus</a></h4>
+<p>A global network (e.g. Polkadot or Kusama) is capable of externalizing its own consensus.
+This is not generally meaningful outside of the universal level.
+An example would be describing the Kusama relay chain from the perspective of the Polkadot relay chain as <code>{parents: 1, interior: GlobalConsensus(Kusama)}</code>.
+An example use case could be routing XCMs between global consensus networks using bridges.</p>
+<h2 id="multiple-ways-to-create-a-multilocation"><a class="header" href="#multiple-ways-to-create-a-multilocation">Multiple ways to create a MultiLocation</a></h2>
+<pre><code class="language-rust noplayground">// Current Location
+MultiLocation {parents: 0, interior: Here};
+MultiLocation::new(0, Here);
+MultiLocation::here();
+MultiLocation::default();
+let _: MultiLocation = Here.into();
+
+// Parent Location
+MultiLocation {parents: 1, interior: Here};
+MultiLocation::parent();
+let _: MultiLocation = Parent.into();
+
+// Conversion
+MultiLocation { parents: 2, interior: X2(Parachain(1), GeneralIndex(1))};
+let _: MultiLocation = (Parent, Parent, Parachain(1), GeneralIndex(1)).into();</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="example"><a class="header" href="#example">Example</a></h1>
+<p>In this example we show different <code>MultiLocation</code>s for the system hierarchy in the image below.
+<img src="fundamentals/multilocation/./../images/MultiLocation_Example.png" alt="Example" /></p>
+<p>From the perspective of RelayA</p>
+<pre><code class="language-rust noplayground">// ParaA
+let _: MultiLocation = Parachain(1000).into();
+// AccountId32 in Parachain A
+let _: MultiLocation = (Parachain(1000), AccountId32 { network: RELAY_A_NETWORK, id: [0u8; 32]}).into();
+// Asset in Parachain A
+let _: MultiLocation = (Parachain(1000), PalletInstance(1), GeneralIndex(1)).into();
+// Ethereum based account on Parachain B
+let _: MultiLocation = (Parachain(2000), AccountKey20 { network: RELAY_A_NETWORK, key: [0u8; 20] }).into();
+// Smart Contract
+let _: MultiLocation = (Parachain(2000), PalletInstance(1), AccountKey20 { network: RELAY_A_NETWORK, key: [0u8; 20] }).into();
+// RelayB 
+let _: MultiLocation = (Parent, GlobalConsensus(RELAY_B_NETWORK)).into();
+// NFT on Parachain C
+let _: MultiLocation = (Parent, GlobalConsensus(RELAY_B_NETWORK), Parachain(1000), GeneralIndex(1)).into();</code></pre>
+<p>From the perspective of Parachain C</p>
+<pre><code class="language-rust noplayground">// Relay A
+let _: MultiLocation = Parent.into();
+// Plurality Example. Many more BodyId/BodyPart combos imaginable
+let _: MultiLocation = (Parent, Plurality { id: BodyId::Index(0), part: BodyPart::Members { count: 10 } }).into();
+// Account in Relay
+let _: MultiLocation = (Parent, AccountId32 { network: None, id: [0u8; 32] }).into();</code></pre>
+<p>From the perspective of the Smart Contract</p>
+<pre><code class="language-rust noplayground">// Asset in Parachain A
+let _: MultiLocation = (Parent, Parent, Parachain(1000), PalletInstance(1), GeneralIndex(1)).into();
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="multiasset"><a class="header" href="#multiasset">MultiAsset</a></h1>
+<p>When working with XCM, it is often needed to represent an asset of some sort.
+This is because practically all public blockchains in existence rely on some native digital asset to provide the backbone for its internal economy and security mechanism.
+For example, the native asset for the Polkadot relay chain is DOT.</p>
+<p>Some blockchains manage multiple assets, e.g. Ethereum’s ERC-20 framework allows for many different assets to be managed on-chain.
+Some manage assets that are not fungible, such as Ethereum’s Crypto-kitties — each kitty is a one-of-a-kind instance.
+It was an early example of such non-fungible tokens or NFTs.</p>
+<p>XCM is designed to be able to describe all such assets without breaking a sweat.
+For this purpose, there is the <code>MultiAsset</code> datatype, along with its related types <code>MultiAssets</code>, <code>WildMultiAsset</code>, and <code>MultiAssetFilter</code>.</p>
+<h2 id="multiasset-breakdown"><a class="header" href="#multiasset-breakdown">MultiAsset Breakdown</a></h2>
+<p>Let's take a look at the MultiAsset struct: </p>
+<pre><code class="language-rust noplayground">pub struct MultiAsset {
+    pub id: AssetId,
+    pub fun: Fungibility,
+}</code></pre>
+<p>So two fields define our asset: id and fun.
+These fields are indicative of how XCM approaches assets.
+Firstly, an overall asset identity must be provided.
+For fungible assets, this is simply a symbol that identifies the asset.
+For NFTs this identifies the overall asset “class” — different asset instances may be within this class.</p>
+<pre><code class="language-rust noplayground">enum AssetId {
+   Concrete(MultiLocation),
+   Abstract([u8; 32]),
+}</code></pre>
+<p>The asset identity is expressed in one of two ways; either Concrete or Abstract.
+Abstract identities allow assets to be specified by a 32-byte blob.
+This is convenient, but it relies on the receiver to interpret the blob in the way that the sender expects, which will require a common definition between the sender and the receiver, and may not be simple to achieve.
+Concrete identities use a <code>MultiLocation</code> to identify an asset unambiguously.
+For native assets (such as DOT), the asset is identified as the chain which mints the asset (the Polkadot Relay Chain in this case, which would be the location <code>..</code> from one of its parachains).
+Other assets (e.g. non-native assets or NFTs) can be identified by a <code>GeneralIndex</code> junction. Depending on the implementation of the encapsulating consensus system, the exact location may differ (e.g. <code>GeneralIndex(AssetID)</code> or <code>PalletInstance(PalletID)/GeneralIndex(AssetID)</code> can both be valid asset identities).</p>
+<pre><code class="language-rust noplayground">enum Fungibility {
+   // Fungible cannot be 0 
+   Fungible(u128),
+   NonFungible(AssetInstance),
+}</code></pre>
+<p>Secondly, they must be either fungible or non-fungible.
+If they’re fungible, then there should be some associated non-zero amount of assets specified.
+If they’re not fungible, then instead of an amount, there should be some indication of which <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/enum.AssetInstance.html">AssetInstance</a> they are.
+(This is commonly expressed with an index, but XCM also allows arrays.)</p>
+<h2 id="how-to-use-multiple-assets-together"><a class="header" href="#how-to-use-multiple-assets-together">How to use Multiple Assets Together?</a></h2>
+<p>There are multiple ways to group Assets.
+In this section, we go over these methods.</p>
+<h3 id="multiassets"><a class="header" href="#multiassets">MultiAssets</a></h3>
+<p>One way to group a set of <code>MultiAsset</code> items is the <a href="https://paritytech.github.io/polkadot/doc/xcm/v3/struct.MultiAssets.html">MultiAssets</a> type.</p>
+<pre><code class="language-rust noplayground">struct MultiAssets(Vec&lt;MultiAsset&gt;);</code></pre>
+<p>This structure must uphold some rules:</p>
+<ul>
+<li>It may not contain duplicate <code>MultiAsset</code>s (<code>Fungible</code> assets are considered the same if their IDs match. However, <code>NonFungible</code> assets are different if the <code>AssetInstance</code> is different);</li>
+<li>All items must be ordered;</li>
+<li>The number of items should grow no larger than MAX_ITEMS_IN_MULTIASSETS (currently set to 20).</li>
+</ul>
+<h3 id="wildmultiasset"><a class="header" href="#wildmultiasset">WildMultiAsset</a></h3>
+<p>Then we have WildMultiAsset; this is a wildcard that can be used to match against one or more MultiAsset items.
+All the WildMultiAsset wildcards can be used to select/filter assets in the <a href="fundamentals/../overview/xcvm.html">Holding register</a>.</p>
+<pre><code class="language-rust noplayground">pub enum WildMultiAsset {
+    /// All assets in Holding.
+    All,
+    /// All assets in Holding of a given fungibility and ID.
+    AllOf { id: AssetId, fun: WildFungibility },
+    /// All assets in Holding, up to `u32` individual assets (different instances of non-fungibles
+    /// are separate assets).
+    AllCounted(#[codec(compact)] u32),
+    /// All assets in Holding of a given fungibility and ID up to `count` individual assets
+    /// (different instances of non-fungibles are separate assets).
+    AllOfCounted {
+        id: AssetId,
+        fun: WildFungibility,
+        #[codec(compact)]
+        count: u32,
+    },
+}</code></pre>
+<h3 id="multiassetfilter"><a class="header" href="#multiassetfilter">MultiAssetFilter</a></h3>
+<p>Finally, there is <code>MultiAssetFilter</code>.
+This is used most often and is just a combination of MultiAssets and WildMultiAsset allowing either a wildcard or a list of definite (i.e. not wildcard) assets to be specified.</p>
+<pre><code class="language-rust noplayground">pub enum MultiAssetFilter {
+    /// Specify the filter as being everything contained by the given `MultiAssets` inner.
+    Definite(MultiAssets),
+    /// Specify the filter as the given `WildMultiAsset` wildcard.
+    Wild(WildMultiAsset),
+}</code></pre>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h3 id="multiasset-1"><a class="header" href="#multiasset-1">MultiAsset</a></h3>
+<p>For more information about the MultiLocations used to define concrete assets, see <a href="fundamentals/multilocation/README.html">MultiLocation</a> and <a href="fundamentals/multilocation/junction.html">Junction</a>.</p>
+<pre><code class="language-rust noplayground">// Location Relay Chain
+// 100 Native Asset (three ways)
+MultiAsset {id: Concrete(MultiLocation {parents: 0, interior: Here}), fun: Fungible(100u128)};
+MultiAsset {id: Here.into(), fun: 100.into()};
+let _: MultiAsset = (Here, 100u128).into();
+
+// 100 Parachain's Native Asset 
+let _: MultiAsset = (X1(Parachain(1000)), 100u128).into();
+// 100 Fungible assets in Parachain 1000 with id 1234 
+let _: MultiAsset = (X2(Parachain(1000), GeneralIndex(1234)), 100u128).into();
+// Non Fungible asset with asset class 1234 containing only one nft instance in Parachain 1000
+let _: MultiAsset = (X2(Parachain(1000), GeneralIndex(1234)), Undefined).into();
+// Non Fungible asset with asset class 1234 and AssetInstance 1 in Parachain 1000
+let _: MultiAsset = (X2(Parachain(1000), GeneralIndex(1234)), Index(1)).into();</code></pre>
+<h3 id="multiassetfilter-1"><a class="header" href="#multiassetfilter-1">MultiAssetFilter</a></h3>
+<pre><code class="language-rust noplayground">let a1: MultiAssets = MultiAssets::from(vec![MultiAsset {id: Here.into(), fun: 100u128.into()}]);
+let b1: MultiAssets = (Here, 100u128).into();
+assert_eq!(a1, b1);
+
+let a2: MultiAssetFilter = a1.into();
+let b2 = MultiAssetFilter::Definite((Here, 100u128).into());
+assert_eq!(a2, b2);
+
+let a3 = MultiAssetFilter::Wild(WildMultiAsset::All);
+let b3: MultiAssetFilter = All.into();
+assert_eq!(a3, b3);</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="xcvm"><a class="header" href="#xcvm">XCVM</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="weight-and-fees"><a class="header" href="#weight-and-fees">Weight and fees</a></h1>
+<p>The resources available to a blockchain are limited, so it's important to manage how operations on-chain use them.
+Not managing how resources are used can open an attack vector, known as DoS (Denial of Service), where an attacker floods the chain with operations in order to get it to stop producing blocks.
+In order to manage how resources are used and to protect against DoS attacks, XCM uses a concept of <em>weight</em>.
+This concept, which has the purpose of quantifying usage of blockchain resources, comes from the <a href="https://docs.substrate.io/build/tx-weights-fees/">Substrate</a> world.</p>
+<p>Weight is two-dimensional, it tracks both time (execution time) and space (state accesses).
+Weight determines how much fees need to be paid in order to perform some operation.
+The logic for turning it into fees is configurable.</p>
+<p>Some systems have the concept of <em>gas metering</em>, which is calculated during execution and only measures execution time.
+Weight, however, is static, defined beforehand, which makes XCM execution lighter by not including gas metering.</p>
+<p>The principle behind weight payment is to pay for what you use, so the two stages of XCM where fees are paid are <em>sending</em> the message and actually <em>executing</em> it.
+The fees for sending are paid on the local system, usually by the origin of the message, because we are using the message delivery mechanism maintained by the origin.
+Similarly, the execution fees are paid on the destination system, via the <code>BuyExecution</code> instruction. In other words, XCMs are paid for via their own instructions.
+We'll talk more about <code>BuyExecution</code> in the <a href="fundamentals/TODO:add_link">fee handling chapter</a>.</p>
+<p>XCM is agnostic, which means it doesn't assume fees need to be paid.
+It's entirely possible to not pay for the effects of an XCM on the destination system.
+Even in systems where fees have to be paid, special cases of free execution can be made.
+There are security measures systems can put in place (see <a href="fundamentals/TODO:add_link">barrier</a>) to not execute XCMs that do not pay for their fees.</p>
+<h2 id="executor-config"><a class="header" href="#executor-config">Executor config</a></h2>
+<p>The executor has a <code>Weigher</code> <a href="fundamentals/TODO:add_link">configuration item</a> that specifies the weight of each instruction.
+It weighs the whole message by adding the weight of each instruction.
+A simple way of weighing instructions is to assign them a base weight value to all of them.
+This works, but it is not very accurate, as different instructions use more resources when being executed.
+A better approach is to benchmark each instruction to find out the actual weight used by each.</p>
+<p>Another configuration item, <code>Trader</code>, converts the required weight units into fees, which are represented as <code>MultiAsset</code>s.
+There are two basic approaches: one is to just assign a value (measured in assets) to each unit of weight; the other is to reuse some existing transaction payment method for XCM weight.
+Custom configurations allow for things like NFT coupons that give you a certain amount of weight for executing the XCM.</p>
+<p>Naturally, this configuration items allow for any approach you can think of for weighing messages and charging execution fees.</p>
+<h2 id="xcm-pallet"><a class="header" href="#xcm-pallet">XCM pallet</a></h2>
+<p>FRAME pallets, like the XCM pallet, specify weights for each extrinsic they expose.
+That means that when interacting with pallets that deal with XCM, there will be an additional fee at the beginning for calling the extrinsic locally.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="a-journey-through-xcm"><a class="header" href="#a-journey-through-xcm">A Journey through XCM</a></h1>
+<p>This section will be a step-by-step, practical introduction to all the features XCM has.
+We'll create XCMs for a variety of use cases, learning about all the instructions available to us along the way.
+Let's step right in.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="transfers"><a class="header" href="#transfers">Transfers</a></h1>
+<p>The first feature you'll be interested in when dealing with XCM is being able to transfer assets between consensus systems.
+In the <a href="journey/transfers/../../overview/README.html">Quickstart</a> section, we saw a simple XCM that when executed, would send assets between two accounts on the same consensus system.
+Now that we've learnt the <a href="journey/transfers/../../fundamentals/README.html">fundamentals</a>, let's go over those same instructions.</p>
+<h2 id="withdrawasset-1"><a class="header" href="#withdrawasset-1">WithdrawAsset</a></h2>
+<pre><code class="language-rust noplayground">WithdrawAsset(MultiAssets),</code></pre>
+<p>This instruction is the most common way to get assets to the holding register of the XCVM.
+The <code>MultiAssets</code> in the operand will be stored in the holding register to be later used for other instructions.
+As we've seen, we can use the expression <code>(Here, amount).into()</code> to take a certain <code>amount</code> of the native token.</p>
+<h2 id="buyexecution-1"><a class="header" href="#buyexecution-1">BuyExecution</a></h2>
+<pre><code class="language-rust noplayground">BuyExecution { fees: MultiAssets, weight_limit: WeightLimit },</code></pre>
+<p>Because XCM is designed to be agnostic to the underlying consensus system, it doesn't have fee payment baked in.
+This instruction lets you pay for the execution of the XCM using the assets in the holding register.
+Most XCMs are not allowed to be executed (blocked by the <a href="journey/transfers/TODO:link">barrier</a>) if they don't contain this instruction as one of the first ones to pay for all future ones.</p>
+<h2 id="depositasset-1"><a class="header" href="#depositasset-1">DepositAsset</a></h2>
+<pre><code class="language-rust noplayground">DepositAsset { assets: MultiAssetFilter, beneficiary: MultiLocation },</code></pre>
+<p>This instruction will put assets from the holding register that match the <a href="journey/transfers/../../fundamentals/multiasset.html">MultiAssetFilter</a> into the <code>beneficiary</code>.
+Note that <code>beneficiary</code> must be a location where the local consensus system can actually deposit assets to, e.g. it doesn't make sense to deposit assets to <code>../AccountId32(0x0)</code>.</p>
+<h2 id="example-1"><a class="header" href="#example-1">Example</a></h2>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((Here, amount).into()),
+  BuyExecution { fees: (Here, amount).into(), weight_limit: Unlimited },
+  DepositAsset { 
+    assets: All.into(),
+    beneficiary: AccountId32 { id: ALICE.into(), network: None }.into()
+  },
+]);</code></pre>
+<p>As we've seen, the above message results in withdrawing assets from the origin of the message, paying for execution and depositing the rest to another account on the same system.
+The full example can be seen in <a href="journey/transfers/TODO:add_link">the examples repo</a>.</p>
+<h2 id="transferring-between-systems"><a class="header" href="#transferring-between-systems">Transferring between systems</a></h2>
+<p>But what if you want to make a transfer from one system to another?
+There are two ways of doing this:</p>
+<ul>
+<li>Asset teleportation</li>
+<li>Reserve-backed transfers</li>
+</ul>
+<p>We'll be discussing both in the following chapters.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="asset-teleportation"><a class="header" href="#asset-teleportation">Asset teleportation</a></h1>
+<p>Asset teleportation is the simpler method of the two for sending assets from one chain to another.
+It has only two actors, the source and the destination.</p>
+<h2 id="process"><a class="header" href="#process">Process</a></h2>
+<p><img src="journey/transfers/images/asset_teleportation.png" alt="Asset Teleportation diagram" /></p>
+<p>The way in which we transfer assets between the source and the destination are briefly summarized in the numbered labels on the diagram, and are explained in more detail below:</p>
+<h3 id="1-initiateteleport"><a class="header" href="#1-initiateteleport">1. InitiateTeleport</a></h3>
+<p>The source gathers the assets to be teleported from the sending account and <em>takes them out of the circulating supply</em>, taking note of the total amount of assets that were taken out.</p>
+<h3 id="2-receiveteleportedassets"><a class="header" href="#2-receiveteleportedassets">2. ReceiveTeleportedAssets</a></h3>
+<p>The source then creates an XCM instruction called <code>ReceiveTeleportedAssets</code> and puts the amount of assets taken out of circulation and the receiving account as parameters to this instruction.
+It then sends this instruction over to the destination, where it gets processed and new assets are <em>put back into the circulating supply</em> accordingly.</p>
+<h3 id="3-depositasset"><a class="header" href="#3-depositasset">3. DepositAsset</a></h3>
+<p>The destination then deposits the assets to the receiving account of the asset.</p>
+<h3 id="thoughts"><a class="header" href="#thoughts">Thoughts</a></h3>
+<p>The phrases &quot;taken out of circulating supply&quot; and &quot;put back into circulating supply&quot; are highlighted above to give an indication of how much flexibility an XCM executor has in implementing the semantics of taking an asset out of and putting it back into its circulating supply.
+The straightforward answer is to burn the assets to take them out of circulation, but there are multiple methods of achieving the same goal, such as transferring the assets locally to an inaccessible account.
+Likewise for putting assets back to circulation, the receiving consensus system can freely choose to implement such semantics by releasing assets from a pre-filled and inaccessible treasury of the assets transferred, or perform a mint of the assets.</p>
+<p>The above also gives a hint on the disadvantages of this model, it requires both the source and destination to have a high level of mutual trust.
+The destination must trust that the source has appropriately removed the assets that were sent over from the circulating supply, and the source must also trust the destination to put the assets back into circulation.
+An asset teleportation should result in the same circulating supply of the asset.
+Failing to uphold either of these two conditions will result in a change in the asset's total issuance (in the case of fungible tokens) or a complete loss/duplication of an NFT.</p>
+<h2 id="example-2"><a class="header" href="#example-2">Example</a></h2>
+<p>The following is an example XCM program that achieves the process described above.</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((Here, teleport_amount).into()),
+  InitiateTeleport {
+    assets: All.into(),
+    dest: Parachain(1).into(),
+    xcm: Xcm(vec![DepositAsset {
+      assets: All.into(),
+      beneficiary: Junction::AccountId32 {
+        network: None,
+        id: ALICE.into(),
+      }
+    }]),
+  },
+]);</code></pre>
+<p>Let's discuss how the new instructions work.</p>
+<h3 id="initiateteleport"><a class="header" href="#initiateteleport">InitiateTeleport</a></h3>
+<pre><code class="language-rust noplayground">InitiateTeleport { assets: MultiAssetFilter, dest: MultiLocation, xcm: Xcm&lt;()&gt; }</code></pre>
+<p>This instruction is intended to be executed from the source system.
+It takes the assets to be teleported (that match the <code>MultiAssetFilter</code>) from the holding register, which needs to have been populated, usually with a <code>WithdrawAsset</code> instruction.
+It then sends an XCM to the destination system given by <code>dest</code> with the following instructions:</p>
+<ol>
+<li>ReceiveTeleportedAsset</li>
+<li>ClearOrigin</li>
+<li>All the instructions from the <code>xcm</code> operand, in this case <code>DepositAsset</code></li>
+</ol>
+<p>As we see in the example, instructions 1. and 2. are always added by the executor, no need to specify them.</p>
+<h3 id="receiveteleportedasset"><a class="header" href="#receiveteleportedasset">ReceiveTeleportedAsset</a></h3>
+<pre><code class="language-rust noplayground">ReceiveTeleportedAssets(MultiAssets)</code></pre>
+<p>This instruction is a <em>trusted indication</em>. It should only be executed if the origin of the XCM is trusted for this purpose.
+This level of care must be taken because this instruction will <em>put assets into the circulating supply</em>, usually minting them.
+As specified earlier, this can result in an increase/decrease in circulating supply of an asset, or a duplication/loss of an NFT, if the source is not trusted for this purpose.</p>
+<p>You can set which origins are allowed (act as teleporters) by configuring the <a href="journey/transfers/TODO:add_link">IsTeleporter</a> type in the XCM executor.
+If the origin is not allowed to teleport assets to this system, an <code>UntrustedTeleportLocation</code> error is returned.</p>
+<p>This instruction will populate the holding register with the teleported assets, which can be used by further instructions.
+In our example, the <code>DepositAsset</code> instruction will deposit these assets to the receiving account.</p>
+<h3 id="clearorigin"><a class="header" href="#clearorigin">ClearOrigin</a></h3>
+<pre><code class="language-rust noplayground">ClearOrigin</code></pre>
+<p>This instruction clears the origin register of the XCVM.
+It's mainly used to not allow further instructions to act on behalf of the previous origin.
+The <code>InitiateTeleport</code> instruction sends a XCM to the destination system with freshly minted assets and immediately clears the origin.</p>
+<h2 id="another-example"><a class="header" href="#another-example">Another example</a></h2>
+<p>Let's say we want to teleport an NFT (Non-Fungible Token) this time, instead of a fungible token, to another system.
+We could do so with the following program:</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((GeneralIndex(1), 42u32).into()),
+  InitiateTeleport {
+    assets: All.into(),
+    dest: Parachain(1).into(),
+    xcm: Xcm(vec![DepositAsset {
+      assets: All.into(),
+      beneficiary: Junction::AccountId32 {
+        id: ALICE.into(),
+        network: None,
+      }.into()
+    }]),
+  },
+]);</code></pre>
+<p>Very little changes, in fact, only the <code>MultiAsset</code> we're referencing changes, like we would expect.
+All the teleportation logic stays the same.
+The example assumes an NFT with index 42 inside a collection with index 1.</p>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next steps</a></h2>
+<p>We'll look at reserve-backed transfers next.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="reserve-backed-transfers"><a class="header" href="#reserve-backed-transfers">Reserve-backed transfers</a></h1>
+<p>For consensus systems that don't have the level of trust required for asset teleportation, they can instead opt for trusting a third party called a reserve to store the real assets (think Statemine on Kusama, or Statemint on Polkadot).
+The source and the destination need a way to keep track of the real assets they own on the reserve, this is usually done by minting a new derivative token.
+Both source and destination now need accounts on the reserve to hold their assets, we call these their sovereign accounts on that system.</p>
+<h2 id="process-1"><a class="header" href="#process-1">Process</a></h2>
+<p><img src="journey/transfers/images/reserve_asset_transfer.png" alt="Reserve Backed Transfer diagram" /></p>
+<p>The flow in this diagram is further explained below:</p>
+<h3 id="1-initiatereservewithdraw"><a class="header" href="#1-initiatereservewithdraw">1. InitiateReserveWithdraw</a></h3>
+<p>The source gathers the derivative assets to be transferred from the sending account and burns them, taking note of the amount of derivatives that were burned.</p>
+<h3 id="2-withdrawasset"><a class="header" href="#2-withdrawasset">2. WithdrawAsset</a></h3>
+<p>The source sends a <code>WithdrawAsset</code> instruction to the reserve, instructing it to withdraw real assets equivalent to the amount of derivatives burned from the source chain.</p>
+<h3 id="3-depositreserveasset"><a class="header" href="#3-depositreserveasset">3. DepositReserveAsset</a></h3>
+<p>The reserve deposits the assets withdrawn from the previous step to the destination's sovereign account, taking note of the amount of assets deposited.</p>
+<h3 id="4-reserveassetdeposited"><a class="header" href="#4-reserveassetdeposited">4. ReserveAssetDeposited</a></h3>
+<p>The reserve creates a <code>ReserveAssetDeposited</code> instruction with the amount of assets deposited to the destination's sovereign account, and sends this instruction onwards to the destination.
+The destination receives the instruction and processes it, minting the correct amount of derivative assets.</p>
+<h3 id="5-depositasset"><a class="header" href="#5-depositasset">5. DepositAsset</a></h3>
+<p>The destination deposits the derivative assets minted to the receiving account.</p>
+<h3 id="thoughts-1"><a class="header" href="#thoughts-1">Thoughts</a></h3>
+<p>The addition of a third consensus system is already a hint of the disadvantages of a reserve asset transfer model.
+Firstly, the reserve could easily become a point of centralization when too many consensus systems rely on it to be the reserve of choice for their assets.
+Secondly, the sheer amount of steps required necessarily makes it more prone to errors, and as such, implementors will have to consider more possible pitfalls and provide technical support accordingly when an end user encounters issues arising from these steps.
+Last, but not least, either the source or destination can opt to designate multiple consensus systems to be their reserves.
+In such a situation, care must be taken in order to ensure that the sovereign accounts on the reserves are balanced, so that one doesn't get drained while the others still contain a healthy balance.</p>
+<h3 id="a-note-on-trust"><a class="header" href="#a-note-on-trust">A note on trust</a></h3>
+<p>We mentioned that reserve-backed transfers require the sender and the destination to trust a third party, the reserve, and not each other.
+This is true, but it doesn't mean the sender and destination have to trust ONLY the reserve, they also have to trust the issuer of the token.
+Whenever you are dealing with a particular asset, you are always trusting the issuer of said asset, because at any point they could mint a huge amount of that asset, wreaking havoc.
+You have to make sure you trust the asset, based on the security mechanisms used to protect its issuance.
+For this reason, reserves work best when they are the issuers of the asset being transacted.
+In that scenario, you only have to trust the reserve, period.</p>
+<h2 id="example-3"><a class="header" href="#example-3">Example</a></h2>
+<p>We'll create a program for the scenario in the diagram.
+Let's assume that the reserve is a relay chain and both source and destination are parachains 1 and 2 respectively.
+Let's also say that an account ALICE in parachain 1 wants to transfer the relay chain's native token to their other account (also ALICE) on parachain 2.
+The program might look like this:</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((Parent, amount).into()),
+  InitiateReserveWithdraw {
+    assets: All.into(),
+    reserve: Parent.into(),
+    xcm: Xcm(vec![DepositReserveAsset {
+      assets: All.into(),
+      dest: Parachain(2).into(),
+      xcm: Xcm(vec![DepositAsset {
+        assets: All.into(),
+        beneficiary: AccountId32 { id: ALICE.into(), network: None }.into(),
+      }]),
+    }]),
+  },
+]);</code></pre>
+<p>This program should be executed on the source, so on parachain 1.
+We start, as usual, with a <code>WithdrawAsset</code> instruction.
+The <code>MultiAsset</code> here references the relay chain's native token, which means we'll be gathering the derivative on this chain.</p>
+<h3 id="initiatereservewithdraw"><a class="header" href="#initiatereservewithdraw">InitiateReserveWithdraw</a></h3>
+<pre><code class="language-rust noplayground">InitiateReserveWithdraw { assets: MultiAssetFilter, reserve: MultiLocation, xcm: Xcm&lt;()&gt; }</code></pre>
+<p>The <code>InitiateReserveWithdraw</code> instruction takes the derivative token from the holding register and burns it.
+Then it sends a new XCM to the specified <code>reserve</code>, in this example, the relay chain.
+This new XCM contains the following instructions, in order:</p>
+<ol>
+<li>WithdrawAsset</li>
+<li>ClearOrigin</li>
+<li>All instructions specified in the <code>xcm</code> operand, in this case <code>DepositReserveAsset</code></li>
+</ol>
+<p>As was the case with <a href="journey/transfers/../teleports.html">teleports</a>, instructions 1. and 2. are added automatically by the executor when using <code>InitiateReserveWithdraw</code>.</p>
+<p>Upon receiving this XCM, the reserve will withdraw the asset from parachain 1's sovereign account (where the real asset is stored), and deposit it on parachain 2's sovereign account.</p>
+<h3 id="depositreserveasset"><a class="header" href="#depositreserveasset">DepositReserveAsset</a></h3>
+<pre><code class="language-rust noplayground">DepositReserveAsset { assets: MultiAssetFilter, dest: MultiLocation, xcm: Xcm&lt;()&gt; }</code></pre>
+<p>This instruction is used in this example instead of <code>DepositAsset</code>, because as well as depositing the assets to parachain 2's sovereign account, this instruction will send another XCM to parachain 2.
+This new XCM has the following instructions:</p>
+<ol>
+<li>ReserveAssetDeposited</li>
+<li>ClearOrigin</li>
+<li>All instructions specified in the <code>xcm</code> operand, in this case, only <code>DepositAsset</code></li>
+</ol>
+<h3 id="reserveassetdeposited"><a class="header" href="#reserveassetdeposited">ReserveAssetDeposited</a></h3>
+<pre><code class="language-rust noplayground">ReserveAssetDeposited(MultiAssets)</code></pre>
+<p>Parachain 2 receives the XCM, mints new derivative tokens and deposit them locally to the beneficiary account.
+<code>ReserveAssetDeposited</code> is a <em>trusted indication</em>.
+As is the case with teleporting, you need to trust the reserve to have actually put the specified amount of assets in the sovereign account of this system.
+You can specify which systems you trust as reserves for which assets by configuring the <a href="journey/transfers/TODO:add_link">IsReserve</a> type in the executor.
+In our example, both parachains trust the relay chain as a reserve for its own native token.</p>
+<h2 id="another-example-1"><a class="header" href="#another-example-1">Another example</a></h2>
+<p>We now know this type of transfers requires 3 actors: the source, the reserve, and the destination.
+However, the source and reserve don't have to be different systems, they could be one and the same, as in the following diagram.</p>
+<p><img src="journey/transfers/images/source_is_reserve.png" alt="Source is reserve" /></p>
+<p>In this case the message is the following:</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((Parent, amount).into()),
+  DepositReserveAsset {
+    assets: All.into(),
+    dest: Parachain(2).into(),
+    xcm: Xcm(vec![DepositAsset {
+      assets: All.into(),
+      beneficiary: AccountId32 { id: ALICE.into(), network: None }.into(),
+    }]),
+  },
+]);</code></pre>
+<p>This simplifies the reserve-backed transfer.
+However, the destination still needs to:</p>
+<ul>
+<li>Recognize the source as the proper reserve for the tokens that are being sent over and</li>
+<li>Support minting derivatives of the tokens being sent over</li>
+</ul>
+<p>It's also possible to skip the <code>WithdrawAsset</code> instruction.
+The <code>TransferReserveAsset</code> instruction handles the withdrawal already.
+It can be called like so:</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  TransferReserveAsset {
+    assets: (Parent, amount).into(),
+    dest: Parachain(2).into(),
+    xcm: Xcm(vec![DepositAsset {
+      assets: All.into(),
+      beneficiary: AccountId32 { id: ALICE.into(), network: None }.into(),
+    }]),
+  },
+]);</code></pre>
+<h3 id="another-note-on-trust"><a class="header" href="#another-note-on-trust">Another note on trust</a></h3>
+<p>In this model, where the sender is the reserve, the destination is trusting the sender entirely.
+It's the sender the one who doesn't need to trust the destination, since it'll ever only be minting derivatives anyway, the sender/reserve controls the real assets and issuance.</p>
+<h2 id="next-steps-1"><a class="header" href="#next-steps-1">Next steps</a></h2>
+<p>Next, we'll talk about a very important topic we mentioned before but skipped in this chapter, paying fees for the effects our XCMs have.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="transact"><a class="header" href="#transact">Transact</a></h1>
+<p>XCM contains an instruction that allows for the execution of calls (from a <code>RuntimeCall</code> in a FRAME-based system, to a smart contract function call in an EVM-based system) in a consensus system.
+It is the <code>Transact</code> instruction and it looks like this:</p>
+<pre><code class="language-rust noplayground">Transact { 
+    origin_kind: OriginKind, 
+    require_weight_at_most: Weight, 
+    call: DoubleEncoded&lt;Call&gt; 
+}</code></pre>
+<p>The Transact instruction has three fields. 
+The <code>origin_kind</code> is of type <a href="https://paritytech.github.io/polkadot/doc/xcm/v2/enum.OriginKind.html">OriginKind</a> and specifies how the origin of the call should be interpreted. 
+In the xcm-executor, the <code>origin_kind</code> is used to determine how to convert a <code>MultiLocation</code> origin into a <code>RuntimeOrigin</code>. 
+For more information, check out the <a href="journey/../executor_config/index.html">xcm-executor config docs</a>. </p>
+<p>The <code>require_weight_at_most</code> field tells the XCVM executing the call how much <a href="journey/../fundamentals/fees.html">weight</a> it can use. 
+If the call uses more weight than the specified <code>require_weight_at_most</code>, the execution of the call fails. </p>
+<p>The <code>call</code> field is of type <code>DoubleEncoded&lt;Call&gt;</code>. </p>
+<pre><code class="language-rust noplayground">pub struct DoubleEncoded&lt;T&gt; {
+    encoded: Vec&lt;u8&gt;,
+    #[codec(skip)]
+    decoded: Option&lt;T&gt;,
+}</code></pre>
+<p>XCM is consensus system agnostic; it does not know what is being encoded in the call field. 
+Hence, the field is a byte vector that can be freely interpreted in whatever form possible.
+However, the XCVM does not inherently know how to interpret this call field nor how to decode it; it is reliant on the <code>T</code> type parameter to specify the proper codec for the byte vector.
+Instead of just using a <code>Vec&lt;u8&gt;</code> we use <code>DoubleEncoded</code> as a wrapper around a pre-encoded call (<code>Vec&lt;u8&gt;</code>) with extra functionalities such as caching of the decoded value. 
+We like to emphasize that the call in the <code>Transact</code> instruction can be anything from a <code>RuntimeCall</code> in a FRAME-based system, to a smart contract function call in an EVM-based system.</p>
+<p>Each XCVM has a Transact Status Register, to record the execution result of the call that is dispatched by the <code>Transact</code> instruction. 
+<em>Important note:</em> The execution of the XCM instruction does <em>not</em> error when the dispatched call errors.</p>
+<h2 id="xcm-executor"><a class="header" href="#xcm-executor">XCM Executor</a></h2>
+<p>In this section, we quickly look at how the XCM executor executes the <code>Transact</code> instruction.</p>
+<p>It executes, among other things, the following steps:</p>
+<ol>
+<li>Decode the call field into the actual call that we want to dispatch.</li>
+<li>Check with the <a href="journey/../executor_config/index.html#safecallfilter">SafeCallFilter</a> on whether the execution of this call is allowed.</li>
+<li>Use the <a href="journey/../executor_config/index.html#originconverter">OriginConverter</a> to convert the <code>MultiLocation</code> origin into a <code>RuntimeOrigin</code>.</li>
+<li>Check whether the call weight does not exceed <code>require_weight_at_most</code>.</li>
+<li>Dispatch the call with the converted origin and set the <code>transact_status</code> register to be the result of the dispatch.</li>
+<li>Calculate the weight that was actually used during the dispatch.</li>
+</ol>
+<h2 id="example-1"><a class="header" href="#example-1">Example 1</a></h2>
+<p>For the full example, check <a href="journey/TODO">here</a>.</p>
+<p>In this example, the relay chain executes the <code>set_balance</code> function of <code>pallet_balances</code> on <code>Parachain(1)</code>.
+This function requires the origin to be root. We enable the root origin for the relay chain by setting <code>ParentAsSuperuser</code> for the <code>OriginConverter</code> config type. </p>
+<pre><code class="language-rust noplayground">let call = parachain::RuntimeCall::Balances(
+    pallet_balances::Call::&lt;parachain::Runtime&gt;::set_balance {
+        who: ALICE,
+        new_free: 5 * AMOUNT,
+        new_reserved: 0,
+    },
+);
+
+let message = Xcm(vec![
+    WithdrawAsset((Here, AMOUNT).into()),
+    BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+    Transact {
+        origin_kind: OriginKind::Superuser,
+        require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+        call: call.encode().into(),
+    },
+]);</code></pre>
+<h2 id="example-2"><a class="header" href="#example-2">Example 2</a></h2>
+<p>For the full example, check <a href="journey/TODO">here</a>.</p>
+<p>In this example, as Parachain(1), we create an NFT collection on the relay chain and we then mint an NFT with ID 1. 
+The admin for the nft collection is parachain(1). The call looks as follows:</p>
+<pre><code class="language-rust noplayground">let create_collection = relay_chain::RuntimeCall::Uniques(
+    pallet_uniques::Call::&lt;relay_chain::Runtime&gt;::create {
+        collection: 1u32,
+        admin: parachain_sovereign_account_id(1),
+    }
+);</code></pre>
+<p>The owner of the NFT is Alice. The nft mint call looks as follows:</p>
+<pre><code class="language-rust noplayground">let mint = relay_chain::RuntimeCall::Uniques(
+    pallet_uniques::Call::&lt;relay_chain::Runtime&gt;::mint {
+        collection: 1u32,
+        item: 1u32,
+        owner: ALICE,
+    }
+);</code></pre>
+<p>The xcm message contains the following instructions:</p>
+<ol>
+<li>Withdraw native assets from the <code>Parachain(1)</code>'s sovereign account.</li>
+<li>Buy weight with these assets.</li>
+<li>Create a collection with as admin and owner the sovereign account of <code>Parachain(1)</code>.</li>
+<li>Mints an NFT in the collection with item ID 1 and as owner Alice.</li>
+</ol>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+    WithdrawAsset((Here, AMOUNT).into()),
+    BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+    Transact {
+        origin_kind: OriginKind::SovereignAccount,
+        require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+        call: create_collection.encode().into(),
+    },
+    Transact {
+        origin_kind: OriginKind::SovereignAccount,
+        require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+        call: mint.encode().into(),
+    },
+]);</code></pre>
+<h2 id="next"><a class="header" href="#next">Next:</a></h2>
+<p>Check out the following instructions that interact with the Transact Status Register:</p>
+<ul>
+<li><a href="journey/TODO">ClearTransactStatus</a></li>
+<li><a href="journey/TODO">ReportTransactStatus</a></li>
+<li><a href="journey/TODO">ExpectTransactStatus</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="fee-handling"><a class="header" href="#fee-handling">Fee handling</a></h1>
+<p>Like we learnt in the <a href="journey/fees/../../fundamentals/weight_and_fees.html">weight and fees</a> chapter, the XCM operations our messages perform need to be paid for.
+To accomplish this, we'll make use of different instructions in this chapter.</p>
+<h2 id="buyexecution-2"><a class="header" href="#buyexecution-2">BuyExecution</a></h2>
+<pre><code class="language-rust noplayground">BuyExecution { fees: MultiAsset, weight_limit: WeightLimit }</code></pre>
+<p>This instruction is used to buy weight using fees.
+While in some cases there's no need to pay for execution (if you control both systems for example), in most cases you'll need to add this instruction.
+There's a predefined <a href="journey/fees/../../config/barrier.html">barrier</a>, <code>AllowTopLevelPaidExecutionFrom&lt;T&gt;</code>, that explicitly drops messages that do not include this instruction.</p>
+<p>Let's grab the teleport message from the <a href="journey/fees/../transfers/teleports.html">transfers chapter</a> and add fee payment.</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((Here, withdraw_amount + fee_estimation).into()),
+  BuyExecution { // &lt;-- Added here
+    fees: (Here, fee_estimation).into(),
+    weight_limit: WeightLimit::Limited(weight_estimation),
+  },
+  InitiateTeleport {
+    assets: All.into(),
+    dest: Parachain(1).into(),
+    xcm: Xcm(vec![DepositAsset {
+      assets: All.into(),
+      beneficiary: Junction::AccountId32 {
+        network: None,
+        id: ALICE.into(),
+      },
+    }]),
+  },
+]);</code></pre>
+<p><code>fee_estimation</code> and <code>weight_estimation</code> are values that can be calculated from the configuration of the receiving chain.
+As mentioned in the <a href="journey/fees/../../fundamentals/weight_and_fees.html">weight and fees</a> chapter of the fundamentals, XCMs instructions are usually assigned weights separately, so, in order to estimate the weight, you need to estimate the weight of every instruction and add them together.
+By using <code>WeightLimit::Limited()</code>, you guarantee the message will error if it tries to use more weight than you expect, if you don't mind this, you can use <code>WeightLimit::Unlimited</code>.
+The <code>fee_estimation</code> value is the maximum assets you want to use, if it doesn't cover all fees, message execution will fail.
+You can add a higher value (all of <code>withdraw_amount</code> for example) to make sure you have enough assets for fee payment.
+If you plan to use the entirety of <code>withdraw_amount</code>, however, it's recommended to add a little extra for fee payment.</p>
+<p>In our examples, we use a very simple method, where all instructions weigh a constant value.
+This is very useful for testing purposes, but it's recommended to actually benchmark every instruction as they differ in resource usage.
+Given our setup, we estimate the weight and fee using only the number of instructions in each message.</p>
+<h2 id="setfeesmode"><a class="header" href="#setfeesmode">SetFeesMode</a></h2>
+<pre><code class="language-rust noplayground">SetFeesMode { jit_withdraw: bool }</code></pre>
+<p>This instruction changes the fee mode of the XCVM.
+If <code>jit_withdraw</code> is set to true, then fee assets are taken directly from the origin's on-chain account, instead of the holding register.
+This means the fees are taken directly from the account, no need for a <code>BuyExecution</code> instruction.
+That means you make sure the message will get executed, as long as there are enough assets in the account.
+It's useful when paying sending fees, which are difficult to estimate, as they usually depend on network congestion.</p>
+<h2 id="unpaidexecution"><a class="header" href="#unpaidexecution">UnpaidExecution</a></h2>
+<pre><code class="language-rust noplayground">UnpaidExecution { weight_limit: WeightLimit, check_origin: Option&lt;MultiLocation&gt; }</code></pre>
+<p>This instruction is used for explicitly stating this message shouldn't be paid for.
+It can be used as a way of identifying certain priviledged messages that don't pay fees, coming from a particular system.
+This instruction can be searched for in <a href="journey/fees/TODO:add_link">barriers</a> to allow this.
+Make sure you trust the origin system because it won't be paying fees.
+There's already a predefined barrier in xcm-builder, <code>AllowExplicitUnpaidExecutionFrom&lt;T&gt;</code>, that makes sure this is the first instruction in the message.
+As always, you can build your own for your own use-cases.</p>
+<p>This is safer than allowing all messages from a particular system to not pay fees, as it's an exception to the rule and not the default.
+Extra measures can be taken to limit who can use this instruction.</p>
+<h2 id="refundsurplus"><a class="header" href="#refundsurplus">RefundSurplus</a></h2>
+<pre><code class="language-rust noplayground">RefundSurplus</code></pre>
+<p>Refunds any surplus weight previously bought with <code>BuyExecution</code>.
+This is useful in many cases:</p>
+<ul>
+<li>When you pay for execution of your whole message, but there's an error and not all instructions get executed</li>
+<li>When you set an error handler, buy weight for it, but in the end there's no error so it doesn't get called</li>
+<li>When you use the <a href="journey/fees/"><code>Transact</code> instruction</a> and the call takes less weight than expected</li>
+</ul>
+<h3 id="example-4"><a class="header" href="#example-4">Example</a></h3>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+  WithdrawAsset((Here, amount + fee_estimation).into()),
+  BuyExecution {
+    fees: (Here, fee_estimation).into(),
+    weight_limit: WeightLimit::Limited(weight_estimation),
+  },
+  SetErrorHandler(Xcm(vec![
+    RefundSurplus
+  ])),
+  DepositAsset { ... },
+  DepositAsset { ... },
+  DepositAsset { ... },
+  DepositAsset { ... },
+  DepositAsset { ... },
+]);</code></pre>
+<p>In this example, we pay upfront for all the transactions we do later with the <code>DepositAsset</code> instructions.
+If any transaction throws an error (for example, due to lack of funds), the error handler will be called and the weight for all the instructions that weren't executed is refunded.
+For the full example, check our <a href="journey/fees/TODO:add_link">examples repo</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="origins"><a class="header" href="#origins">Origins</a></h1>
+<p>An XCVM contains contextual information while executing XCM instructions. 
+It uses the <code>XcmContext</code> struct to provide them.
+<code>XcmContext</code> contains information such as the origin of the corresponding XCM, the hash of the message, and the topic of the XCM.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct XcmContext {
+	/// The `MultiLocation` origin of the corresponding XCM.
+	pub origin: Option&lt;MultiLocation&gt;,
+	/// The hash of the XCM.
+	pub message_hash: XcmHash,
+	/// The topic of the XCM.
+	pub topic: Option&lt;[u8; 32]&gt;,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>In the XCVM, the origin field of the XcmContext indicates which <code>MultiLocation</code>'s privilege level that the current programme is using to execute.
+The origin is important for enforcing restrictions and ensuring appropriate execution of the instructions. </p>
+<p>There are multiple instructions in XCM that can alter the XcmContext origin field:</p>
+<ul>
+<li><code>ClearOrigin</code></li>
+<li><code>DescendOrigin</code></li>
+<li><code>UniversalOrigin</code></li>
+<li><code>AliasOrigin</code></li>
+</ul>
+<h2 id="clearorigin-1"><a class="header" href="#clearorigin-1">ClearOrigin</a></h2>
+<pre><code class="language-rust noplayground">ClearOrigin</code></pre>
+<p>The <code>ClearOrigin</code> instruction clears the origin register in the XCVM. 
+Specifically, it sets the origin field of the XCM context to None. 
+This ensures that subsequent instructions in the XCM cannot use the privilege level of the cleared origin to execute operations.</p>
+<h2 id="descendorigin"><a class="header" href="#descendorigin">DescendOrigin</a></h2>
+<pre><code class="language-rust noplayground">DescendOrigin(InteriorMultiLocation),</code></pre>
+<p>The <code>DescendOrigin</code> instruction is used to change the XcmContext origin to an interior location of the current origin. </p>
+<p>This can be useful when executing instructions that require a specific location within the current origin.</p>
+<p>Note that the XcmContext origin is a <code>MultiLocation</code> containing an <code>InteriorMultiLocation</code> enum; it can only hold up to a maximum of 8 <code>Junction</code>s, so when we try to execute multiple <code>DescendOrigin</code> instructions which would result in an <code>InteriorMultiLocation</code> containing more than 8 <code>Junction</code>s, a <code>LocationFull</code> error is thrown. </p>
+<h2 id="universalorigin"><a class="header" href="#universalorigin">UniversalOrigin</a></h2>
+<pre><code class="language-rust noplayground">UniversalOrigin(Junction)</code></pre>
+<p>The UniversalOrigin XCM instruction sets the Origin Register to be a child of the Universal Location. The Junction parameter should generally be a <code>GlobalConsensus</code> variant since only these are children of the Universal Location.</p>
+<p>Safety Note: Should only be usable if the Origin is trusted to represent a child of the Universal location. In general, no Origin should be able to represent the Universal Location's child which is the root of the local consensus system since it would by extension allow it to act as any location within the local consensus, but it is necessary when bridging XCMs between <code>GlobalConsensus</code> systems.</p>
+<h2 id="aliasorigin"><a class="header" href="#aliasorigin">AliasOrigin</a></h2>
+<pre><code class="language-rust noplayground">AliasOrigin(MultiLocation)</code></pre>
+<p>The AliasOrigin instruction is similar to the UniversalOrigin instruction, but it is primarily used for account IDs. 
+When executed, it switches out the current origin for the given MultiLocation.
+THe AliasOrigin instruction would allow to remove certain prefix patterns such as Parent/Parachain(X)/ for certain values of X (thereby allowing sibling chains to use the same account IDs) or Parachain(X)/ (allowing a Relay-chain to use the account IDs native to its child parachains) or just Parent/ (allowing parachains to use AccountIds of the Relay-chain).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="register-modifiers"><a class="header" href="#register-modifiers">Register Modifiers</a></h1>
+<p>In the previous chapters we already saw instructions that modified the XCVM registers. This chapter contains more instructions that change the XCVM registers. We will discuss the following instructions: </p>
+<ul>
+<li><code>SetErrorHandler</code></li>
+<li><code>SetAppendixHandler</code></li>
+<li><code>ClearError</code></li>
+<li><code>ClearTransactStatus</code></li>
+<li><code>SetTopic</code></li>
+<li><code>ClearTopic</code></li>
+</ul>
+<h2 id="seterrorhandler"><a class="header" href="#seterrorhandler">SetErrorHandler</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>SetErrorHandler(Xcm&lt;Call&gt;)
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>SetErrorHandler</code> instructions is used to set the Error Handler Register. As discussed in the <a href="journey/TODO">XCVM chapter</a>, the Error Handler is executed when an error is thrown during the regular instruction execution. </p>
+<h2 id="setappendix"><a class="header" href="#setappendix">SetAppendix</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>SetAppendix(Xcm&lt;Call&gt;)
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>SetAppendix</code> instruction is used to set the Appendix Register. As discussed in the <a href="journey/TODO">XCVM chapter</a>, the Appendix instructions are executed after the regular and error handler instruction are executed. These instructions are executed regardless of whether an error occurred. </p>
+<h2 id="clearerror"><a class="header" href="#clearerror">ClearError</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>ClearError
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>ClearError</code> instruction clears the Error Register by setting it to None. </p>
+<h2 id="cleartransactstatus"><a class="header" href="#cleartransactstatus">ClearTransactStatus</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>ClearTransactStatus
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>ClearTransactStatus</code> instruction sets the Transact Status Register to its default, cleared, value.</p>
+<h2 id="settopic"><a class="header" href="#settopic">SetTopic</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>SetTopic([u8; 32])
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>SetTopic</code> instruction sets the Topic Register.</p>
+<h2 id="cleartopic"><a class="header" href="#cleartopic">ClearTopic</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>ClearTopic
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>ClearTopic</code> instruction clears the Topic Register.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="holding-register-modifiers"><a class="header" href="#holding-register-modifiers">Holding Register Modifiers</a></h1>
+<p>Most of the XCM instructions alter the Holding Register. We already have seen instructions that alter the Holding Register, like the <code>WithdrawAsset</code> or <code>DepositAsset</code> instructions. In this chapter we go over more instructions that alter the holding register, namely:</p>
+<ul>
+<li>BurnAsset</li>
+<li>ExchangeAsset</li>
+</ul>
+<h2 id="burnasset"><a class="header" href="#burnasset">BurnAsset</a></h2>
+<pre><code class="language-rust noplayground">BurnAsset(MultiAssets)</code></pre>
+<p>The <code>BurnAsset</code> instruction allows for the reduction of assets in the Holding Register by up to the specified assets. The execution of the instruction does not throw an error if the Holding Register does not contain the assets (to make this an error, use <code>ExpectAsset</code> prior).</p>
+<h3 id="example-5"><a class="header" href="#example-5">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>.
+The Scenario of the example is as follows:
+Parachain A withdraws 10 units from its sovereign account on the relay chain and burns 4 of them.
+The relay chain then reports back the status of the Holding Register to Parachain A. We expect the Holding Register to hold 6 units. 
+Note: If we would have added more then 10 units worth of assets in the <code>BurnAsset</code> instruction, we would have burned all assets in the Holding Register and the execution would succeed.</p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+    WithdrawAsset((Here, 10 * CENTS).into()),
+    BuyExecution { fees: (Here, CENTS).into(), weight_limit: WeightLimit::Unlimited },
+    BurnAsset((Here, 4 * CENTS).into()),
+    ReportHolding { 
+        response_info: QueryResponseInfo { 
+            destination: Parachain(1).into(), 
+            query_id: QUERY_ID, 
+            max_weight: Weight::from_parts(1_000_000_000, 64*64) },
+        assets: All.into()
+    }
+]);</code></pre>
+<p>We expect the following response:</p>
+<pre><code class="language-rust noplayground">Response::Assets((Parent, 6 * CENTS).into())</code></pre>
+<h2 id="exchangeasset"><a class="header" href="#exchangeasset">ExchangeAsset</a></h2>
+<pre><code class="language-rust noplayground">ExchangeAsset { give: MultiAssetFilter, want: MultiAssets, maximal: bool }</code></pre>
+<p>The <code>ExchangeAsset</code> instruction allows us to remove asset(s) (<code>give</code>) from the Holding Register and replace them with alternative
+assets (<code>want</code>). The <code>ExchangeAsset</code> instruction has three fields.</p>
+<p>The <code>give</code> field indicates the maximum number of assets that can be removed from the Holding register. </p>
+<p>The <code>want</code> field indicates the minimum amount of assets which <code>give</code> should be exchanged for. We should at a mimimum get the assets in <code>want</code> for the execution of the instruction not to fail. </p>
+<p>If the <code>maximal</code> field is <code>true</code>, then we prefer to give as much as possible up to the limit of <code>give</code>
+and receive accordingly more assets then stated in <code>want</code>. If the <code>maximal</code> field is <code>false</code>, then we prefer to give as little as possible in
+order to receive as little as possible while receiving at least <code>want</code>.</p>
+<h3 id="example-6"><a class="header" href="#example-6">Example</a></h3>
+<p>The full example can be found <a href="journey/TODO">here</a>.</p>
+<p>The scenario for the example is this:
+Scenario:
+The relay chain sends an XCM to Parachain A that:
+.1 Withdraws some native assets
+.2 Exchanges these assets for relay chain derivative tokens, with maximal set to true.
+.3 Deposit all the assets that are in the Holding in the account of Alice.</p>
+<p>NOTE: The implementation of the AssetExchanger is simple
+and in this case swaps all the assets in the exchange for the assets in <code>give</code>.
+Depending on the implementation of AssetExchanger, the test results could differ.</p>
+<p>The Assets in the exchange in Parachain(1). This is a custom exchange implementation just for testing purposes. </p>
+<pre><code class="language-rust noplayground">let assets_in_exchange = vec![(Parent, 10 * CENTS).into()];
+parachain::set_exchange_assets(assets_in_exchange);</code></pre>
+<p>The message that is send: </p>
+<pre><code class="language-rust noplayground">let message = Xcm(vec![
+    WithdrawAsset((Here, 10 * CENTS).into()),
+    BuyExecution { fees: (Here, CENTS).into(), weight_limit: WeightLimit::Unlimited },
+    // Maximal field set to true.
+    ExchangeAsset {
+        give: Definite((Here, 5 * CENTS).into()),
+        want: (Parent, 5 * CENTS).into(),
+        maximal: true,
+    },
+    DepositAsset {
+        assets: AllCounted(2).into(),
+        beneficiary: AccountId32 {
+            network: Some(parachain::RelayNetwork::get()),
+            id: ALICE.into(),
+        }
+        .into(),
+    },
+]);</code></pre>
+<p>Alice receives <code>5 CENTS</code> worth of native assets (<code>Here</code>) and <code>5 CENTS</code> worth of relay chain derivative assets (<code>Parent</code>).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="trapping-and-claiming-assets"><a class="header" href="#trapping-and-claiming-assets">Trapping and Claiming assets.</a></h1>
+<p>When we reach the end of the execution of the XCM there can still be assets in the Holding Register. We can do nothing with them (essentially burning the assets) or we can trap the assets. When we trap the assets, we keep track of the assets together with the origin of the XCM. The origin can claim the assets back in one of the next XCMs. We have two instructions related to trapping and claiming assets: </p>
+<ul>
+<li><code>Trap</code></li>
+<li><code>ClaimAsset</code></li>
+</ul>
+<h2 id="trap"><a class="header" href="#trap">Trap</a></h2>
+<pre><code class="language-rust noplayground">Trap(#[codec(compact)] u64)</code></pre>
+<p>The <code>Trap</code> instruction throws an error of type <code>Trap</code>. Both the Trap instruction and Trap error take an <code>u64</code> that can be used to represent some value. The Trap instruction is useful for throwing custom errors. An important thing to note is that the Trap instruction does not directly trap assets. It can however forcefully halt the further execution of instructions and if there are still assets in the Holding Register, these assets can be trapped. </p>
+<h2 id="claimasset"><a class="header" href="#claimasset">ClaimAsset</a></h2>
+<pre><code class="language-rust noplayground">ClaimAsset { assets: MultiAssets, ticket: MultiLocation }</code></pre>
+<p>Once assets are trapped, the <code>ClaimAsset</code> instruction can be used to claim the assets. The <code>ClaimAsset</code> instruction has two fields.</p>
+<p>The <code>assets</code> field tells which trapped assets should be claimed. 
+This must match exactly with the assets claimable by the origin.</p>
+<p>The <code>ticket</code> field is an identifier that helps locating the asset. It is, for example, useful for distinguishing between Asset Versions. Lets say we have an XCM V2 trapped asset and send an XCM V3 <code>ClaimAsset</code> instruction, then the <code>ticket</code> field can be used to tell between the versions. In the xcm-pallet, <code>Here</code> is used to describe the same version as the <code>ClaimAsset</code> instruction, while the <code>GeneralIndex</code> Junction is used to describe other XCM versions.</p>
+<h2 id="example-7"><a class="header" href="#example-7">Example</a></h2>
+<p>The full example can be found <a href="journey/TODO">here</a>.</p>
+<p>The scenario of the example is this:
+Parachain A withdraws funds from its sovereign account on the relay chain. 
+The assets are trapped because an error is thrown and the execution is halted.
+Parachain A claims the trapped assets and receives a report of the holding register.</p>
+<p>Parachain A sends the following message to the relay chain. 
+The message errors because of the <code>Trap</code> instruction, so all assets in the Holding Register are trapped.</p>
+<pre><code class="language-rust  noplayground">let message = Xcm(vec![
+    WithdrawAsset((Here, 10 * CENTS).into()),
+    BuyExecution { fees: (Here, CENTS).into(), weight_limit: WeightLimit::Unlimited },
+    Trap(0), // &lt;-- Errors
+    DepositAsset { // &lt;-- Not executed because of error.
+        assets: All.into(), 
+        beneficiary: AccountId32 { 
+            network: Some(parachain::RelayNetwork::get()), 
+            id: ALICE.into() 
+        }.into() 
+    }
+]);</code></pre>
+<p>Parachain A claims the assets, reports them to itself and deposits them in the Account of Alice.</p>
+<pre><code class="language-rust  noplayground">let claim_message = Xcm(vec![
+    ClaimAsset { assets: (Here, 10 * CENTS).into(), ticket: Here.into() },
+    ReportHolding { 
+        response_info: QueryResponseInfo { 
+            destination: Parachain(1).into(), 
+            query_id: QUERY_ID, 
+            max_weight: Weight::from_parts(1_000_000_000, 64*64) },
+        assets: All.into()
+    },
+    DepositAsset {
+        assets: All.into(), 
+        beneficiary: AccountId32 { 
+            network: Some(parachain::RelayNetwork::get()), 
+            id: ALICE.into() 
+        }.into() 
+    },
+]);</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="expects"><a class="header" href="#expects">Expects</a></h1>
+<p>XCM contains instructions to check for specific conditions during the execution of the message. 
+These 'expect' instructions check for a specific condition and if it's not fulfilled, an error is then thrown. 
+These instructions are used for things like checking the state of the registers before executing specific instructions. 
+XCM contains the following expect instructions:</p>
+<ul>
+<li><code>ExpectAsset</code></li>
+<li><code>ExpectOrigin</code></li>
+<li><code>ExpectPallet</code></li>
+<li><code>ExpectError</code></li>
+<li><code>ExpectTransactStatus</code></li>
+</ul>
+<h2 id="expectasset"><a class="header" href="#expectasset">ExpectAsset</a></h2>
+<p>The <code>ExpectAsset</code> instruction throws an <code>ExpectationFalse</code> error if the holding register does not contain at least the given assets.</p>
+<pre><code class="language-rust noplayground">ExpectAsset(MultiAssets)</code></pre>
+<h3 id="example-8"><a class="header" href="#example-8">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>.</p>
+<pre><code class="language-rust  noplayground">WithdrawAsset((Here, AMOUNT).into()),
+BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+// Set the instructions that are executed when ExpectAsset does not pass.
+// In this case, reporting back an error to the Parachain.
+SetErrorHandler(Xcm(vec![
+    ReportError(QueryResponseInfo {
+        destination: Parachain(1).into(),
+        query_id: QUERY_ID,
+        max_weight: Weight::from_all(0),
+    })
+])),
+ExpectAsset((Here, AMOUNT + 10).into()),
+// Add Instructions that do something with assets in holding when ExpectAsset passes.
+</code></pre>
+<h2 id="expectorigin"><a class="header" href="#expectorigin">ExpectOrigin</a></h2>
+<p>The <code>ExpectOrigin</code> instruction throws an <code>ExpectationFalse</code> error if the origin register does not equal the expected origin.</p>
+<pre><code class="language-rust noplayground">ExpectOrigin(Option&lt;MultiLocation&gt;)</code></pre>
+<h3 id="example-9"><a class="header" href="#example-9">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>. 
+The <code>ExpectOrigin</code> instruction errors because the <code>ClearOrigin</code> clears the origin register and we expect it to be equal to <code>Parachain(1)</code>.</p>
+<pre><code class="language-rust noplayground">// Set the instructions that are executed when ExpectOrigin does not pass.
+// In this case, reporting back an error to the Parachain.
+SetErrorHandler(Xcm(vec![ReportError(QueryResponseInfo {
+    destination: Parachain(1).into(),
+    query_id: QUERY_ID,
+    max_weight: Weight::from_all(0),
+})])),
+ClearOrigin,
+// Checks if the XcmContext origin is equal to `Parachain(1)`.
+ExpectOrigin(Some(Parachain(1).into())),</code></pre>
+<h2 id="expectpallet"><a class="header" href="#expectpallet">ExpectPallet</a></h2>
+<p>The <code>ExpectPallet</code> instruction ensures that a particular pallet with a particular version exists in the destination's runtime. 
+It throws a <code>PalletNotFound</code> error if there is no pallet at the given index.
+It throws a <code>NameMismatch</code> error is the <code>name</code> or <code>module_name</code> mismatch and a <code>VersionIncompatible</code> error if the <code>crate_major</code> or <code>crate_minor</code> mismatch. 
+The <code>name</code> and <code>module_name</code> represent a byte representation of the pallet's name and module name (e.g. 'Balances' and 'pallet_balances'). 
+Consensus systems that are not substrate-based may throw an <code>Unimplemented</code> error for this instruction.</p>
+<pre><code class="language-rust noplayground">ExpectPallet {
+    #[codec(compact)]
+    index: u32,
+    name: Vec&lt;u8&gt;,
+    module_name: Vec&lt;u8&gt;,
+    #[codec(compact)]
+    crate_major: u32,
+    #[codec(compact)]
+    min_crate_minor: u32,
+},</code></pre>
+<h3 id="example-10"><a class="header" href="#example-10">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>.</p>
+<pre><code class="language-rust  noplayground">// Set the instructions that are executed when ExpectPallet does not pass.
+// In this case, reporting back an error to the Parachain.
+SetErrorHandler(Xcm(vec![
+    ReportError(QueryResponseInfo {
+        destination: Parachain(1).into(),
+        query_id: QUERY_ID,
+        max_weight: Weight::from_all(0),
+    })
+])),
+// Configured pallet has different `crate_major` so `VersionIncompatible` error is thrown.
+ExpectPallet {
+    index: 1,
+    name: &quot;Balances&quot;.into(),
+    module_name: &quot;pallet_balances&quot;.into(),
+    crate_major: 3,
+    min_crate_minor: 0,
+}</code></pre>
+<h2 id="expecterror"><a class="header" href="#expecterror">ExpectError</a></h2>
+<p>The <code>ExpectError</code> instruction throws an <code>ExpectationFalse</code> error if the error register does not equal the expected error at that point in the execution. 
+This instruction is useful during the error handler execution to halt the error handler if the error that started the execution of the error handler is not as expected. 
+The <code>ExpectError</code> instruction allows to only execute the instructions in the error handler, when a specific error is thrown. </p>
+<pre><code class="language-rust noplayground">	ExpectError(Option&lt;(u32, Error)&gt;)</code></pre>
+<h3 id="example-11"><a class="header" href="#example-11">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>.</p>
+<pre><code class="language-rust noplayground">SetErrorHandler(Xcm(vec![
+    ExpectError(Some((1, XcmError::VersionIncompatible))),
+    ReportError(QueryResponseInfo {
+        destination: Parachain(1).into(),
+        query_id: QUERY_ID,
+        max_weight: Weight::from_all(0),
+    }),
+])),
+// Pallet index is wrong, so throws `PalletNotFound` error.
+ExpectPallet {
+    index: 100,
+    name: &quot;Balances&quot;.into(),
+    module_name: &quot;pallet_balances&quot;.into(),
+    crate_major: 4,
+    min_crate_minor: 0,
+},</code></pre>
+<h2 id="expecttransactstatus"><a class="header" href="#expecttransactstatus">ExpectTransactStatus</a></h2>
+<p>The <code>ExpectTransactStatus</code> instruction throws an <code>ExpectationFalse</code> error if the transact status register does not equal the expected transact status.
+The status is described by the <code>MaybeErrorCode</code> enum, and can either be a Success, Error or TruncatedError if the length of the error exceeds the MaxDispatchErrorLen. 
+For pallet-based calls, the Error is represented as the scale encoded <code>Error</code> enum of the called pallet. </p>
+<pre><code class="language-rust noplayground">ExpectTransactStatus(MaybeErrorCode)
+
+pub enum MaybeErrorCode {
+	Success,
+	Error(BoundedVec&lt;u8, MaxDispatchErrorLen&gt;),
+	TruncatedError(BoundedVec&lt;u8, MaxDispatchErrorLen&gt;),
+}</code></pre>
+<h3 id="example-12"><a class="header" href="#example-12">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>.
+The transact status is reported to <code>Parachain(1)</code> if the call in the <code>Transact</code> errors. </p>
+<pre><code class="language-rust noplayground">SetErrorHandler(Xcm(vec![ReportTransactStatus(QueryResponseInfo {
+    destination: Parachain(1).into(),
+    query_id: QUERY_ID,
+    max_weight: Weight::from_all(0),
+})])),
+Transact {
+    origin_kind: OriginKind::SovereignAccount,
+    require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+    call: call.encode().into(),
+},
+ExpectTransactStatus(MaybeErrorCode::Success),</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="queries"><a class="header" href="#queries">Queries</a></h1>
+<p>XCM contains query instructions that can be used to query information from another consensus system: </p>
+<ul>
+<li><code>ReportHolding</code></li>
+<li><code>QueryPallet</code></li>
+<li><code>ReportError</code></li>
+<li><code>ReportTransactStatus</code></li>
+</ul>
+<p>Each of these instructions is sent to the destination where we would like the information to be reported back to us. 
+Each instruction has a <code>QueryResponseInfo</code> struct as one of its inputs.</p>
+<pre><code class="language-rust  noplayground">pub struct QueryResponseInfo {
+	pub destination: MultiLocation,
+	#[codec(compact)]
+	pub query_id: QueryId,
+	pub max_weight: Weight,
+}</code></pre>
+<p>The <code>destination</code> tells the queried consensus system where to send the response to and the <code>query_id</code> field links the query and the query response together. The <code>max_weight</code> field tells the queried consensus system what the maximum weight is that the response instruction can take.</p>
+<p>When a query instruction is executed correctly, it sends a <code>QueryResponse</code> instruction to the location defined in the previously described <code>destination</code> field. 
+The <code>QueryResponse</code> looks like this: </p>
+<pre><code class="language-rust noplayground">QueryResponse {
+    #[codec(compact)]
+    query_id: QueryId,
+    response: Response,
+    max_weight: Weight,
+    querier: Option&lt;MultiLocation&gt;,
+}
+
+// Reponse Struct
+pub enum Response {
+	/// No response. Serves as a neutral default.
+	Null,
+	/// Some assets.
+	Assets(MultiAssets),
+	/// The outcome of an XCM instruction.
+	ExecutionResult(Option&lt;(u32, Error)&gt;),
+	/// An XCM version.
+	Version(super::Version),
+	/// The index, instance name, pallet name and version of some pallets.
+	PalletsInfo(BoundedVec&lt;PalletInfo, MaxPalletsInfo&gt;),
+	/// The status of a dispatch attempt using `Transact`.
+	DispatchResult(MaybeErrorCode),
+}</code></pre>
+<p>The <code>QueryResponse</code> has the same <code>query_id</code> as the request to link the request and response and takes over the <code>max_weight</code> from the <code>QueryResponseInfo</code>. 
+It has the requested information in the <code>response</code> field. 
+And it has the location of the querier relative to the queried location in the querier field. 
+The response can be sent back to the requester, or to another location, so the querier field is important to determine where the requested information is needed. </p>
+<p>Now we take a look at the query instructions.</p>
+<h2 id="reportholding"><a class="header" href="#reportholding">ReportHolding</a></h2>
+<pre><code class="language-rust  noplayground">ReportHolding { response_info: QueryResponseInfo, assets: MultiAssetFilter }</code></pre>
+<p>The <code>ReportHolding</code> instruction reports to the given destination the contents of the Holding Register. The <code>assets</code> field is a filter for the assets that should be reported back. The assets reported back will be, asset-wise, <em>the lesser of this value and the holding register</em>. For example, if the holding register contains 10 units of some fungible asset and the <code>assets</code> field specifies 15 units of the same asset, the result will return 10 units of that asset. Wild cards can be used to describe which assets in the holding register to report, but the response always contains assets and no wild cards. </p>
+<h3 id="example-13"><a class="header" href="#example-13">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>. Assets are withdrawn from the account of parachain 1 on the relay chain and partly deposited in the account of parachain 2. The remaining assets are reported back to parachain 1. </p>
+<pre><code class="language-rust  noplayground">Xcm(vec![
+    WithdrawAsset((Here, AMOUNT).into()),
+    BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: Unlimited },
+    DepositAsset { assets: Definite((Here, AMOUNT - 5).into()), beneficiary: Parachain(2).into() },
+    ReportHolding {
+        response_info: QueryResponseInfo {
+            destination: Parachain(1).into(),
+            query_id: QUERY_ID,
+            max_weight: Weight::from_all(0),
+        },
+        assets: All.into(),
+    },
+]);</code></pre>
+<h2 id="querypallet"><a class="header" href="#querypallet">QueryPallet</a></h2>
+<p>The <code>QueryPallet</code> instruction queries the existence of a particular pallet based on the module name specified in the <code>module_name</code> field. </p>
+<pre><code class="language-rust  noplayground">QueryPallet { module_name: Vec&lt;u8&gt;, response_info: QueryResponseInfo }</code></pre>
+<p>The destination responds with a vec of <code>PalletInfo</code>s if the pallet exists. </p>
+<pre><code class="language-rust noplayground">pub struct PalletInfo {
+	#[codec(compact)]
+	index: u32,
+	name: BoundedVec&lt;u8, MaxPalletNameLen&gt;,
+	module_name: BoundedVec&lt;u8, MaxPalletNameLen&gt;,
+	#[codec(compact)]
+	major: u32,
+	#[codec(compact)]
+	minor: u32,
+	#[codec(compact)]
+	patch: u32,
+}</code></pre>
+<h3 id="example-14"><a class="header" href="#example-14">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>. It queries for all instances of pallet_balances and sends the result back to parachain 1.</p>
+<pre><code class="language-rust  noplayground">Xcm(vec![
+    QueryPallet {
+        module_name: &quot;pallet_balances&quot;.into(),
+        response_info: QueryResponseInfo {
+            destination: Parachain(1).into(),
+            query_id: QUERY_ID,
+            max_weight: Weight::from_all(0),
+        },
+    }
+]);</code></pre>
+<h2 id="reporterror"><a class="header" href="#reporterror">ReportError</a></h2>
+<p>The <code>ReportError</code> instruction report the contents of the Error Register to the given destination. This instruction is useful in combination with the <code>SetErrorHandler</code> instruction. It then only reports an error if an error is thrown. </p>
+<pre><code class="language-rust noplayground">ReportError(QueryResponseInfo)</code></pre>
+<h3 id="example-15"><a class="header" href="#example-15">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>. The message sets the error handler to report back any error that is thrown during execution of the instructions using the <code>ReportError</code> instruction. </p>
+<pre><code class="language-rust  noplayground">Xcm(vec![
+    // Set the Error Handler to report back status of Error register.
+    SetErrorHandler(Xcm(vec![
+        ReportError(QueryResponseInfo {
+            destination: Parachain(1).into(),
+            query_id: QUERY_ID,
+            max_weight: Weight::from_all(0),
+        })
+    ])),
+    // If an instruction errors during further processing, the resulting error is reported back to Parachain(1).
+    // MORE INSTRUCTIONS
+]);</code></pre>
+<h2 id="reporttransactstatus"><a class="header" href="#reporttransactstatus">ReportTransactStatus</a></h2>
+<p>The <code>ReportTransactStatus</code> instruction report the value of the Transact Status Register to the specified destination. </p>
+<pre><code class="language-rust noplayground">ReportTransactStatus(QueryResponseInfo)</code></pre>
+<h3 id="example-16"><a class="header" href="#example-16">Example</a></h3>
+<p>For the full example, check <a href="journey/TODO">here</a>. 
+Dispatches a call on the consensus system receiving this Xcm and reports back the status of the Transact Status Register.</p>
+<pre><code class="language-rust noplayground">Xcm(vec![
+    Transact {
+        origin_kind: OriginKind::SovereignAccount,
+        require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+        call: remark.encode().into(),
+    },
+    ReportTransactStatus(QueryResponseInfo {
+        destination: Parachain(1).into(),
+        query_id: QUERY_ID,
+        max_weight: Weight::from_all(0),
+    }),
+]);</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="version-subscription"><a class="header" href="#version-subscription">Version Subscription</a></h1>
+<p>XCM is a versioned messaging format. One version may contain more or different instructions than another, so for parties to communicate via XCM, it is important to know which version the other party is using. XCM enables a version subscription model, where parties can subscribe to each other to get notified of version updates. XCM has two instructions to enable this:</p>
+<ul>
+<li><code>SubscribeVersion</code></li>
+<li><code>UnsubscribeVersion</code></li>
+</ul>
+<p>The version subscription model can differ per XCVM implementation. 
+The <code>xcm-executor</code> has a <code>SubscriptionService</code> <a href="journey/../executor_config/README.html">config item</a>. 
+Any type specified as the <code>SubscriptionService</code> must implement the <code>VersionChangeNotifier</code> trait. 
+The XCM pallet is one such implementor.
+When the <code>SubscribeVersion</code> instruction is sent to a consensus system that uses the XCM pallet as the <code>SubscriptionService</code> in the XCM executor, the system will send back its currently <code>AdvertisedVersion</code> and will keep the subscribed location up to date when the version changes. 
+The subscribed location can unsubscribe to version changes by sending the <code>UnsubscribeVersion</code> instruction.</p>
+<pre><code class="language-rust noplayground">SubscribeVersion {
+    #[codec(compact)]
+    query_id: QueryId,
+    max_response_weight: Weight,
+}
+
+UnsubscribeVersion</code></pre>
+<p>Check out the <a href="journey/TODO">example</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="locking"><a class="header" href="#locking">Locking</a></h1>
+<p>Assets can be locked via XCM, meaning, the transfer or withdrawal of assets can be restricted via messages.
+The XCM locking mechanism consists of four instructions: <code>LockAsset</code>, <code>UnlockAsset</code>, <code>NoteUnlockable</code>, and <code>RequestUnlock</code>. 
+Let's explore each instruction in detail:</p>
+<h2 id="lockasset"><a class="header" href="#lockasset">LockAsset</a></h2>
+<pre><code class="language-rust noplayground">LockAsset { asset: MultiAsset, unlocker: MultiLocation }</code></pre>
+<p>The LockAsset instruction is used to lock locally held assets and prevent further transfers or withdrawals. 
+This instruction requires two parameters:</p>
+<ul>
+<li><code>asset</code>: The asset(s) to be locked.</li>
+<li><code>unlocker</code>: The MultiLocation that can unlock the asset(s). This value must match the origin of a corresponding <code>UnlockAsset</code> instruction to unlock the asset.</li>
+</ul>
+<p>When the locking operation succeeds, a <code>NoteUnlockable</code> instruction is sent to the unlocker. 
+This instruction serves as a notification that the asset is now unlockable.</p>
+<h2 id="unlockasset"><a class="header" href="#unlockasset">UnlockAsset</a></h2>
+<pre><code class="language-rust noplayground">UnlockAsset { asset: MultiAsset, target: MultiLocation }</code></pre>
+<p>The <code>UnlockAsset</code> instruction removes the lock on a specific asset on the local chain, allowing it to be transferred if there are no other restrictions. 
+The following parameters are required:</p>
+<ul>
+<li><code>asset</code>: The asset to be unlocked.</li>
+<li><code>target</code>: The owner of the asset on the local chain.</li>
+</ul>
+<h2 id="noteunlockable"><a class="header" href="#noteunlockable">NoteUnlockable</a></h2>
+<pre><code class="language-rust noplayground">NoteUnlockable { asset: MultiAsset, owner: MultiLocation }</code></pre>
+<p>The <code>NoteUnlockable</code> instruction indicates that an asset has been locked on the system which the message originated from.<br />
+The locked assets can only be unlocked by receiving an <code>UnlockAsset</code> instruction from this chain.
+This instruction requires the following parameters:</p>
+<ul>
+<li><code>asset</code>: The asset(s) which are now unlockable from this origin.</li>
+<li><code>owner</code>: The owner of the asset on the chain in which it was locked. This may be a location specific to the origin network. 
+The owner can request this origin to unlock the assets using a <code>RequestUnlock</code> instruction. 
+However, the owner is not able to unlock the assets themselves.</li>
+</ul>
+<p>It is essential to trust the origin to have locked the corresponding asset before sending this message.</p>
+<h2 id="requestunlock"><a class="header" href="#requestunlock">RequestUnlock</a></h2>
+<pre><code class="language-rust  noplayground">RequestUnlock { asset: MultiAsset, locker: MultiLocation }</code></pre>
+<p>The <code>RequestUnlock</code> instruction is used to send an <code>UnlockAsset</code> instruction to the <code>locker</code> for a given asset. 
+The following parameters are required:</p>
+<ul>
+<li><code>asset</code>: The asset(s) to be unlocked.</li>
+<li><code>locker</code>: The location from which a previous <code>NoteUnlockable</code> was sent, and where the <code>UnlockAsset</code> instruction should be sent.</li>
+</ul>
+<h2 id="example-17"><a class="header" href="#example-17">Example</a></h2>
+<p>To get a better grasp on how these instructions work together, we give two examples in this section. 
+The examples use the xcm-executor with the pallet-xcm as the implementation for the <code>AssetLocker</code> config item. 
+An important note of this implementation is that only one lock with ID <code>py/xcmlk</code> is set per account. 
+The pallet-xcm implementation keeps track of all the xcm-related locks that are placed on an account and sets the most restricting one with the <code>py/xcmlk</code> lock ID. 
+This principle becomes more clear in the second example.</p>
+<h3 id="example-1-1"><a class="header" href="#example-1-1">Example 1</a></h3>
+<p>Check out the full <a href="journey/locks/TODO">example code</a>.
+The scenario of this example is as follows:</p>
+<p>Parachain A locks 5 Cents of relay chain native assets of its Sovereign account on the relay chain and assigns Parachain B as unlocker.
+Parachain A then asks Parachain B to unlock the funds partly. 
+Parachain B responds by sending an UnlockAssets instruction to the relay chain.</p>
+<p><img src="journey/locks/./images/Example1.png" alt="Example" /></p>
+<ol>
+<li>send <code>LockAsset</code> instruction from ParaA to relay. </li>
+</ol>
+<pre><code class="language-rust noplayground">ParaA::execute_with(|| {
+    let message = Xcm(vec![LockAsset {
+        asset: (Here, CENTS * 5).into(),
+        unlocker: (Parachain(2)).into(),
+    }]);
+    assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone()));
+});</code></pre>
+<ol start="2">
+<li>Parachain B receives this <code>NoteUnlockable</code> instruction from the relay chain.</li>
+</ol>
+<pre><code class="language-rust noplayground">NoteUnlockable {
+    owner: (Parent, Parachain(1)).into(),
+    asset: (Parent, CENTS * 5).into()
+}</code></pre>
+<ol start="3">
+<li>Parachain A sends <code>RequestUnlock</code> instruction to Parachain B</li>
+</ol>
+<pre><code class="language-rust noplayground">ParaA::execute_with(|| {
+    let message = Xcm(vec![RequestUnlock {
+        asset: (Parent, 3 * CENTS).into(),
+        locker: Parent.into(),
+    }]);
+    assert_ok!(ParachainPalletXcm::send_xcm(Here, (Parent, Parachain(2)), message.clone()));
+});</code></pre>
+<ol start="4">
+<li>Parachain B sends an <code>UnlockAsset</code> instruction to the relay chain. We check if the lock is updated accordingly:</li>
+</ol>
+<pre><code class="language-rust noplayground">assert_eq!(
+    relay_chain::Balances::locks(&amp;parachain_sovereign_account_id(1)),
+    vec![BalanceLock { id: *b&quot;py/xcmlk&quot;, amount: 2 * CENTS, reasons: Reasons::All }]
+);</code></pre>
+<h3 id="example-2-1"><a class="header" href="#example-2-1">Example 2</a></h3>
+<p>Check out the full <a href="journey/locks/TODO">example code</a>.
+The scenario of this example is as follows:</p>
+<p>Parachain A sets two locks on the relay chain with as unlockers Parachain B and Parachain C.
+Parachain A then requests Parachain B to partly unlock.</p>
+<p>Note: The locks overlap. When there are two or more locks, the total assets that are locked is equal to the most restrictive lock (the lock that locks the most assets). When the most restrictive lock is unlocked, the total locked assets is than equal to the next most restrictive lock. </p>
+<p><img src="journey/locks/./images/Example2.png" alt="Example" /></p>
+<ol>
+<li>Set locks on the relay chain. Unlockers: B, C; Locks registered in pallet-xcm: 10, 5. Lock set in pallet-balances: 10.</li>
+</ol>
+<pre><code class="language-rust  noplayground">ParaA::execute_with(|| {
+    let message = Xcm(vec![
+        LockAsset { asset: (Here, 10 * CENTS).into(), unlocker: (Parachain(2)).into() },
+        LockAsset { asset: (Here, 5 * CENTS).into(), unlocker: (Parachain(3)).into() },
+    ]);
+    assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone()));
+});
+
+Relay::execute_with(|| {
+    assert_eq!(
+        relay_chain::Balances::locks(&amp;parachain_sovereign_account_id(1)),
+        vec![BalanceLock { id: *b&quot;py/xcmlk&quot;, amount: 10 * CENTS, reasons: Reasons::All }]
+    );
+});</code></pre>
+<ol start="2">
+<li>Parachain B and C receive the <code>NoteUnlockable</code> instruction.</li>
+</ol>
+<pre><code class="language-rust  noplayground">ParaB::execute_with(|| {
+    assert_eq!(
+        parachain::MsgQueue::received_dmp(),
+        vec![Xcm(vec![NoteUnlockable {
+            owner: (Parent, Parachain(1)).into(),
+            asset: (Parent, 10 * CENTS).into()
+        }])]
+    );
+});
+
+ParaC::execute_with(|| {
+    assert_eq!(
+        parachain::MsgQueue::received_dmp(),
+        vec![Xcm(vec![NoteUnlockable {
+            owner: (Parent, Parachain(1)).into(),
+            asset: (Parent, 5 * CENTS).into()
+        }])]
+    );
+});</code></pre>
+<ol start="3">
+<li>Parachain A sends a <code>RequestUnlock</code> instruction to Parachain B for 8 CENTS.</li>
+</ol>
+<pre><code class="language-rust  noplayground">ParaA::execute_with(|| {
+    let message = Xcm(vec![RequestUnlock {
+        asset: (Parent, 8 * CENTS).into(),
+        locker: Parent.into(),
+    }]);
+
+    assert_ok!(ParachainPalletXcm::send_xcm(Here, (Parent, Parachain(2)), message.clone()));
+});</code></pre>
+<ol start="4">
+<li>Parachain B Unlocks a part of the funds by sending an <code>UnlockAsset</code> to the relay chain. we check the lock in the balances-pallet. 
+Unlockers: B, C; Funds registered in pallet-xcm: 2, 5. 
+Lock set in pallet-balances: 5.</li>
+</ol>
+<pre><code class="language-rust noplayground">Relay::execute_with(|| {
+    assert_eq!(
+        relay_chain::Balances::locks(&amp;parachain_sovereign_account_id(1)),
+        vec![BalanceLock { id: *b&quot;py/xcmlk&quot;, amount: 5 * CENTS, reasons: Reasons::All }]
+    );
+});</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="channels"><a class="header" href="#channels">Channels</a></h1>
+<p>XCM has instructions that aid in the establishment of a HRMP channel between parachains.
+HRMP channels are always unidirectional (one-way); every channel has a static sender and a static recipient. 
+To send messages in the opposite direction (i.e. from recipient to sender), another new HRMP channel must be opened.
+Unlike other XCM instructions, these HRMP instructions are related to the underlying transport mechanism, and will normally not be sent by developers.
+We still want to list them, as they are part of XCM:</p>
+<ul>
+<li><code>HrmpNewChannelOpenRequest</code></li>
+<li><code>HrmpChannelAccepted</code></li>
+<li><code>HrmpChannelClosing</code></li>
+</ul>
+<h2 id="hrmpnewchannelopenrequest"><a class="header" href="#hrmpnewchannelopenrequest">HrmpNewChannelOpenRequest</a></h2>
+<pre><code class="language-rust noplayground">HrmpNewChannelOpenRequest {
+    #[codec(compact)]
+    sender: u32,
+    #[codec(compact)]
+    max_message_size: u32,
+    #[codec(compact)]
+    max_capacity: u32,
+}</code></pre>
+<p>The <code>HrmpNewChannelOpenRequest</code> is an instruction to notify about a new incoming HRMP channel.
+This message is meant to be sent by the relay chain to a parachain.</p>
+<p>The <code>sender</code> field represents the ParaId of the parachain initializing the channel. 
+This parachain will also be the sender in the to-be opened channel.</p>
+<p>The <code>max_message_size</code> field is the maximum size of a message that is send through the channel.
+This field is the size proposed by the sender, and needs to be accepted by the recipient. </p>
+<p>The <code>max_capacity</code> is the maximum number of messages that can be queued in the channel. </p>
+<h2 id="hrmpchannelaccepted"><a class="header" href="#hrmpchannelaccepted">HrmpChannelAccepted</a></h2>
+<pre><code class="language-rust noplayground">HrmpChannelAccepted {
+    #[codec(compact)]
+    recipient: u32,
+}</code></pre>
+<p>The <code>HrmpChannelAccepted</code> instruction is used to notify about that a previously sent open channel request has been accepted by the recipient.
+That means that the channel will be opened during the next relay chain session change.
+This message is meant to be sent by the relay chain to a parachain.</p>
+<p>The <code>recipient</code> field represents the ParaId of the parachain that initialized the channel, so it equals the <code>sender</code> field in the preceding <code>HrmpNewChannelOpenRequest</code> instruction.</p>
+<h2 id="hrmpchannelclosing"><a class="header" href="#hrmpchannelclosing">HrmpChannelClosing</a></h2>
+<pre><code class="language-rust noplayground">HrmpChannelClosing {
+    #[codec(compact)]
+    initiator: u32,
+    #[codec(compact)]
+    sender: u32,
+    #[codec(compact)]
+    recipient: u32,
+}</code></pre>
+<p>The <code>HrmpChannelClosing</code> instruction is used to notify that the other party in an open channel decided to close it.
+In particular, <code>initiator</code> is going to close the channel opened from <code>sender</code> to the <code>recipient</code>.
+The close will be enacted at the next relay chain session change. 
+This message is meant to be sent by the relay chain to a para.</p>
+<p>The <code>initiator</code> field represents the ParaId of the parachain that is closing the channel.
+It is equal to either the <code>sender</code> or <code>recipient</code> field.</p>
+<p>The <code>sender</code> field represents the ParaId of the parachain that is the sender side of the channel.</p>
+<p>The <code>recipient</code> field represents the ParaId of the parachain that is the recipient side of the channel.</p>
+<p>Important to note is that both the sender and recipient can close the channel.</p>
+<h1 id="message-export-bridging"><a class="header" href="#message-export-bridging">Message Export (Bridging)</a></h1>
+<p>XCM has an instruction that allows us to send an XCM to a Non-Local Consensus System, meaning to MultiLocation that is outside our current GlobalConsensus.
+For example, it allows us to send an XCM from Kusama to Polkadot or from Polkadot to an Ethereum-based chain.
+Exporting an XCM to another Non-Local Consensus System will tend to utilize some extra consensus layer/mechanism, the obvious one being a bridge.
+The instruction to export an XCM is called <code>ExportMessage</code>.</p>
+<h2 id="exportmessage"><a class="header" href="#exportmessage">ExportMessage</a></h2>
+<pre><code class="language-rust noplayground">ExportMessage { network: NetworkId, destination: InteriorMultiLocation, xcm: Xcm&lt;()&gt; },</code></pre>
+<p>The <code>ExportMessage</code> instruction can be used to export a message to a Non-Local Consensus System.
+The message is sent to the bridge (or other consensus mechanism) that is able to export the message.
+A fee is charged for exporting the message via the bridge.</p>
+<p>The <code>network</code> field is the remote consensus system to which the message should be exported.</p>
+<p>The <code>destination</code> field is the location relative to the remote consensus system to which the message should be sent on arrival.</p>
+<p>The <code>xcm</code> field is the message to be exported.</p>
+<p>As an example, to export a message for execution on Statemine (parachain <code>#1000</code> in the Kusama network), you would call with <code>network: NetworkId::Kusama</code> and <code>destination: X1(Parachain(1000))</code>.
+Alternatively, to export a message for execution on Polkadot, you would call with <code>network: NetworkId:: Polkadot</code> and <code>destination: Here</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="executor-config-1"><a class="header" href="#executor-config-1">Executor Config</a></h1>
+<p>As previously mentioned, the xcm-executor is a Cross-Consensus Virtual Machine(XCVM) implementation.
+It provides an opinionated interpretation and execution of XCMs.
+Each chain that uses the xcm-executor, can configure it for their use case.
+In this chapter we will go over this configuration, explain each config item and give some examples of the tools and types that can be used to configure these items.</p>
+<h2 id="xcm-executor-configuration"><a class="header" href="#xcm-executor-configuration">XCM Executor Configuration</a></h2>
+<p>Below we list the <a href="https://paritytech.github.io/polkadot/doc/xcm_executor/trait.Config.html">Config</a> trait of the xcm-executor.
+The Config trait expects multiple associated types.
+Each type has a trait bound which the concrete type must implement.
+Some of these types will use a default implementation in most situations (e.g.
+RuntimeCall).
+Other types have a default implementation specified by the unit type <code>()</code>.
+Most types you'll want to carefully choose which implementation they get.
+For most of these types there are pre-defined solutions and building blocks you can use and adapt to your scenario.
+These solutions are listed in the xcm-builder <a href="https://github.com/paritytech/polkadot/tree/master/xcm/xcm-builder/src">folder</a>.</p>
+<p>We will now explain each type and go over some of the implementations of the type:</p>
+<pre><code class="language-rust  noplayground">/// The trait to parameterize the `XcmExecutor`.
+pub trait Config {
+	type RuntimeCall: Parameter + Dispatchable&lt;PostInfo = PostDispatchInfo&gt; + GetDispatchInfo;
+	type XcmSender: SendXcm;
+	type AssetTransactor: TransactAsset;
+	type OriginConverter: ConvertOrigin&lt;&lt;Self::RuntimeCall as Dispatchable&gt;::RuntimeOrigin&gt;;
+	type IsReserve: ContainsPair&lt;MultiAsset, MultiLocation&gt;;
+	type IsTeleporter: ContainsPair&lt;MultiAsset, MultiLocation&gt;;
+	type UniversalLocation: Get&lt;InteriorMultiLocation&gt;;
+	type Barrier: ShouldExecute;
+	type Weigher: WeightBounds&lt;Self::RuntimeCall&gt;;
+	type Trader: WeightTrader;
+	type ResponseHandler: OnResponse;
+	type AssetTrap: DropAssets;
+	type AssetClaims: ClaimAssets;
+	type AssetLocker: AssetLock;
+	type AssetExchanger: AssetExchange;
+	type SubscriptionService: VersionChangeNotifier;
+	type PalletInstancesInfo: PalletsInfoAccess;
+	type MaxAssetsIntoHolding: Get&lt;u32&gt;;
+	type FeeManager: FeeManager;
+	type MessageExporter: ExportXcm;
+	type UniversalAliases: Contains&lt;(MultiLocation, Junction)&gt;;
+	type CallDispatcher: CallDispatcher&lt;Self::RuntimeCall&gt;;
+	type SafeCallFilter: Contains&lt;Self::RuntimeCall&gt;;
+}</code></pre>
+<h2 id="how-to-use-multiple-implementations"><a class="header" href="#how-to-use-multiple-implementations">How to use multiple implementations.</a></h2>
+<p>Some associated types in the Config trait are highly configurable and in certain cases will have multiple implementations (e.g. Barrier).
+These implementations are then grouped using a tuple <code>(impl_1, impl_2, ..., impl_n)</code>.
+The execution of the tuple type is sequential, meaning that each item is executed one after another. Each item is checked to see whether it fails to pass, then the next item is checked, and so on. The execution is halted when one of these items returns positive (Ok or true, etc.). The next example of the Barrier type shows how the grouping works (understanding each item in the tuple is not necessary).</p>
+<pre><code class="language-rust noplayground">pub type Barrier = (
+	TakeWeightCredit,
+	AllowTopLevelPaidExecutionFrom&lt;Everything&gt;,
+	AllowKnownQueryResponses&lt;XcmPallet&gt;,
+	AllowSubscriptionsFrom&lt;Everything&gt;,
+);
+
+pub struct XcmConfig;
+impl xcm_executor::Config for XcmConfig {
+    ...
+	type Barrier = Barrier;
+    ...
+}</code></pre>
+<p>In the above example, when checking the barrier, we'll first check the TakeWeightCredit type. If it fails, we'll go on to check the AllowTopLevelPaidExecutionFrom<Everything> and so on until one of them gives a positive. If they all fail, a <code>Barrier</code> error is thrown.</p>
+<h2 id="config-items"><a class="header" href="#config-items">Config Items</a></h2>
+<p>We now go over each config item to explain what the associate type does and how it is used in the xcm-executor. Many of these types have pre-defined solutions that can be found in the xcm-builder and a good way to understand these configurations is to look at example configurations. On the bottom of this page we listed some examples. </p>
+<h3 id="runtimecall"><a class="header" href="#runtimecall">RuntimeCall</a></h3>
+<p>The <code>RuntimeCall</code> type is equal to the RuntimeCall created in the <code>construct_runtime!</code> macro. It is an enum of all the callable functions of each of the implemented pallets. </p>
+<h3 id="xcmsender"><a class="header" href="#xcmsender">XcmSender</a></h3>
+<p>The <code>XcmSender</code> type implements the <code>SendXcm</code> trait, and defines how the xcm_executor can send XCMs (which transport layer it can use for the XCMs).
+This type normally implements a tuple for one or more [transport layer(s)](Todo Transport Layer Link).
+For example a parachain can implement the XcmSender as: </p>
+<pre><code class="language-rust noplayground"> (
+	// Two routers - use UMP to communicate with the relay chain:
+	cumulus_primitives_utility::ParentAsUmp&lt;ParachainSystem, PolkadotXcm, ()&gt;,
+	// ..and XCMP to communicate with the sibling chains.
+	XcmpQueue,
+);</code></pre>
+<p>If a runtime does not contain the XcmpQueue pallet as a config item for XcmSender, it will not be able to send messages to other parachains.
+This can be useful for controlling the destinations that an XCM can be sent to.</p>
+<h3 id="assettransactor"><a class="header" href="#assettransactor">AssetTransactor</a></h3>
+<p>The <code>AssetTransactor</code> type implements the <code>TransactAsset</code> trait and defines how the xcm-executor can convert <code>MultiAsset</code>s from and to on chain assets and how to transfer these assets between accounts, or from and to the holding register.
+As chains can support different types of currencies (native tokens), fungibles and non-fungibles, we can configure the AssetTransactor in different ways, depending on the chains implementation fo these types.
+Three default implementations are provided in the xcm-builder, namely the <code>CurrencyAdapter</code>, <code>FungiblesAdapter</code> and <code>NonFungiblesAdapter</code>.</p>
+<h3 id="originconverter"><a class="header" href="#originconverter">OriginConverter</a></h3>
+<p>The <code>OriginConverter</code> type implements the <code>ConvertOrigin</code> trait and defines how the xcm-executor can convert a <code>MultiLocation</code> into a <code>RuntimeOrigin</code>.
+Most xcm-executors take multiple implementations in a tuple for this configuration as there are many different MLs we would like to convert.
+When multiple <code>OriginConverter</code>s conflict, the <a href="https://paritytech.github.io/polkadot/doc/xcm/v2/enum.OriginKind.html">OriginKind</a> that is passed to the <code>convert_origin</code> function is used to distingues which <code>OriginConverter</code> to use. There are four different <code>OriginKind</code>s :</p>
+<pre><code class="language-rust noplayground">pub enum OriginKind {
+	Native,
+	SovereignAccount,
+	Superuser,
+	Xcm,
+}</code></pre>
+<p>An example of the use of <code>OriginKind</code>s are the <code>SovereignSignedViaLocation</code> and <code>SignedAccountId32AsNative</code> OriginConverters (defined in xcm-builder). The first converts an sovereign account into a <code>Signed</code> RuntimeOrigin (uses <code>SovereignAccount</code> OriginKind) while the second converts a local native account into a <code>Signed</code> RuntimeOrigin (uses <code>Native</code> OriginKind). </p>
+<pre><code class="language-rust noplayground">pub type SovereignAccountOf = AccountId32Aliases&lt;ThisNetwork, AccountId&gt;;
+(
+	// A `Signed` origin of the sovereign account that the original location controls.
+	SovereignSignedViaLocation&lt;SovereignAccountOf, RuntimeOrigin&gt;,
+	// The AccountId32 location type can be expressed natively as a `Signed` origin.
+	SignedAccountId32AsNative&lt;ThisNetwork, RuntimeOrigin&gt;,
+);
+</code></pre>
+<h3 id="isreserve"><a class="header" href="#isreserve">IsReserve</a></h3>
+<p>The <code>IsReserve</code> type must be set to specify which <code>&lt;MultiAsset, MultiLocation&gt;</code> pair we trust to deposit reserve assets on our chain.
+We can also use the unit type <code>()</code> to block <code>ReserveAssetDeposited</code> instructions.
+An example implementation is the <code>NativeAsset</code> struct, that accepts an asset iff it is a native asset.</p>
+<h3 id="isteleporter"><a class="header" href="#isteleporter">IsTeleporter</a></h3>
+<p>The <code>IsTeleporter</code> type must be set to specify which <code>&lt;MultiAsset, MultiLocation&gt;</code> pair we trust to teleport assets to our chain.
+We can also use the unit type <code>()</code> to block <code>ReceiveTeleportedAssets</code> instruction.
+An example implementation is the <code>NativeAsset</code> struct, that accepts an asset iff it is a native asset.</p>
+<h3 id="universallocation"><a class="header" href="#universallocation">UniversalLocation</a></h3>
+<p>The <code>UniversalLocation</code> type describes the location of the runtime implementing the xcm-executor in the consensus universe.
+Below we give some examples of <code>UniversalLocation</code> implementations.</p>
+<pre><code class="language-rust noplayground">//Polkadot
+X1(GlobalConsensus(NetworkId::Polkadot))
+//Kusama
+X1(GlobalConsensus(NetworkId::Kusama))
+//Statemint
+X2(GlobalConsensus(NetworkId::Polkadot), Parachain(1000))</code></pre>
+<h3 id="barrier"><a class="header" href="#barrier">Barrier</a></h3>
+<p>Before any XCMs are executed in the XCM executor, they need to pass the <code>Barrier</code>.
+The <code>Barrier</code> type implements the <code>ShouldExecute</code> trait and can be seen as the firewall of the xcm-executor.
+Each time the xcm-executor receives an XCM, it check with the barrier if the XCM should be executed.
+We can also define multiple barriers for our <code>Barrier</code> type by using a tuple.
+During execution, each barrier is checks, and if one of them succeed, the XCM is executed.
+Example of a <code>Barrier</code> implementations is <code>AllowTopLevelPaidExecutionFrom&lt;T&gt;</code> that accepts the XCM if the <code>T</code> contains the origin of the XCM and the XCM contains the <code>BuyExecution</code> instruction.
+To accept all XCMs that pay for execution we could set the barrier to <code>AllowTopLevelPaidExecutionFrom&lt;Everything&gt;</code>.
+There are multiple pre-defined barrier implementations in the xcm-builder.</p>
+<h3 id="weigher"><a class="header" href="#weigher">Weigher</a></h3>
+<p>The <code>Weigher</code> is responsible for weighing full XCMs and individual instructions.
+This weight is calculated before the XCM execution, and this calculated weight is checked against the weight_limit.
+If the weight is more than weight_limit, the xcm will not be executed.
+The weight is also passed to each <code>Barrier</code>, as certain barriers execute weight-based checks.
+After the execution of the XCM, unused weight is refunded (if possible).
+There are pre-defined <code>Weigher</code> solutions in the xcm-builder.
+The most used is the <code>FixedWeightBounds</code>:</p>
+<pre><code class="language-rust noplayground">// BaseXcmWeight is a const weight.
+FixedWeightBounds&lt;BaseXcmWeight, RuntimeCall, MaxInstructions&gt;;</code></pre>
+<p>Note: <a href="executor_config/Todo">More information</a> about weight.</p>
+<h3 id="trader"><a class="header" href="#trader">Trader</a></h3>
+<p>The <code>Trader</code> type is responsible for buying weight in the <code>BuyExecution</code> instruction using assets in the holding register and to refund unspend weight.
+One of the first implementations of the <code>Trader</code> is defined in the xcm-builder, namely the <code>UsingComponents</code> trader.</p>
+<h3 id="responsehandler"><a class="header" href="#responsehandler">ResponseHandler</a></h3>
+<p>The <code>ResponseHandler</code> type is responsible for handling the <code>QueryResponse</code> instructions.
+A <code>ResponseHandler</code> implementation has to implement the <code>OnResponse</code> trait.
+One of the implementations of the <code>ResponseHandler</code> is the <code>pallet-xcm</code>.
+This will be the main implementation for most FRAME-based systems that implement the XCM-executor.
+Another option is to use the unit type <code>()</code> if you do not want to support <code>QueryResponse</code>.</p>
+<h3 id="assettrap"><a class="header" href="#assettrap">AssetTrap</a></h3>
+<p>The <code>AssetTrap</code> type is responsible for handling the funds left over in holding after the execution of the XCM.
+The assets are stored in the AssetTrap and can be claimed using the ClaimAsset instruction.
+One of the implementations of the <code>AssetTrap</code> type is the <code>pallet-xcm</code>.
+Another option is to use the unit type <code>()</code> if you do not want to support asset trapping.
+In this case, the assets that are left in holding are burned.</p>
+<h3 id="assetclaims"><a class="header" href="#assetclaims">AssetClaims</a></h3>
+<p>The <code>AssetClaims</code> type is responsible for claiming trapped assets.
+It is during execution of the <code>ClaimAsset</code> instruction.
+One of the implementations of the <code>AssetClaims</code> type is the <code>pallet-xcm</code>.
+Another option is to use the unit type <code>()</code> if you do not want to support asset claiming.</p>
+<h3 id="assetlocker"><a class="header" href="#assetlocker">AssetLocker</a></h3>
+<p>The <code>AssetLocker</code> type is responsible with handling locking and unlocking assets.
+One of the implementations of the <code>AssetLocker</code> type is the <code>pallet-xcm</code>.
+Another option is to use the unit type <code>()</code> if you do not want to support asset locking.</p>
+<h3 id="assetexchanger"><a class="header" href="#assetexchanger">AssetExchanger</a></h3>
+<p>The <code>AssetExchanger</code> type implements the <code>AssetExchange</code> trait and handles the exchange of assets for the ExchangeAsset instruction.
+An option is to use the unit type <code>()</code> if you do not want to support asset exchanging.</p>
+<h3 id="subscriptionservice"><a class="header" href="#subscriptionservice">SubscriptionService</a></h3>
+<p>The <code>SubscriptionService</code> type implements the <code>VersionChangeNotifier</code> trait and is used for the execution of the (Un)SubscribeVersion instructions.
+When a chain receives the <code>SubscribeVersion</code> instruction, the <code>SubscriptionService</code> should send back a <code>QueryResponse</code> with the XCM version that the chain uses.
+One of the implementations of the <code>SubscriptionService</code> is the <code>pallet-xcm</code>.
+This will be the main implementation for most FRAME-based systems that implement the XCM-executor.</p>
+<h3 id="palletinstancesinfo"><a class="header" href="#palletinstancesinfo">PalletInstancesInfo</a></h3>
+<p>The <code>PalletInstancesInfo</code> type implements the <code>PalletsInfoAccess</code> trait and is used in the <code>QueryPallet</code> and <code>ExpectPallet</code> instructions.
+It supplies the information of all the pallets in the Runtime, and is therefore FRAME specific.
+The unit type <code>()</code> can be used if you do not want to support pallet information.</p>
+<h3 id="maxassetsintoholding"><a class="header" href="#maxassetsintoholding">MaxAssetsIntoHolding</a></h3>
+<p>The <code>MaxAssetsIntoHolding</code> type is used to set a limit on the number of assets in the Holding Register.
+In the worse case, the Holding Register may contain up to twice as many assets as this limit.</p>
+<h3 id="feemanager"><a class="header" href="#feemanager">FeeManager</a></h3>
+<p>The <code>FeeManager</code> type is used to manage what happens with the fees that need to be paid for certain XCM instructions.
+A <code>FeeManager</code> implementation implements the <code>FeeManager</code> trait.
+The FeeManager determines if fees should be paid (or if they are waived) and what to do with the paid fees.
+The unit type <code>()</code> can be used if you want to waive every fee.</p>
+<h3 id="messageexporter"><a class="header" href="#messageexporter">MessageExporter</a></h3>
+<p>The <code>MessageExporter</code> type implements the <code>ExportXcm</code> trait and is used to export a message to another consensus system.
+The <code>MessageExporter</code> is different from the <code>XcmSender</code>.
+The <code>MessageExporter</code> is able to spoof the origin of the message, meaning it can represent a different origin then the local (i.e.
+the caller chain's) location.
+The MessageExporter will mainly be used to send XCMs over bridges.
+For a more in depth explanation, see the <a href="https://paritytech.github.io/polkadot/doc/xcm_executor/traits/trait.ExportXcm.html">ExportXcm trait</a>.
+The unit type <code>()</code> can be used if you do not want to support XCM exporting.</p>
+<h3 id="universalaliases"><a class="header" href="#universalaliases">UniversalAliases</a></h3>
+<p>The <code>UniversalAliases</code> type is used to list the origin locations and specific universal junctions to which they are allowed to elevate
+themselves.
+<code>UniversalAliases</code> is used in the <code>UniversalOrigin</code> instruction.
+To not allow any alliasing of origins, <code>Nothing</code> can be used.</p>
+<h3 id="calldispatcher"><a class="header" href="#calldispatcher">CallDispatcher</a></h3>
+<p>The <code>CallDispatcher</code> type is used by xcm-executor to dispatch calls that are passed in the <code>Transact</code> instruction with the given origin.
+When no special call dispatcher is required, this can be set to the same type as <code>RuntimeCall</code>.
+However, <code>CallDispatcher</code> can be used to customize call dispatch, such as adapting the origin based on the call or modifying the call.</p>
+<h3 id="safecallfilter"><a class="header" href="#safecallfilter">SafeCallFilter</a></h3>
+<p>The <code>SafeCallFilter</code> type is used by the xcm-executor to whitelist calls that can be made in the <code>Transact</code> instruction.
+This is a
+temporary measure until proof size weights for XCM instructions are properly account for.
+If you want to allow all calls in <code>Tansact</code>, use <code>Everything</code>.</p>
+<h2 id="what-next-1"><a class="header" href="#what-next-1">What Next</a></h2>
+<p>Check out the <a href="https://github.com/paritytech/polkadot/blob/master/runtime/kusama/src/xcm_config.rs">Kusama</a>, <a href="https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/assets/statemine/src/xcm_config.rs">Statemine</a>, or <a href="https://github.com/paritytech/trappist/blob/main/runtime/trappist/src/xcm_config.rs">Trappist</a> for examples of how to implement the xcm-executor config.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
