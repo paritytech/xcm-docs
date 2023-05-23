@@ -23,4 +23,4 @@ Typically, an XCM takes the following path through the XCVM:
 The XCVM register you will hear most about is the `holding` register.
 An XCVM program that handles assets (which means most of them) will be putting them in and taking them out of this register.
 Instructions we'll see later like `DepositAsset`, `WithdrawAsset` and many more, make use of this register.
-You can see all registers in the [All XCVM Registers](TODO:link) section.
+You can see all registers in the [All XCVM Registers](../reference/xcvm-registers.md) section.
