@@ -23,7 +23,7 @@
     - [Reserve-backed transfers](journey/transfers/reserve.md)
   - [Transact: A general solution](journey/transact.md)
   - [Fee handling](journey/fees/README.md)
-  - [Origin]()
+  - [Origin manipulation](journey/origins.md)
   - [More register modifiers](journey/register-modifiers.md)
   - [More Holding Modifiers](./journey/holding-modifiers.md)
   - [Trap and Claim assets](./journey/trap-and-claim.md)
