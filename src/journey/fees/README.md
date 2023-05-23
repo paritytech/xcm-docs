@@ -1,7 +1,7 @@
 # Fee handling
 
 Like we learnt in the [weight and fees](../../fundamentals/weight_and_fees.md) chapter, the XCM operations our messages perform need to be paid for.
-To do this, we'll see different instructions in this chapter.
+To accomplish this, we'll make use of different instructions in this chapter.
 
 ## BuyExecution
 
