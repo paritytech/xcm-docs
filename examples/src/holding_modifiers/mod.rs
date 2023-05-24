@@ -82,7 +82,7 @@ mod tests {
 
 		ParaA::execute_with(|| {
 			assert_eq!(parachain::exchange_assets(), vec![(Here, 5 * CENTS).into()].into());
-			assert_eq!(ParachainAssets::balance(1u128, &ALICE), INITIAL_BALANCE + 10 * CENTS);
+			assert_eq!(ParachainAssets::balance(0, &ALICE), INITIAL_BALANCE + 10 * CENTS);
 			assert_eq!(ParachainBalances::free_balance(ALICE), INITIAL_BALANCE + 5 * CENTS);
 		})
 	}
@@ -130,7 +130,7 @@ mod tests {
 				parachain::exchange_assets(),
 				vec![(Parent, 5 * CENTS).into(), (Here, 5 * CENTS).into()].into()
 			);
-			assert_eq!(ParachainAssets::balance(1u128, &ALICE), INITIAL_BALANCE + 5 * CENTS);
+			assert_eq!(ParachainAssets::balance(0, &ALICE), INITIAL_BALANCE + 5 * CENTS);
 			assert_eq!(ParachainBalances::free_balance(ALICE), INITIAL_BALANCE + 5 * CENTS);
 		})
 	}

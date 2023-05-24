@@ -49,7 +49,7 @@ mod tests {
 
 			assert_eq!(parachain::MsgQueue::received_dmp(), vec![expected_message_received]);
 
-			assert_eq!(parachain::Assets::balance(1, &ALICE), INITIAL_BALANCE + teleport_amount);
+			assert_eq!(parachain::Assets::balance(0, &ALICE), INITIAL_BALANCE + teleport_amount);
 		});
 	}
 

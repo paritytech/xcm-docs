@@ -36,7 +36,7 @@ mod tests {
 			assert_ok!(ParachainPalletXcm::execute(
 				parachain::RuntimeOrigin::signed(ALICE),
 				Box::new(xcm::VersionedXcm::from(message.clone())),
-				10.into()
+				(100_000_000_000, 100_000_000_000).into()
 			));
 
 			// Check if the funds are subtracted from the account of Alice and added to the account of Bob.
