@@ -16,7 +16,7 @@
 
 //! Parachain runtime mock.
 
-use super::Balance;
+use super::{Balance, ForeignChainAliasAccount};
 use codec::{Decode, Encode};
 use core::marker::PhantomData;
 use frame_support::{
@@ -43,11 +43,11 @@ use sp_runtime::{
 use sp_std::{cell::RefCell, prelude::*};
 use xcm::{latest::prelude::*, VersionedXcm};
 use xcm_builder::{
-	AccountId32Aliases, AllowUnpaidExecutionFrom, AsPrefixedGeneralIndex, Case,
-	ConvertedConcreteId, CurrencyAdapter as XcmCurrencyAdapter, EnsureXcmOrigin,
-	FixedRateOfFungible, FixedWeightBounds, FungiblesAdapter, IsConcrete, NativeAsset, NoChecking,
-	NonFungiblesAdapter, ParentAsSuperuser, ParentIsPreset, SiblingParachainConvertsVia,
-	SignedAccountId32AsNative, SignedToAccountId32, SovereignSignedViaLocation,
+	AccountId32Aliases, AllowUnpaidExecutionFrom, AsPrefixedGeneralIndex, ConvertedConcreteId,
+	CurrencyAdapter as XcmCurrencyAdapter, EnsureXcmOrigin, FixedRateOfFungible, FixedWeightBounds,
+	FungiblesAdapter, IsConcrete, NativeAsset, NoChecking, NonFungiblesAdapter, ParentAsSuperuser,
+	ParentIsPreset, SiblingParachainConvertsVia, SignedAccountId32AsNative, SignedToAccountId32,
+	SovereignSignedViaLocation,
 };
 use xcm_executor::{
 	traits::{AssetExchange, Convert, JustTry},
@@ -58,6 +58,7 @@ pub type AccountId = AccountId32;
 pub type AssetIdForAssets = u128;
 
 pub type SovereignAccountOf = (
+	ForeignChainAliasAccount<AccountId>,
 	SiblingParachainConvertsVia<Sibling, AccountId>,
 	AccountId32Aliases<RelayNetwork, AccountId>,
 	ParentIsPreset<AccountId>,
@@ -224,15 +225,15 @@ parameter_types! {
 pub type LocalBalancesTransactor =
 	XcmCurrencyAdapter<Balances, IsConcrete<TokenLocation>, SovereignAccountOf, AccountId, ()>;
 
-pub struct FromNativeAssetToFungible<MultiLocation, AssetId>(
-	core::marker::PhantomData<(MultiLocation, AssetId)>,
-);
+pub struct FromMultiLocationToAsset<MultiLocation, AssetId>(PhantomData<(MultiLocation, AssetId)>);
 impl Convert<MultiLocation, AssetIdForAssets>
-	for FromNativeAssetToFungible<MultiLocation, AssetIdForAssets>
+	for FromMultiLocationToAsset<MultiLocation, AssetIdForAssets>
 {
 	fn convert(value: MultiLocation) -> Result<AssetIdForAssets, MultiLocation> {
 		match value {
-			MultiLocation { parents: 1, interior: Here } => Ok(1 as AssetIdForAssets),
+			MultiLocation { parents: 1, interior: Here } => Ok(0 as AssetIdForAssets),
+			MultiLocation { parents: 1, interior: X1(Parachain(para_id)) } =>
+				Ok(para_id as AssetIdForAssets),
 			_ => Err(value),
 		}
 	}
@@ -243,7 +244,7 @@ pub type ForeignAssetsTransactor = FungiblesAdapter<
 	ConvertedConcreteId<
 		AssetIdForAssets,
 		Balance,
-		FromNativeAssetToFungible<MultiLocation, AssetIdForAssets>,
+		FromMultiLocationToAsset<MultiLocation, AssetIdForAssets>,
 		JustTry,
 	>,
 	SovereignAccountOf,

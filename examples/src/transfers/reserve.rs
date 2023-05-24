@@ -43,7 +43,7 @@ mod tests {
 				(100_000_000_000, 100_000_000_000).into(),
 			));
 
-			assert_eq!(parachain::Assets::balance(1, &ALICE), INITIAL_BALANCE - withdraw_amount);
+			assert_eq!(parachain::Assets::balance(0, &ALICE), INITIAL_BALANCE - withdraw_amount);
 		});
 
 		Relay::execute_with(|| {
@@ -54,7 +54,7 @@ mod tests {
 		});
 
 		ParaB::execute_with(|| {
-			assert_eq!(parachain::Assets::balance(1, &ALICE), INITIAL_BALANCE + withdraw_amount);
+			assert_eq!(parachain::Assets::balance(0, &ALICE), INITIAL_BALANCE + withdraw_amount);
 		});
 	}
 
@@ -102,7 +102,51 @@ mod tests {
 		});
 
 		ParaB::execute_with(|| {
-			assert_eq!(parachain::Assets::balance(1, &ALICE), INITIAL_BALANCE + withdraw_amount);
+			assert_eq!(parachain::Assets::balance(0, &ALICE), INITIAL_BALANCE + withdraw_amount);
+		});
+	}
+
+	#[test]
+	fn reserve_backed_transfer_para_to_relay() {
+		MockNet::reset();
+
+		let withdraw_amount = 50 * CENTS;
+
+		let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
+			WithdrawAsset((Parent, withdraw_amount).into()),
+			InitiateReserveWithdraw {
+				assets: All.into(),
+				reserve: Parent.into(),
+				xcm: Xcm(vec![DepositAsset {
+					assets: All.into(),
+					beneficiary: Junction::AccountId32 { id: ALICE.into(), network: None }.into(),
+				}]),
+			},
+		]);
+
+		ParaA::execute_with(|| {
+			assert_ok!(parachain::PolkadotXcm::execute(
+				parachain::RuntimeOrigin::signed(ALICE),
+				Box::new(xcm::VersionedXcm::V3(message.into())),
+				(100_000_000_000, 100_000_000_000).into(),
+			));
+
+			// ALICE's balance in the parachain decreases
+			assert_eq!(parachain::Assets::balance(0, &ALICE), INITIAL_BALANCE - withdraw_amount);
+		});
+
+		Relay::execute_with(|| {
+			// Parachain(1)'s sovereign account balance decreases
+			assert_eq!(
+				relay_chain::Balances::free_balance(parachain_sovereign_account_id(1)),
+				INITIAL_BALANCE - withdraw_amount
+			);
+
+			// ALICE's balance in the relay chain increases
+			assert_eq!(
+				relay_chain::Balances::free_balance(&ALICE),
+				INITIAL_BALANCE + withdraw_amount
+			);
 		});
 	}
 }
