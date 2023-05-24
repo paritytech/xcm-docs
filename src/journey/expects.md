@@ -17,7 +17,9 @@ ExpectAsset(MultiAssets)
 ```
 
 ### Example
-For the full example, check [here](TODO).
+
+For the full example, check [here](https://github.com/paritytech/xcm-docs).
+
 ```rust, noplayground 
 WithdrawAsset((Here, AMOUNT).into()),
 BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
@@ -42,7 +44,8 @@ ExpectOrigin(Option<MultiLocation>)
 ```
 
 ### Example
-For the full example, check [here](TODO). 
+
+For the full example, check [here](https://github.com/paritytech/xcm-docs).
 The `ExpectOrigin` instruction errors because the `ClearOrigin` clears the origin register and we expect it to be equal to `Parachain(1)`.
 ```rust,noplayground
 // Set the instructions that are executed when ExpectOrigin does not pass.
@@ -78,7 +81,7 @@ ExpectPallet {
 ```
 
 ### Example
-For the full example, check [here](TODO).
+For the full example, check [here](https://github.com/paritytech/xcm-docs).
 ```rust, noplayground
 // Set the instructions that are executed when ExpectPallet does not pass.
 // In this case, reporting back an error to the Parachain.
@@ -108,7 +111,9 @@ The `ExpectError` instruction allows to only execute the instructions in the err
 ```
 
 ### Example
-For the full example, check [here](TODO).
+
+For the full example, check [here](https://github.com/paritytech/xcm-docs).
+
 ```rust,noplayground
 SetErrorHandler(Xcm(vec![
     ExpectError(Some((1, XcmError::VersionIncompatible))),
@@ -143,8 +148,10 @@ pub enum MaybeErrorCode {
 ```
 
 ### Example
-For the full example, check [here](TODO).
+
+For the full example, check [here](https://github.com/paritytech/xcm-docs).
 The transact status is reported to `Parachain(1)` if the call in the `Transact` errors. 
+
 ```rust,noplayground
 SetErrorHandler(Xcm(vec![ReportTransactStatus(QueryResponseInfo {
     destination: Parachain(1).into(),

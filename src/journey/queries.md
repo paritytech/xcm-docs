@@ -65,7 +65,9 @@ ReportHolding { response_info: QueryResponseInfo, assets: MultiAssetFilter }
 The `ReportHolding` instruction reports to the given destination the contents of the Holding Register. The `assets` field is a filter for the assets that should be reported back. The assets reported back will be, asset-wise, *the lesser of this value and the holding register*. For example, if the holding register contains 10 units of some fungible asset and the `assets` field specifies 15 units of the same asset, the result will return 10 units of that asset. Wild cards can be used to describe which assets in the holding register to report, but the response always contains assets and no wild cards. 
 
 ### Example
-For the full example, check [here](TODO). Assets are withdrawn from the account of parachain 1 on the relay chain and partly deposited in the account of parachain 2. The remaining assets are reported back to parachain 1. 
+
+For the full example, check [here](https://github.com/paritytech/xcm-docs). Assets are withdrawn from the account of parachain 1 on the relay chain and partly deposited in the account of parachain 2. The remaining assets are reported back to parachain 1. 
+
 ```rust, noplayground
 Xcm(vec![
     WithdrawAsset((Here, AMOUNT).into()),
@@ -107,7 +109,7 @@ pub struct PalletInfo {
 ```
 
 ### Example
-For the full example, check [here](TODO). It queries for all instances of pallet_balances and sends the result back to parachain 1.
+For the full example, check [here](https://github.com/paritytech/xcm-docs). It queries for all instances of pallet_balances and sends the result back to parachain 1.
 
 ```rust, noplayground
 Xcm(vec![
@@ -131,7 +133,7 @@ ReportError(QueryResponseInfo)
 ```
 
 ### Example
-For the full example, check [here](TODO). The message sets the error handler to report back any error that is thrown during execution of the instructions using the `ReportError` instruction. 
+For the full example, check [here](https://github.com/paritytech/xcm-docs). The message sets the error handler to report back any error that is thrown during execution of the instructions using the `ReportError` instruction. 
 ```rust, noplayground
 Xcm(vec![
     // Set the Error Handler to report back status of Error register.
@@ -154,8 +156,10 @@ ReportTransactStatus(QueryResponseInfo)
 ```
 
 ### Example
-For the full example, check [here](TODO). 
+
+For the full example, check [here](https://github.com/paritytech/xcm-docs). 
 Dispatches a call on the consensus system receiving this Xcm and reports back the status of the Transact Status Register.
+
 ```rust,noplayground
 Xcm(vec![
     Transact {

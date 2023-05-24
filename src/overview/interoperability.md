@@ -1,7 +1,7 @@
 # Introduction
 
 XCM is a messaging format, a language, designed to enable seamless communication between different consensus systems, for example blockchains and smart contracts.
-XCM was originally developed for the [Polkadot](https://polkadot.network/) ecosystem, but was designed to provide a common language for cross-consensus communication that can be used anywhere.
+XCM was originally developed for the [Polkadot](https://polkadot.network/) ecosystem, but was designed to be general enough to provide a common language for cross-consensus communication that can be used anywhere.
 
 XCM is a language in which interactions (programs) can be written.
 It aims to provide better interoperability between consensus systems, both more features and a better user and developer experience.

@@ -115,7 +115,7 @@ ReserveAssetDeposited(MultiAssets)
 Parachain 2 receives the XCM, mints new derivative tokens and deposit them locally to the beneficiary account.
 `ReserveAssetDeposited` is a *trusted indication*.
 As is the case with teleporting, you need to trust the reserve to have actually put the specified amount of assets in the sovereign account of this system.
-You can specify which systems you trust as reserves for which assets by configuring the [IsReserve](TODO:add_link) type in the executor.
+You can specify which systems you trust as reserves for which assets by configuring the [IsReserve](../../executor_config/index.md) type in the executor.
 In our example, both parachains trust the relay chain as a reserve for its own native token.
 
 ## Another example
