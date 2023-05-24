@@ -1,4 +1,5 @@
-# Origins
+# Origin manipulation
+
 An XCVM contains contextual information while executing XCM instructions. 
 It uses the `XcmContext` struct to provide them.
 `XcmContext` contains information such as the origin of the corresponding XCM, the hash of the message, and the topic of the XCM.

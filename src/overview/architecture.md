@@ -23,14 +23,17 @@ The XCM executor follows the Cross-Consensus Virtual Machine (XCVM) specificatio
 
 The XCM executor is highly configurable.
 XCM builder provides building blocks people can use to configure their executor according to their needs.
+Many of these building blocks will be explained in the [Config Deep Dive](../executor_config/index.md) chapter.
+They cover common use-cases but are not meant to be exhaustive.
+It's very easy to build your own building blocks for your specific configuration when needed, using these as examples.
 
 ## Pallet
 
-The XCM pallet is a FRAME pallet that can be used to execute XCMs locally or send them to a different system.
+The XCM pallet is a [FRAME](https://docs.substrate.io/quick-start/substrate-at-a-glance/) pallet that can be used to execute XCMs locally or send them to a different system.
 It also has extrinsics for specific use cases such as teleporting assets or doing reserve asset transfers, which we'll talk about later.
 It's the glue between XCM and FRAME, which is highly used in the Polkadot ecosystem.
 
 ## Simulator 
 
 The simulator allows for testing XCMs fast, without needing to boot up several different nodes in a network, or test in production.
-It's a very useful tool which we'll use later to build and test different XCMs.
+It's a very useful tool which we'll use throughout this document to build and test different XCMs.

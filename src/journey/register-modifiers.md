@@ -11,13 +11,13 @@ In the previous chapters we already saw instructions that modified the XCVM regi
 ```rust
 SetErrorHandler(Xcm<Call>)
 ```
-The `SetErrorHandler` instructions is used to set the Error Handler Register. As discussed in the [XCVM chapter](TODO), the Error Handler is executed when an error is thrown during the regular instruction execution. 
+The `SetErrorHandler` instructions is used to set the Error Handler Register. As discussed in the [XCVM chapter](../fundamentals/xcvm.md), the Error Handler is executed when an error is thrown during the regular instruction execution. 
 
 ## SetAppendix
 ```rust
 SetAppendix(Xcm<Call>)
 ```
-The `SetAppendix` instruction is used to set the Appendix Register. As discussed in the [XCVM chapter](TODO), the Appendix instructions are executed after the regular and error handler instruction are executed. These instructions are executed regardless of whether an error occurred. 
+The `SetAppendix` instruction is used to set the Appendix Register. As discussed in the [XCVM chapter](../fundamentals/xcvm.md), the Appendix instructions are executed after the regular and error handler instruction are executed. These instructions are executed regardless of whether an error occurred. 
 
 ## ClearError
 ```rust

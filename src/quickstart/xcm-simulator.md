@@ -1,13 +1,11 @@
 # XCM Simulator
-Setting up a live network with multiple connected parachains for testing XCM is not straight forward. The `XCM-simulator` was created as a solution to this problem. The XCM-simulator is a network simulator specifically designed for testing and playing around with XCM. It uses mock relay chain and parachain runtime. 
+Setting up a live network with multiple connected parachains for testing XCM is not straight forward.
+The `xcm-simulator` was created as a solution to this problem.
+It's a network simulator specifically designed for testing and tinkering with XCM.
+It uses mock runtimes for a relay chain and parachains. 
 
-For testing xcm configurations for live runtime environments we use the `XCM-emulator`. The XCM-emulator can use production relay chain and parachain runtimes. Users can plug in Kusama, Statemine, or their custom runtime etc. With up-to-date chain specs, it's able to verify if specific XCM messages work in live networks. The specific use cases will be further explained in the chapter on [testing](testing/README.md).
+Although it's a great tool to learn and test XCMs, it shouldn't be the only thing you use to actually test your XCM-powered solution.
+We'll get into tools and best practices for testing in the [testing](../testing/index.md) chapter.
 
-In the next section we will take a first look at an XCM. The XCM-simulator is used for the example code.
-
-[Next: First Look at an XCM](first-look.md)
-
-
-
-
-
+We'll use the simulator throughout the documentation to show different XCMs in action.
+In the next section we will take a first look at an XCM.

@@ -1,8 +1,8 @@
 # Transfers
 
 The first feature you'll be interested in when dealing with XCM is being able to transfer assets between consensus systems.
-In the [Quickstart](../../overview/README.md) section, we saw a simple XCM that when executed, would send assets between two accounts on the same consensus system.
-Now that we've learnt the [fundamentals](../../fundamentals/README.md), let's go over those same instructions.
+In the [quickstart](../../quickstart/index.md) chapter, we saw a simple XCM that when executed, would send assets between two accounts on the same consensus system.
+Now that we've learnt the [fundamentals](../../fundamentals/index.md), let's go over those same instructions once again.
 
 ## WithdrawAsset
 
@@ -22,7 +22,7 @@ BuyExecution { fees: MultiAssets, weight_limit: WeightLimit },
 
 Because XCM is designed to be agnostic to the underlying consensus system, it doesn't have fee payment baked in.
 This instruction lets you pay for the execution of the XCM using the assets in the holding register.
-Most XCMs are not allowed to be executed (blocked by the [barrier](TODO:link)) if they don't contain this instruction as one of the first ones to pay for all future ones.
+Most XCMs are not allowed to be executed (blocked by the [barrier](../../executor_config/index.md)) if they don't contain this instruction as one of the first ones to pay for all future ones.
 
 ## DepositAsset
 
@@ -47,7 +47,7 @@ let message = Xcm(vec![
 ```
 
 As we've seen, the above message results in withdrawing assets from the origin of the message, paying for execution and depositing the rest to another account on the same system.
-The full example can be seen in [the examples repo](TODO:add_link).
+The full example can be seen in [the repo](https://github.com/paritytech/xcm-docs).
 
 ## Transferring between systems
 

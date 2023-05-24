@@ -1,4 +1,5 @@
 # Transact
+
 XCM contains an instruction that allows for the execution of calls (from a `RuntimeCall` in a FRAME-based system, to a smart contract function call in an EVM-based system) in a consensus system.
 It is the `Transact` instruction and it looks like this:
 
@@ -15,7 +16,7 @@ The `origin_kind` is of type [OriginKind](https://paritytech.github.io/polkadot/
 In the xcm-executor, the `origin_kind` is used to determine how to convert a `MultiLocation` origin into a `RuntimeOrigin`. 
 For more information, check out the [xcm-executor config docs](../executor_config/index.html). 
 
-The `require_weight_at_most` field tells the XCVM executing the call how much [weight](../fundamentals/fees.md) it can use. 
+The `require_weight_at_most` field tells the XCVM executing the call how much [weight](../fundamentals/weight_and_fees.md) it can use. 
 If the call uses more weight than the specified `require_weight_at_most`, the execution of the call fails. 
 
 The `call` field is of type `DoubleEncoded<Call>`. 
@@ -52,7 +53,7 @@ It executes, among other things, the following steps:
 
 
 ## Example 1
-For the full example, check [here](TODO).
+For the full example, check [the repo](https://github.com/paritytech/xcm-docs).
 
 In this example, the relay chain executes the `set_balance` function of `pallet_balances` on `Parachain(1)`.
 This function requires the origin to be root. We enable the root origin for the relay chain by setting `ParentAsSuperuser` for the `OriginConverter` config type. 
@@ -77,7 +78,7 @@ let message = Xcm(vec![
 ```
 
 ## Example 2
-For the full example, check [here](TODO).
+For the full example, check [the repo](https://github.com/paritytech/xcm-docs).
 
 In this example, as Parachain(1), we create an NFT collection on the relay chain and we then mint an NFT with ID 1. 
 The admin for the nft collection is parachain(1). The call looks as follows:

@@ -11,7 +11,7 @@ BuyExecution { fees: MultiAsset, weight_limit: WeightLimit }
 
 This instruction is used to buy weight using fees.
 While in some cases there's no need to pay for execution (if you control both systems for example), in most cases you'll need to add this instruction.
-There's a predefined [barrier](../../config/barrier.md), `AllowTopLevelPaidExecutionFrom<T>`, that explicitly drops messages that do not include this instruction.
+There's a predefined [barrier](../../executor_config/index.md), `AllowTopLevelPaidExecutionFrom<T>`, that explicitly drops messages that do not include this instruction.
 
 Let's grab the teleport message from the [transfers chapter](../transfers/teleports.md) and add fee payment.
 
@@ -67,7 +67,7 @@ UnpaidExecution { weight_limit: WeightLimit, check_origin: Option<MultiLocation>
 
 This instruction is used for explicitly stating this message shouldn't be paid for.
 It can be used as a way of identifying certain priviledged messages that don't pay fees, coming from a particular system.
-This instruction can be searched for in [barriers](TODO:add_link) to allow this.
+This instruction can be searched for in [barriers](../../executor_config/index.md) to allow this.
 Make sure you trust the origin system because it won't be paying fees.
 There's already a predefined barrier in xcm-builder, `AllowExplicitUnpaidExecutionFrom<T>`, that makes sure this is the first instruction in the message.
 As always, you can build your own for your own use-cases.
@@ -85,7 +85,7 @@ Refunds any surplus weight previously bought with `BuyExecution`.
 This is useful in many cases:
 - When you pay for execution of your whole message, but there's an error and not all instructions get executed
 - When you set an error handler, buy weight for it, but in the end there's no error so it doesn't get called
-- When you use the [`Transact` instruction]() and the call takes less weight than expected
+- When you use the [`Transact` instruction](../transact.md) and the call takes less weight than expected
 
 ### Example
 
@@ -109,4 +109,4 @@ let message = Xcm(vec![
 
 In this example, we pay upfront for all the transactions we do later with the `DepositAsset` instructions.
 If any transaction throws an error (for example, due to lack of funds), the error handler will be called and the weight for all the instructions that weren't executed is refunded.
-For the full example, check our [examples repo](TODO:add_link).
+For the full example, check our [repo](https://github.com/paritytech/xcm-docs).
