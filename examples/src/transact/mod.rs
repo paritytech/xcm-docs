@@ -15,12 +15,11 @@ mod tests {
 	fn transact_set_balance() {
 		MockNet::reset();
 		// Runtime call dispatched by the Transact instruction.
-		// set_balance requires root origin.
+		// force_set_balance requires root origin.
 		let call = parachain::RuntimeCall::Balances(
-			pallet_balances::Call::<parachain::Runtime>::set_balance {
+			pallet_balances::Call::<parachain::Runtime>::force_set_balance {
 				who: ALICE,
 				new_free: 5 * AMOUNT,
-				new_reserved: 0,
 			},
 		);
 
