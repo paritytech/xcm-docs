@@ -48,6 +48,6 @@
 
 - [Cookbook]()
 - [All Instructions]()
-- [All XCVM Registers]()
+- [All XCVM Registers](reference/xcvm-registers.md)
 
 [Next Steps]()
