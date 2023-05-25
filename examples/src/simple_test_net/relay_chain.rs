@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright Parity Technologies (UK) Ltd.
 // This file is part of Polkadot.
 
 // Polkadot is free software: you can redistribute it and/or modify
@@ -18,8 +18,11 @@
 
 use frame_support::{
 	construct_runtime, parameter_types,
-	traits::{AsEnsureOriginWithArg, Everything, Nothing},
-	weights::Weight,
+	traits::{AsEnsureOriginWithArg, Contains, Everything, Nothing},
+	weights::{
+		constants::{WEIGHT_PROOF_SIZE_PER_MB, WEIGHT_REF_TIME_PER_SECOND},
+		Weight,
+	},
 };
 
 use frame_system::EnsureRoot;
@@ -30,15 +33,16 @@ use polkadot_parachain::primitives::Id as ParaId;
 use polkadot_runtime_parachains::{configuration, origin, shared, ump};
 use xcm::latest::prelude::*;
 use xcm_builder::{
-	AccountId32Aliases, AllowUnpaidExecutionFrom, AsPrefixedGeneralIndex, ChildParachainAsNative,
-	ChildParachainConvertsVia, ChildSystemParachainAsSuperuser, ConvertedConcreteId,
-	CurrencyAdapter as XcmCurrencyAdapter, FixedRateOfFungible, FixedWeightBounds, IsConcrete,
-	NoChecking, NonFungiblesAdapter, SiblingParachainConvertsVia, SignedAccountId32AsNative,
-	SignedToAccountId32, SovereignSignedViaLocation,
+	AccountId32Aliases, AllowExplicitUnpaidExecutionFrom, AllowTopLevelPaidExecutionFrom,
+	AsPrefixedGeneralIndex, ChildParachainAsNative, ChildParachainConvertsVia,
+	ChildSystemParachainAsSuperuser, ConvertedConcreteId, CurrencyAdapter as XcmCurrencyAdapter,
+	FixedRateOfFungible, FixedWeightBounds, IsConcrete, NoChecking, NonFungiblesAdapter,
+	SiblingParachainConvertsVia, SignedAccountId32AsNative, SignedToAccountId32,
+	SovereignSignedViaLocation, WithComputedOrigin,
 };
 use xcm_executor::{traits::JustTry, Config, XcmExecutor};
 
-use super::Balance;
+use super::{AllowNoteUnlockables, AllowUnlocks, Balance, ForeignChainAliasAccount};
 
 pub type AccountId = AccountId32;
 
@@ -126,6 +130,7 @@ parameter_types! {
 }
 
 pub type SovereignAccountOf = (
+	ForeignChainAliasAccount<AccountId>,
 	AccountId32Aliases<RelayNetwork, AccountId>,
 	ChildParachainConvertsVia<ParaId, AccountId>,
 	SiblingParachainConvertsVia<ParaId, AccountId>,
@@ -153,15 +158,48 @@ type LocalOriginConverter = (
 );
 
 parameter_types! {
-	pub const BaseXcmWeight: Weight = Weight::from_parts(1_000, 1_000);
-	pub TokensPerSecondPerByte: (AssetId, u128, u128) =
+	pub const XcmInstructionWeight: Weight = Weight::from_parts(1_000, 1_000);
+	pub TokensPerSecondPerMegabyte: (AssetId, u128, u128) =
 		(Concrete(TokenLocation::get()), 1_000_000_000_000, 1024 * 1024);
 	pub const MaxInstructions: u32 = 100;
 	pub const MaxAssetsIntoHolding: u32 = 64;
 }
 
+pub fn estimate_message_fee(number_of_instructions: u64) -> u128 {
+	let weight = estimate_message_weight(number_of_instructions);
+
+	estimate_fee_for_weight(weight)
+}
+
+pub fn estimate_message_weight(number_of_instructions: u64) -> Weight {
+	XcmInstructionWeight::get().saturating_mul(number_of_instructions)
+}
+
+pub fn estimate_fee_for_weight(weight: Weight) -> u128 {
+	let (_, units_per_second, units_per_mb) = TokensPerSecondPerMegabyte::get();
+
+	units_per_second * (weight.ref_time() as u128) / (WEIGHT_REF_TIME_PER_SECOND as u128) +
+		units_per_mb * (weight.proof_size() as u128) / (WEIGHT_PROOF_SIZE_PER_MB as u128)
+}
+
+pub struct ChildrenParachains;
+impl Contains<MultiLocation> for ChildrenParachains {
+	fn contains(location: &MultiLocation) -> bool {
+		matches!(location, MultiLocation { parents: 0, interior: X1(Parachain(_)) })
+	}
+}
+
 pub type XcmRouter = super::RelayChainXcmRouter;
-pub type Barrier = AllowUnpaidExecutionFrom<Everything>;
+pub type Barrier = WithComputedOrigin<
+	(
+		AllowNoteUnlockables,
+		AllowUnlocks,
+		AllowExplicitUnpaidExecutionFrom<ChildrenParachains>,
+		AllowTopLevelPaidExecutionFrom<Everything>,
+	),
+	UniversalLocation,
+	ConstU32<1>,
+>;
 
 pub struct XcmConfig;
 impl Config for XcmConfig {
@@ -173,8 +211,8 @@ impl Config for XcmConfig {
 	type IsTeleporter = ();
 	type UniversalLocation = UniversalLocation;
 	type Barrier = Barrier;
-	type Weigher = FixedWeightBounds<BaseXcmWeight, RuntimeCall, MaxInstructions>;
-	type Trader = FixedRateOfFungible<TokensPerSecondPerByte, ()>;
+	type Weigher = FixedWeightBounds<XcmInstructionWeight, RuntimeCall, MaxInstructions>;
+	type Trader = FixedRateOfFungible<TokensPerSecondPerMegabyte, ()>;
 	type ResponseHandler = XcmPallet;
 	type AssetTrap = XcmPallet;
 	type AssetLocker = XcmPallet;
@@ -207,7 +245,7 @@ impl pallet_xcm::Config for Runtime {
 	type XcmExecutor = XcmExecutor<XcmConfig>;
 	type XcmTeleportFilter = Everything;
 	type XcmReserveTransferFilter = Everything;
-	type Weigher = FixedWeightBounds<BaseXcmWeight, RuntimeCall, MaxInstructions>;
+	type Weigher = FixedWeightBounds<XcmInstructionWeight, RuntimeCall, MaxInstructions>;
 	type UniversalLocation = UniversalLocation;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;

@@ -1,4 +1,4 @@
-// Copyright 2021 Parity Technologies (UK) Ltd.
+// Copyright Parity Technologies (UK) Ltd.
 // This file is part of Polkadot.
 
 // Polkadot is free software: you can redistribute it and/or modify
@@ -19,10 +19,10 @@ pub mod relay_chain;
 
 use core::{borrow::Borrow, marker::PhantomData};
 
-use frame_support::{sp_tracing, traits::GenesisBuild};
+use frame_support::{ensure, pallet_prelude::Weight, sp_tracing, traits::GenesisBuild};
 use sp_core::blake2_256;
 use xcm::prelude::*;
-use xcm_executor::traits::Convert;
+use xcm_executor::traits::{Convert, ShouldExecute};
 use xcm_simulator::{decl_test_network, decl_test_parachain, decl_test_relay_chain};
 
 // Accounts
@@ -34,7 +34,7 @@ pub const BOB: sp_runtime::AccountId32 = sp_runtime::AccountId32::new([2u8; 32])
 pub type Balance = u128;
 pub const UNITS: Balance = 10_000_000_000;
 pub const CENTS: Balance = UNITS / 100; // 100_000_000
-pub const INITIAL_BALANCE: u128 = 1 * UNITS;
+pub const INITIAL_BALANCE: u128 = 10 * UNITS;
 
 decl_test_parachain! {
 	pub struct ParaA {
@@ -126,18 +126,25 @@ pub fn para_ext(para_id: u32) -> sp_io::TestExternalities {
 
 	let mut t = frame_system::GenesisConfig::default().build_storage::<Runtime>().unwrap();
 
-	let other_para_id: u32 = match para_id {
-		1 => 2,
-		2 => 1,
+	let other_para_ids = match para_id {
+		1 => [2, 3],
+		2 => [1, 3],
+		3 => [1, 2],
 		_ => panic!("No parachain exists with para_id = {para_id}"),
 	};
 
 	pallet_balances::GenesisConfig::<Runtime> {
-		balances: vec![
-			(ALICE, INITIAL_BALANCE),
-			(relay_sovereign_account_id(), INITIAL_BALANCE),
-			(sibling_account_sovereign_account_id(other_para_id, ALICE), INITIAL_BALANCE),
-		],
+		balances: vec![(ALICE, INITIAL_BALANCE), (relay_sovereign_account_id(), INITIAL_BALANCE)]
+			.into_iter()
+			.chain(other_para_ids.iter().map(
+				// Initial balance of native token for ALICE on all sibling sovereign accounts
+				|&para_id| (sibling_account_sovereign_account_id(para_id, ALICE), INITIAL_BALANCE),
+			))
+			.chain(other_para_ids.iter().map(
+				// Initial balance of native token all sibling sovereign accounts
+				|&para_id| (sibling_sovereign_account_id(para_id), INITIAL_BALANCE),
+			))
+			.collect(),
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
@@ -145,13 +152,26 @@ pub fn para_ext(para_id: u32) -> sp_io::TestExternalities {
 	pallet_assets::GenesisConfig::<Runtime> {
 		assets: vec![
 			(0u128, ADMIN, false, 1u128), // Create derivative asset for relay's native token
-			(other_para_id as u128, ADMIN, false, 1u128), // Create derivative asset for the other parachain's native token
-		],
+		]
+		.into_iter()
+		.chain(other_para_ids.iter().map(|&para_id| (para_id as u128, ADMIN, false, 1u128))) // Derivative assets for the other parachains' native tokens
+		.collect(),
 		metadata: Default::default(),
 		accounts: vec![
 			(0u128, ALICE, INITIAL_BALANCE),
-			(other_para_id as u128, ALICE, INITIAL_BALANCE),
-		],
+			(0u128, relay_sovereign_account_id(), INITIAL_BALANCE),
+		]
+		.into_iter()
+		.chain(other_para_ids.iter().map(|&para_id| (para_id as u128, ALICE, INITIAL_BALANCE))) // Initial balance for derivatives of other parachains' tokens
+		.chain(other_para_ids.iter().map(|&para_id| {
+			(0u128, sibling_account_sovereign_account_id(para_id, ALICE), INITIAL_BALANCE)
+		})) // Initial balance for sovereign accounts (for fee payment)
+		.chain(
+			other_para_ids
+				.iter()
+				.map(|&para_id| (0u128, sibling_sovereign_account_id(para_id), INITIAL_BALANCE)),
+		) // Initial balance for sovereign accounts (for fee payment)
+		.collect(),
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
@@ -175,6 +195,10 @@ pub fn relay_ext() -> sp_io::TestExternalities {
 			(ALICE, INITIAL_BALANCE),
 			(parachain_sovereign_account_id(1), INITIAL_BALANCE),
 			(parachain_sovereign_account_id(2), INITIAL_BALANCE),
+			(parachain_sovereign_account_id(3), INITIAL_BALANCE),
+			(parachain_account_sovereign_account_id(1, ALICE), INITIAL_BALANCE),
+			(parachain_account_sovereign_account_id(2, ALICE), INITIAL_BALANCE),
+			(parachain_account_sovereign_account_id(3, ALICE), INITIAL_BALANCE),
 		],
 	}
 	.assimilate_storage(&mut t)
@@ -252,5 +276,38 @@ impl<AccountId> ForeignChainAliasAccount<AccountId> {
 
 	fn from_relay_32(id: &[u8; 32], parents: u8) -> [u8; 32] {
 		(FOREIGN_CHAIN_PREFIX_RELAY, id, parents).using_encoded(blake2_256)
+	}
+}
+
+// TODO: Is this vulnerable to DoS? It's how the instructions work
+pub struct AllowNoteUnlockables;
+impl ShouldExecute for AllowNoteUnlockables {
+	fn should_execute<RuntimeCall>(
+		_origin: &MultiLocation,
+		instructions: &mut [Instruction<RuntimeCall>],
+		_max_weight: Weight,
+		_weight_credit: &mut Weight,
+	) -> Result<(), ()> {
+		ensure!(instructions.len() == 1, ());
+		match instructions.first() {
+			Some(NoteUnlockable { .. }) => Ok(()),
+			_ => Err(()),
+		}
+	}
+}
+
+pub struct AllowUnlocks;
+impl ShouldExecute for AllowUnlocks {
+	fn should_execute<RuntimeCall>(
+		_origin: &MultiLocation,
+		instructions: &mut [Instruction<RuntimeCall>],
+		_max_weight: Weight,
+		_weight_credit: &mut Weight,
+	) -> Result<(), ()> {
+		ensure!(instructions.len() == 1, ());
+		match instructions.first() {
+			Some(UnlockAsset { .. }) => Ok(()),
+			_ => Err(()),
+		}
 	}
 }
