@@ -19,7 +19,12 @@ pub mod relay_chain;
 
 use core::{borrow::Borrow, marker::PhantomData};
 
-use frame_support::{ensure, pallet_prelude::Weight, sp_tracing, traits::GenesisBuild};
+use frame_support::{
+	ensure,
+	pallet_prelude::Weight,
+	sp_tracing,
+	traits::{GenesisBuild, ProcessMessageError},
+};
 use sp_core::blake2_256;
 use xcm::prelude::*;
 use xcm_executor::traits::{Convert, ShouldExecute};
@@ -287,11 +292,11 @@ impl ShouldExecute for AllowNoteUnlockables {
 		instructions: &mut [Instruction<RuntimeCall>],
 		_max_weight: Weight,
 		_weight_credit: &mut Weight,
-	) -> Result<(), ()> {
-		ensure!(instructions.len() == 1, ());
+	) -> Result<(), ProcessMessageError> {
+		ensure!(instructions.len() == 1, ProcessMessageError::BadFormat);
 		match instructions.first() {
 			Some(NoteUnlockable { .. }) => Ok(()),
-			_ => Err(()),
+			_ => Err(ProcessMessageError::BadFormat),
 		}
 	}
 }
@@ -303,11 +308,11 @@ impl ShouldExecute for AllowUnlocks {
 		instructions: &mut [Instruction<RuntimeCall>],
 		_max_weight: Weight,
 		_weight_credit: &mut Weight,
-	) -> Result<(), ()> {
-		ensure!(instructions.len() == 1, ());
+	) -> Result<(), ProcessMessageError> {
+		ensure!(instructions.len() == 1, ProcessMessageError::BadFormat);
 		match instructions.first() {
 			Some(UnlockAsset { .. }) => Ok(()),
-			_ => Err(()),
+			_ => Err(ProcessMessageError::BadFormat),
 		}
 	}
 }
