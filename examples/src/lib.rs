@@ -1,7 +1,6 @@
 mod expects;
 mod first_look;
 mod holding_modifiers;
-mod kusama_test_net;
 mod locks;
 mod origins;
 mod queries;

@@ -184,19 +184,18 @@ mod tests {
 	/// If the status was not succesful, the `ExpectTransactStatus` errors,
 	/// and the ErrorHandler will report the error back to the Parachain.
 	///
-	/// Assert that `set_balance` execution fails as it requires the origin to be root,
+	/// Assert that `force_set_balance` execution fails as it requires the origin to be root,
 	/// and the origin_kind is `SovereignAccount`.
 	#[test]
 	fn expect_transact_status() {
 		MockNet::reset();
 		// Runtime call dispatched by the Transact instruction.
-		// set_balance requires root origin.
+		// force_set_balance requires root origin.
 		let call = relay_chain::RuntimeCall::Balances(pallet_balances::Call::<
 			relay_chain::Runtime,
-		>::set_balance {
+		>::force_set_balance {
 			who: ALICE,
 			new_free: 100,
-			new_reserved: 0,
 		});
 
 		let message = Xcm(vec![
@@ -219,7 +218,7 @@ mod tests {
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone(),));
 		});
 
-		// The execution of set_balance does not succeed, and error is reported back to the parachain.
+		// The execution of force_set_balance does not succeed, and error is reported back to the parachain.
 		ParaA::execute_with(|| {
 			assert_eq!(
 				parachain::MsgQueue::received_dmp(),
