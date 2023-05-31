@@ -7,7 +7,7 @@ mod tests {
 	use xcm::latest::prelude::*;
 	use xcm_simulator::TestExt;
 
-	const AMOUNT: u128 = 1 * CENTS;
+	const AMOUNT: u128 = 50 * CENTS;
 	/// Arbitrary query id
 	const QUERY_ID: u64 = 1234;
 
@@ -20,14 +20,16 @@ mod tests {
 	fn query_holding() {
 		MockNet::reset();
 
-		// Send a message which fully succeeds to the relay chain.
+		let fee_in_relay = relay_chain::estimate_message_fee(4);
+
+		// Send a message which succeeds to the relay chain.
 		// And then report the status of the holding register back to ParaA
 		ParaA::execute_with(|| {
 			let message = Xcm(vec![
 				WithdrawAsset((Here, AMOUNT).into()),
-				BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: Unlimited },
+				BuyExecution { fees: (Here, fee_in_relay).into(), weight_limit: Unlimited },
 				DepositAsset {
-					assets: Definite((Here, AMOUNT - 5).into()),
+					assets: Definite((Here, AMOUNT - (5 * CENTS)).into()),
 					beneficiary: Parachain(2).into(),
 				},
 				ReportHolding {
@@ -53,7 +55,7 @@ mod tests {
 			// Deposit executed
 			assert_eq!(
 				relay_chain::Balances::free_balance(parachain_sovereign_account_id(2)),
-				INITIAL_BALANCE + AMOUNT - 5
+				INITIAL_BALANCE + (AMOUNT - 5 * CENTS)
 			);
 		});
 
@@ -63,7 +65,9 @@ mod tests {
 				parachain::MsgQueue::received_dmp(),
 				vec![Xcm(vec![QueryResponse {
 					query_id: QUERY_ID,
-					response: Response::Assets((Parent, AMOUNT - (AMOUNT - 5)).into()),
+					response: Response::Assets(
+						(Parent, AMOUNT - (AMOUNT - 5 * CENTS) - fee_in_relay).into()
+					),
 					max_weight: Weight::from_all(0),
 					querier: Some(Here.into()),
 				}])],
@@ -72,7 +76,7 @@ mod tests {
 	}
 
 	/// Scenario:
-	/// Parachain A wants to query the `PalletInfo` of the balances pallet in the relay chain.
+	/// Parachain A wants to query for information on the balances pallet in the relay chain.
 	/// It sends a `QueryPallet` instruction to the relay chain.
 	/// The relay chain responds with a `QueryResponse` instruction containing the `PalletInfo`.
 	///
@@ -81,15 +85,24 @@ mod tests {
 	fn query_pallet() {
 		MockNet::reset();
 
+		let fee_in_relay = relay_chain::estimate_message_fee(3);
+
 		ParaA::execute_with(|| {
-			let message = Xcm(vec![QueryPallet {
-				module_name: "pallet_balances".into(),
-				response_info: QueryResponseInfo {
-					destination: Parachain(1).into(),
-					query_id: QUERY_ID,
-					max_weight: Weight::from_all(0),
+			let message = Xcm(vec![
+				WithdrawAsset((Here, fee_in_relay).into()),
+				BuyExecution {
+					fees: (Here, fee_in_relay).into(),
+					weight_limit: WeightLimit::Unlimited,
 				},
-			}]);
+				QueryPallet {
+					module_name: "pallet_balances".into(),
+					response_info: QueryResponseInfo {
+						destination: Parachain(1).into(),
+						query_id: QUERY_ID,
+						max_weight: Weight::from_all(0),
+					},
+				},
+			]);
 
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone(),));
 			print_para_events();
@@ -121,26 +134,36 @@ mod tests {
 	fn report_error() {
 		MockNet::reset();
 
+		let fee_in_relay =
+			relay_chain::estimate_message_fee(4) + relay_chain::estimate_message_fee(1);
+
 		let message = Xcm(vec![
+			WithdrawAsset((Here, fee_in_relay).into()),
+			BuyExecution {
+				fees: (Here, fee_in_relay).into(),
+				weight_limit: WeightLimit::Unlimited,
+			},
 			// Set the Error Handler to report back status of Error register.
 			SetErrorHandler(Xcm(vec![ReportError(QueryResponseInfo {
 				destination: Parachain(1).into(),
 				query_id: QUERY_ID,
 				max_weight: Weight::from_all(0),
 			})])),
-			Trap(1u64),
+			Trap(1u64), // Error is thrown on index 3
 		]);
 
 		ParaA::execute_with(|| {
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone()));
 		});
 
+		let index_of_error = 3;
+
 		ParaA::execute_with(|| {
 			assert_eq!(
 				parachain::MsgQueue::received_dmp(),
 				vec![Xcm(vec![QueryResponse {
 					query_id: QUERY_ID,
-					response: Response::ExecutionResult(Some((1, XcmError::Trap(1)))),
+					response: Response::ExecutionResult(Some((index_of_error, XcmError::Trap(1)))),
 					max_weight: Weight::from_all(0),
 					querier: Some(Here.into()),
 				}])],
@@ -162,10 +185,19 @@ mod tests {
 			},
 		);
 
+		let message_fee = relay_chain::estimate_message_fee(5);
+		let remark_weight_estimation = Weight::from_parts(20_000_000, 100_000); // We overestimate the weight taken by this extrinsic
+		let remark_fee_estimation = relay_chain::estimate_fee_for_weight(remark_weight_estimation);
+
 		let message = Xcm(vec![
+			WithdrawAsset((Here, message_fee + remark_fee_estimation).into()),
+			BuyExecution {
+				fees: (Here, message_fee + remark_fee_estimation).into(),
+				weight_limit: WeightLimit::Unlimited,
+			},
 			Transact {
 				origin_kind: OriginKind::SovereignAccount,
-				require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+				require_weight_at_most: remark_weight_estimation,
 				call: call.encode().into(),
 			},
 			ReportTransactStatus(QueryResponseInfo {
