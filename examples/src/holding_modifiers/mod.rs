@@ -13,8 +13,8 @@ mod tests {
 	#[test]
 	fn burn_assets() {
 		let message = Xcm(vec![
+			UnpaidExecution { weight_limit: WeightLimit::Unlimited, check_origin: None },
 			WithdrawAsset((Here, 10 * CENTS).into()),
-			BuyExecution { fees: (Here, CENTS).into(), weight_limit: WeightLimit::Unlimited },
 			BurnAsset((Here, 4 * CENTS).into()),
 			ReportHolding {
 				response_info: QueryResponseInfo {
@@ -58,8 +58,8 @@ mod tests {
 		parachain::set_exchange_assets(assets_in_exchange);
 
 		let message = Xcm(vec![
+			UnpaidExecution { weight_limit: WeightLimit::Unlimited, check_origin: None },
 			WithdrawAsset((Here, 10 * CENTS).into()),
-			BuyExecution { fees: (Here, CENTS).into(), weight_limit: WeightLimit::Unlimited },
 			// Maximal field set to true.
 			ExchangeAsset {
 				give: Definite((Here, 5 * CENTS).into()),
@@ -103,8 +103,8 @@ mod tests {
 		parachain::set_exchange_assets(assets_in_exchange);
 
 		let message = Xcm(vec![
+			UnpaidExecution { weight_limit: WeightLimit::Unlimited, check_origin: None },
 			WithdrawAsset((Here, 10 * CENTS).into()),
-			BuyExecution { fees: (Here, CENTS).into(), weight_limit: WeightLimit::Unlimited },
 			// Maximal field set to false.
 			ExchangeAsset {
 				give: Definite((Here, 5 * CENTS).into()),

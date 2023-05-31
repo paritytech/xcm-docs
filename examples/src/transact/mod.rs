@@ -6,8 +6,6 @@ mod tests {
 	use xcm::latest::prelude::*;
 	use xcm_simulator::TestExt;
 
-	const AMOUNT: u128 = 1 * CENTS;
-
 	/// Scenario:
 	/// Relay chain sets the balance of Alice on Parachain(1).
 	/// The relay chain is able to do this, because Parachain(1) trusts the relay chain to execute runtime calls as root.
@@ -19,16 +17,22 @@ mod tests {
 		let call = parachain::RuntimeCall::Balances(
 			pallet_balances::Call::<parachain::Runtime>::force_set_balance {
 				who: ALICE,
-				new_free: 5 * AMOUNT,
+				new_free: 5 * CENTS,
 			},
 		);
 
+		let message_fee = parachain::estimate_message_fee(3);
+		let set_balance_weight_estimation = Weight::from_parts(1_000_000_000, 10_000);
+		let set_balance_fee_estimation =
+			parachain::estimate_fee_for_weight(set_balance_weight_estimation);
+		let fees = message_fee + set_balance_fee_estimation;
+
 		let message = Xcm(vec![
-			WithdrawAsset((Here, AMOUNT).into()),
-			BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+			WithdrawAsset((Parent, fees).into()),
+			BuyExecution { fees: (Parent, fees).into(), weight_limit: WeightLimit::Unlimited },
 			Transact {
 				origin_kind: OriginKind::Superuser,
-				require_weight_at_most: Weight::from_parts(1_000_000_000, 1024 * 1024),
+				require_weight_at_most: set_balance_weight_estimation,
 				call: call.encode().into(),
 			},
 		]);
@@ -38,7 +42,7 @@ mod tests {
 		});
 
 		ParaA::execute_with(|| {
-			assert_eq!(ParachainBalances::free_balance(ALICE), 5 * AMOUNT);
+			assert_eq!(ParachainBalances::free_balance(ALICE), 5 * CENTS);
 		})
 	}
 
@@ -49,12 +53,22 @@ mod tests {
 	#[test]
 	fn transact_mint_nft() {
 		MockNet::reset();
+
 		let create_collection = relay_chain::RuntimeCall::Uniques(pallet_uniques::Call::<
 			relay_chain::Runtime,
 		>::create {
 			collection: 1u32,
 			admin: parachain_sovereign_account_id(1),
 		});
+
+		let message_fee = relay_chain::estimate_message_fee(4);
+		let create_collection_weight_estimation = Weight::from_parts(1_000_000_000, 10_000);
+		let create_collection_fee_estimation =
+			relay_chain::estimate_fee_for_weight(create_collection_weight_estimation);
+		let mint_nft_weight_estimation = Weight::from_parts(1_000_000_000, 10_000);
+		let mint_nft_fee_estimation =
+			relay_chain::estimate_fee_for_weight(mint_nft_weight_estimation);
+		let fees = message_fee + create_collection_fee_estimation + mint_nft_fee_estimation;
 
 		let mint =
 			relay_chain::RuntimeCall::Uniques(pallet_uniques::Call::<relay_chain::Runtime>::mint {
@@ -64,16 +78,16 @@ mod tests {
 			});
 
 		let message = Xcm(vec![
-			WithdrawAsset((Here, AMOUNT).into()),
-			BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+			WithdrawAsset((Here, fees).into()),
+			BuyExecution { fees: (Here, fees).into(), weight_limit: WeightLimit::Unlimited },
 			Transact {
 				origin_kind: OriginKind::SovereignAccount,
-				require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+				require_weight_at_most: create_collection_weight_estimation,
 				call: create_collection.encode().into(),
 			},
 			Transact {
 				origin_kind: OriginKind::SovereignAccount,
-				require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+				require_weight_at_most: mint_nft_weight_estimation,
 				call: mint.encode().into(),
 			},
 		]);

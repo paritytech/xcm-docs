@@ -12,14 +12,16 @@ mod tests {
 
 		ParaA::execute_with(|| {
 			// Amount to transfer.
-			let amount: u128 = 10;
+			let amount: u128 = 10 * CENTS;
 			// Check that the balance of Alice is equal to the `INITIAL_BALANCE`.
 			assert_eq!(ParachainBalances::free_balance(&ALICE), INITIAL_BALANCE);
 
+			let fee = parachain::estimate_message_fee(3);
+
 			// The XCM used to transfer funds from Alice to Bob.
 			let message = Xcm(vec![
-				WithdrawAsset((Here, amount).into()),
-				BuyExecution { fees: (Here, amount).into(), weight_limit: WeightLimit::Unlimited },
+				WithdrawAsset(vec![(Here, amount).into(), (Parent, fee).into()].into()),
+				BuyExecution { fees: (Parent, fee).into(), weight_limit: WeightLimit::Unlimited },
 				DepositAsset {
 					assets: All.into(),
 					beneficiary: MultiLocation {
@@ -41,6 +43,7 @@ mod tests {
 
 			// Check if the funds are subtracted from the account of Alice and added to the account of Bob.
 			assert_eq!(ParachainBalances::free_balance(ALICE), INITIAL_BALANCE - amount);
+			assert_eq!(parachain::Assets::balance(0, ALICE), INITIAL_BALANCE - fee);
 			assert_eq!(ParachainBalances::free_balance(BOB), amount);
 		});
 	}

@@ -14,11 +14,14 @@ mod tests {
 	fn subscribe_and_unsubscribe_version() {
 		MockNet::reset();
 
+		let message_fee = relay_chain::estimate_message_fee(3);
+
 		let query_id_set = 1234;
-		let message = Xcm(vec![SubscribeVersion {
-			query_id: query_id_set,
-			max_response_weight: Weight::from_all(0),
-		}]);
+		let message = Xcm(vec![
+			WithdrawAsset((Here, message_fee).into()),
+			BuyExecution { fees: (Here, message_fee).into(), weight_limit: WeightLimit::Unlimited },
+			SubscribeVersion { query_id: query_id_set, max_response_weight: Weight::from_all(0) },
+		]);
 
 		ParaA::execute_with(|| {
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone()));

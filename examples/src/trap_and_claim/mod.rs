@@ -14,9 +14,11 @@ mod tests {
 	/// It then deposits the assets in the account of ALICE.
 	#[test]
 	fn trap_and_claim_assets() {
+		MockNet::reset();
+
 		let message = Xcm(vec![
+			UnpaidExecution { weight_limit: WeightLimit::Unlimited, check_origin: None },
 			WithdrawAsset((Here, 10 * CENTS).into()),
-			BuyExecution { fees: (Here, CENTS).into(), weight_limit: WeightLimit::Unlimited },
 			Trap(0), // <-- Errors
 			DepositAsset {
 				// <-- Not executed because of error.
@@ -33,6 +35,7 @@ mod tests {
 		});
 
 		let claim_message = Xcm(vec![
+			UnpaidExecution { weight_limit: WeightLimit::Unlimited, check_origin: None },
 			ClaimAsset { assets: (Here, 10 * CENTS).into(), ticket: Here.into() },
 			ReportHolding {
 				response_info: QueryResponseInfo {
