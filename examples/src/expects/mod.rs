@@ -7,7 +7,7 @@ mod tests {
 	use xcm::latest::prelude::*;
 	use xcm_simulator::TestExt;
 
-	const AMOUNT: u128 = 10;
+	const AMOUNT: u128 = 50 * CENTS;
 	const QUERY_ID: u64 = 1234;
 
 	/// Scenario:
@@ -19,10 +19,16 @@ mod tests {
 	#[test]
 	fn expect_asset() {
 		MockNet::reset();
+
+		let message_fee = relay_chain::estimate_message_fee(5);
+
 		ParaA::execute_with(|| {
 			let message = Xcm(vec![
-				WithdrawAsset((Here, AMOUNT).into()),
-				BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+				WithdrawAsset((Here, AMOUNT + message_fee).into()),
+				BuyExecution {
+					fees: (Here, message_fee).into(),
+					weight_limit: WeightLimit::Unlimited,
+				},
 				// Set the instructions that are executed when ExpectAsset does not pass.
 				// In this case, reporting back an error to the Parachain.
 				SetErrorHandler(Xcm(vec![ReportError(QueryResponseInfo {
@@ -30,11 +36,13 @@ mod tests {
 					query_id: QUERY_ID,
 					max_weight: Weight::from_all(0),
 				})])),
-				ExpectAsset((Here, AMOUNT + 10).into()),
+				ExpectAsset((Here, AMOUNT + 10 * CENTS).into()),
 				// Add Instructions that do something with assets in holding when ExpectAsset passes.
 			]);
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone(),));
 		});
+
+		let instruction_index_that_errored = 3;
 
 		// Check that QueryResponse message with ExpectationFalse error was received.
 		ParaA::execute_with(|| {
@@ -42,7 +50,10 @@ mod tests {
 				parachain::MsgQueue::received_dmp(),
 				vec![Xcm(vec![QueryResponse {
 					query_id: QUERY_ID,
-					response: Response::ExecutionResult(Some((3, XcmError::ExpectationFalse))),
+					response: Response::ExecutionResult(Some((
+						instruction_index_that_errored,
+						XcmError::ExpectationFalse
+					))),
 					max_weight: Weight::from_all(0),
 					querier: Some(Here.into()),
 				}])],
@@ -58,10 +69,15 @@ mod tests {
 	fn expect_origin() {
 		MockNet::reset();
 
+		let message_fee = relay_chain::estimate_message_fee(6);
+
 		ParaA::execute_with(|| {
 			let message = Xcm(vec![
-				WithdrawAsset((Here, AMOUNT).into()),
-				BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+				WithdrawAsset((Here, AMOUNT + message_fee).into()),
+				BuyExecution {
+					fees: (Here, message_fee).into(),
+					weight_limit: WeightLimit::Unlimited,
+				},
 				// Set the instructions that are executed when ExpectOrigin does not pass.
 				// In this case, reporting back an error to the Parachain.
 				SetErrorHandler(Xcm(vec![ReportError(QueryResponseInfo {
@@ -76,13 +92,18 @@ mod tests {
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone(),));
 		});
 
+		let instruction_index_that_errored = 4;
+
 		// Check that QueryResponse message with ExpectationFalse error was received.
 		ParaA::execute_with(|| {
 			assert_eq!(
 				parachain::MsgQueue::received_dmp(),
 				vec![Xcm(vec![QueryResponse {
 					query_id: QUERY_ID,
-					response: Response::ExecutionResult(Some((4, XcmError::ExpectationFalse))),
+					response: Response::ExecutionResult(Some((
+						instruction_index_that_errored,
+						XcmError::ExpectationFalse
+					))),
 					max_weight: Weight::from_all(0),
 					querier: None,
 				}])],
@@ -98,10 +119,15 @@ mod tests {
 	fn expect_pallet() {
 		MockNet::reset();
 
+		let message_fee = relay_chain::estimate_message_fee(5);
+
 		ParaA::execute_with(|| {
 			let message = Xcm(vec![
-				WithdrawAsset((Here, AMOUNT).into()),
-				BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+				WithdrawAsset((Here, message_fee).into()),
+				BuyExecution {
+					fees: (Here, message_fee).into(),
+					weight_limit: WeightLimit::Unlimited,
+				},
 				// Set the instructions that are executed when ExpectPallet does not pass.
 				// In this case, reporting back an error to the Parachain.
 				SetErrorHandler(Xcm(vec![ReportError(QueryResponseInfo {
@@ -147,10 +173,15 @@ mod tests {
 	fn expect_error() {
 		MockNet::reset();
 
+		let message_fee = relay_chain::estimate_message_fee(6);
+
 		ParaA::execute_with(|| {
 			let message = Xcm(vec![
-				WithdrawAsset((Here, AMOUNT).into()),
-				BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+				WithdrawAsset((Here, message_fee).into()),
+				BuyExecution {
+					fees: (Here, message_fee).into(),
+					weight_limit: WeightLimit::Unlimited,
+				},
 				// ReportError is only executed if the thrown error is the `VersionIncompatible` error.
 				SetErrorHandler(Xcm(vec![
 					ExpectError(Some((1, XcmError::VersionIncompatible))),
@@ -174,7 +205,7 @@ mod tests {
 
 		// Does not receive a message as the incorrect error was thrown during execution.
 		ParaA::execute_with(|| {
-			assert_eq!(parachain::MsgQueue::received_dmp(), vec![],);
+			assert_eq!(parachain::MsgQueue::received_dmp(), vec![]);
 		});
 	}
 
@@ -189,6 +220,7 @@ mod tests {
 	#[test]
 	fn expect_transact_status() {
 		MockNet::reset();
+
 		// Runtime call dispatched by the Transact instruction.
 		// force_set_balance requires root origin.
 		let call = relay_chain::RuntimeCall::Balances(pallet_balances::Call::<
@@ -198,9 +230,15 @@ mod tests {
 			new_free: 100,
 		});
 
+		let message_fee = relay_chain::estimate_message_fee(6);
+		let set_balance_weight_estimation = Weight::from_parts(1_000_000_000, 10_000);
+		let set_balance_fee_estimation =
+			relay_chain::estimate_fee_for_weight(set_balance_weight_estimation);
+		let fees = message_fee + set_balance_fee_estimation;
+
 		let message = Xcm(vec![
-			WithdrawAsset((Here, AMOUNT).into()),
-			BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+			WithdrawAsset((Here, fees).into()),
+			BuyExecution { fees: (Here, fees).into(), weight_limit: WeightLimit::Unlimited },
 			SetErrorHandler(Xcm(vec![ReportTransactStatus(QueryResponseInfo {
 				destination: Parachain(1).into(),
 				query_id: QUERY_ID,
@@ -208,14 +246,14 @@ mod tests {
 			})])),
 			Transact {
 				origin_kind: OriginKind::SovereignAccount,
-				require_weight_at_most: Weight::from_parts(INITIAL_BALANCE as u64, 1024 * 1024),
+				require_weight_at_most: set_balance_weight_estimation,
 				call: call.encode().into(),
 			},
 			ExpectTransactStatus(MaybeErrorCode::Success),
 		]);
 
 		ParaA::execute_with(|| {
-			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone(),));
+			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone()));
 		});
 
 		// The execution of force_set_balance does not succeed, and error is reported back to the parachain.
