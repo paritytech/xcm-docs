@@ -66,7 +66,7 @@ The `ReportHolding` instruction reports to the given destination the contents of
 
 ### Example
 
-For the full example, check [here](https://github.com/paritytech/xcm-docs). Assets are withdrawn from the account of parachain 1 on the relay chain and partly deposited in the account of parachain 2. The remaining assets are reported back to parachain 1. 
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples). Assets are withdrawn from the account of parachain 1 on the relay chain and partly deposited in the account of parachain 2. The remaining assets are reported back to parachain 1. 
 
 ```rust, noplayground
 Xcm(vec![
@@ -109,7 +109,7 @@ pub struct PalletInfo {
 ```
 
 ### Example
-For the full example, check [here](https://github.com/paritytech/xcm-docs). It queries for all instances of pallet_balances and sends the result back to parachain 1.
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples). It queries for all instances of pallet_balances and sends the result back to parachain 1.
 
 ```rust, noplayground
 Xcm(vec![
@@ -133,7 +133,7 @@ ReportError(QueryResponseInfo)
 ```
 
 ### Example
-For the full example, check [here](https://github.com/paritytech/xcm-docs). The message sets the error handler to report back any error that is thrown during execution of the instructions using the `ReportError` instruction. 
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples). The message sets the error handler to report back any error that is thrown during execution of the instructions using the `ReportError` instruction. 
 ```rust, noplayground
 Xcm(vec![
     // Set the Error Handler to report back status of Error register.
@@ -157,7 +157,7 @@ ReportTransactStatus(QueryResponseInfo)
 
 ### Example
 
-For the full example, check [here](https://github.com/paritytech/xcm-docs). 
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples). 
 Dispatches a call on the consensus system receiving this Xcm and reports back the status of the Transact Status Register.
 
 ```rust,noplayground

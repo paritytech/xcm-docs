@@ -1,5 +1,5 @@
 # First Look
-In this section, we take you through a simple example of an XCM. In this example, we withdraw the native token from the account of Alice and deposit this token in the account of Bob. This message simulates a transfer between two accounts in the same consensus system (`ParaA`). You can find the complete code example [in the repo](https://github.com/paritytech/xcm-docs).
+In this section, we take you through a simple example of an XCM. In this example, we withdraw the native token from the account of Alice and deposit this token in the account of Bob. This message simulates a transfer between two accounts in the same consensus system (`ParaA`). You can find the complete code example [in the repo](https://github.com/paritytech/xcm-docs/tree/main/examples).
 
 ## Message
 ```rust,noplayground

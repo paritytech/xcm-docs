@@ -34,11 +34,21 @@ Hence, the field is a byte vector that can be freely interpreted in whatever for
 However, the XCVM does not inherently know how to interpret this call field nor how to decode it; it is reliant on the `T` type parameter to specify the proper codec for the byte vector.
 Instead of just using a `Vec<u8>` we use `DoubleEncoded` as a wrapper around a pre-encoded call (`Vec<u8>`) with extra functionalities such as caching of the decoded value. 
 We like to emphasize that the call in the `Transact` instruction can be anything from a `RuntimeCall` in a FRAME-based system, to a smart contract function call in an EVM-based system.
-
-[//]: # (Todo: Move Transact Status explanation from expect to here.)
  
 Each XCVM has a Transact Status Register, to record the execution result of the call that is dispatched by the `Transact` instruction. 
 *Important note:* The execution of the XCM instruction does *not* error when the dispatched call errors.
+
+The status is described by the `MaybeErrorCode` enum, and can either be a Success, Error or TruncatedError if the length of the error exceeds the MaxDispatchErrorLen. 
+For pallet-based calls, the Error is represented as the scale encoded `Error` enum of the called pallet. 
+```rust,noplayground
+ExpectTransactStatus(MaybeErrorCode)
+
+pub enum MaybeErrorCode {
+	Success,
+	Error(BoundedVec<u8, MaxDispatchErrorLen>),
+	TruncatedError(BoundedVec<u8, MaxDispatchErrorLen>),
+}
+```
 
 ## XCM Executor
 In this section, we quickly look at how the XCM executor executes the `Transact` instruction.
@@ -53,7 +63,7 @@ It executes, among other things, the following steps:
 
 
 ## Example 1
-For the full example, check [the repo](https://github.com/paritytech/xcm-docs).
+For the full example, check [the repo](https://github.com/paritytech/xcm-docs/tree/main/examples).
 
 In this example, the relay chain executes the `set_balance` function of `pallet_balances` on `Parachain(1)`.
 This function requires the origin to be root. We enable the root origin for the relay chain by setting `ParentAsSuperuser` for the `OriginConverter` config type. 
@@ -78,7 +88,7 @@ let message = Xcm(vec![
 ```
 
 ## Example 2
-For the full example, check [the repo](https://github.com/paritytech/xcm-docs).
+For the full example, check [the repo](https://github.com/paritytech/xcm-docs/tree/main/examples).
 
 In this example, as Parachain(1), we create an NFT collection on the relay chain and we then mint an NFT with ID 1. 
 The admin for the nft collection is parachain(1). The call looks as follows:
@@ -126,6 +136,6 @@ let message = Xcm(vec![
 
 ## Next: 
 Check out the following instructions that interact with the Transact Status Register:
-- [ClearTransactStatus](TODO)
-- [ReportTransactStatus](TODO)
-- [ExpectTransactStatus](TODO)
+- [ClearTransactStatus](register-modifiers.md#cleartransactstatus)
+- [ReportTransactStatus](queries.md#reporttransactstatus)
+- [ExpectTransactStatus](expects.md#expecttransactstatus)

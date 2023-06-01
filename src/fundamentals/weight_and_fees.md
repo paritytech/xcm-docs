@@ -15,16 +15,16 @@ Weight, however, is static, defined beforehand, which makes XCM execution lighte
 The principle behind weight payment is to pay for what you use, so the two stages of XCM where fees are paid are *sending* the message and actually *executing* it.
 The fees for sending are paid on the local system, usually by the origin of the message, because we are using the message delivery mechanism maintained by the origin.
 Similarly, the execution fees are paid on the destination system, via the `BuyExecution` instruction. In other words, XCMs are paid for via their own instructions.
-We'll talk more about `BuyExecution` in the [fee handling chapter](TODO:add_link).
+We'll talk more about `BuyExecution` in the [fee handling chapter](../journey/fees/index.html).
 
 XCM is agnostic, which means it doesn't assume fees need to be paid.
 It's entirely possible to not pay for the effects of an XCM on the destination system.
 Even in systems where fees have to be paid, special cases of free execution can be made.
-There are security measures systems can put in place (see [barrier](TODO:add_link)) to not execute XCMs that do not pay for their fees.
+There are security measures systems can put in place (see [barrier](../executor_config/index.html#barrier)) to not execute XCMs that do not pay for their fees.
 
 ## Executor config
 
-The executor has a `Weigher` [configuration item](TODO:add_link) that specifies the weight of each instruction.
+The executor has a `Weigher` [configuration item](../executor_config/index.html#weigher) that specifies the weight of each instruction.
 It weighs the whole message by adding the weight of each instruction.
 A simple way of weighing instructions is to assign them a base weight value to all of them.
 This works, but it is not very accurate, as different instructions use more resources when being executed.

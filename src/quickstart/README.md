@@ -7,7 +7,7 @@ A pre-requisite for using XCM is to have a stable Rust version and Cargo install
 
 ## Running the Examples
 
-All examples in the documentation are located in the [repository](https://github.com/paritytech/xcm-docs). Follow these steps to run the `first-look` example.
+All examples in the documentation are located in the [repository](https://github.com/paritytech/xcm-docs/tree/main/examples). Follow these steps to run the `first-look` example.
 First clone the repository:
 
 ```shell

@@ -7,7 +7,20 @@ There are different levels for testing, which should be tackled sequentially:
 - End-to-end: Making sure the whole flow works, in an environment as similar to production as possible.
 
 We'll discuss tools and best practices for each of these levels.
+## XCM Simulator
+The [xcm-simulator](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-simulator) is a tool to quickly test the execution of various XCM instructions against the `xcm-executor`. 
+The examples in this documentation use the xcm-simulator.
+The simulator mocks the Downward Message Passing pallet, enabling us to get the XCMs that a parachain receives from the relay chain using the `received_dmp` getter. 
+The simulator should be used as a XCM playground. For testing the configuration of your parachain and the integration with other chains, you can use the xcm-emulator.
 
-## Coming soon
+## XCM Emulator
+The [xcm-emulator](https://github.com/paritytech/cumulus/tree/master/xcm/xcm-emulator) is a tool to emulator XCM program execution using pre-configured runtimes, including those used to run on live networks, such as Kusama, Polkadot, Statemine et cetera. This allows for testing cross-chain message passing and verifying outcomes, weights, and side-effects. 
 
-This chapter is still being worked on.
+An example of how the emulator is used for testing common good parachains can be found [here](https://github.com/paritytech/cumulus/tree/master/parachains/integration-tests/emulated).
+
+The xcm-emulator uses the transport layer pallets. However, the messages do not physically go through the same messaging infrastructure as on live networks, so some code is not being tested. Also, consensus related events can not be tested, like disputes, staking and iamonline events. To test for these events, parachains can use E2E tests.
+
+## End-to-End testing
+There are two frameworks being used in the DotSama ecosystem to do e2e testing:
+- [Zombienet](https://github.com/paritytech/zombienet).
+- [Chopsticks](https://github.com/AcalaNetwork/chopsticks).

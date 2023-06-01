@@ -79,7 +79,7 @@ The `RuntimeCall` type is equal to the RuntimeCall created in the `construct_run
 
 ### XcmSender
 The `XcmSender` type implements the `SendXcm` trait, and defines how the xcm_executor can send XCMs (which transport layer it can use for the XCMs).
-This type normally implements a tuple for one or more [transport layer(s)](Todo Transport Layer Link).
+This type normally implements a tuple for one or more [transport layer(s)](https://wiki.polkadot.network/docs/learn-xcm-transport).
 For example a parachain can implement the XcmSender as: 
 ```rust,noplayground
  (
@@ -170,7 +170,7 @@ The most used is the `FixedWeightBounds`:
 // BaseXcmWeight is a const weight.
 FixedWeightBounds<BaseXcmWeight, RuntimeCall, MaxInstructions>;
 ```
-Note: [More information](Todo) about weight.
+Note: [More information](../fundamentals/weight_and_fees.md) about weight.
 
 ### Trader
 The `Trader` type is responsible for buying weight in the `BuyExecution` instruction using assets in the holding register and to refund unspend weight.

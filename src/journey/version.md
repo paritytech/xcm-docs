@@ -4,7 +4,7 @@ XCM is a versioned messaging format. One version may contain more or different i
 - `UnsubscribeVersion`
 
 The version subscription model can differ per XCVM implementation. 
-The `xcm-executor` has a `SubscriptionService` [config item](../executor_config/index.md). 
+The `xcm-executor` has a `SubscriptionService` [config item](../executor_config/index.md#subscriptionservice). 
 Any type specified as the `SubscriptionService` must implement the `VersionChangeNotifier` trait. 
 The XCM pallet is one such implementor.
 When the `SubscribeVersion` instruction is sent to a consensus system that uses the XCM pallet as the `SubscriptionService` in the XCM executor, the system will send back its currently `AdvertisedVersion` and will keep the subscribed location up to date when the version changes. 
@@ -20,4 +20,4 @@ SubscribeVersion {
 UnsubscribeVersion
 ```
 
-Check out the [example](https://github.com/paritytech/xcm-docs).
+Check out the [example](https://github.com/paritytech/xcm-docs/tree/main/examples).

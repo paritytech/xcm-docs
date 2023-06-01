@@ -90,7 +90,7 @@ This new XCM contains the following instructions, in order:
 2. ClearOrigin
 3. All instructions specified in the `xcm` operand, in this case `DepositReserveAsset`
 
-As was the case with [teleports](../teleports.md), instructions 1. and 2. are added automatically by the executor when using `InitiateReserveWithdraw`.
+As was the case with [teleports](teleports.md), instructions 1. and 2. are added automatically by the executor when using `InitiateReserveWithdraw`.
 
 Upon receiving this XCM, the reserve will withdraw the asset from parachain 1's sovereign account (where the real asset is stored), and deposit it on parachain 2's sovereign account.
 
@@ -170,4 +170,4 @@ It's the sender the one who doesn't need to trust the destination, since it'll e
 
 ## Next steps
 
-Next, we'll talk about a very important topic we mentioned before but skipped in this chapter, paying fees for the effects our XCMs have.
+Next, we'll talk about a very important topic we mentioned before but skipped in this chapter, [paying fees](../fees/index.html) for the effects our XCMs have.
