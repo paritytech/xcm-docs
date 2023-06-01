@@ -24,3 +24,29 @@ ParaA::execute_with(|| {
     print_para_events();
 });
 ```
+
+#### Tests
+- `first_look`
+- `transfers/teleport_fungible`
+- `transfers/reserve_backed_transfer_para_to_para`
+- `transfers/reserve_backed_transfer_relay_to_para`
+- `transfers/reserve_backed_transfer_para_to_relay`
+- `transact/transact_set_balance`
+- `transact/transact_mint_nft`
+- `origins/descend_origin`
+- `holding_modifiers/burn_assets`
+- `holding_modifiers/exchange_asset_maximal_true`
+- `holding_modifiers/exchange_asset_maximal_false`
+- `trap_and_claim/trap_and_claim_assets`
+- `expects/expect_asset`
+- `expects/expect_origin`
+- `expects/expect_pallet`
+- `expects/expect_error`
+- `expects/expect_transact_status`
+- `queries/query_holding`
+- `queries/query_pallet`
+- `queries/report_error`
+- `queries/report_transact_status`
+- `version_subscription/subscribe_and_unsubscribe_version`
+- `locks/remote_locking_on_relay`
+- `locks/locking_overlap`
