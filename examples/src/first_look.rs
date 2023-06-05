@@ -44,7 +44,7 @@ mod tests {
 			// Check if the funds are subtracted from the account of Alice and added to the account of Bob.
 			assert_eq!(ParachainBalances::free_balance(ALICE), INITIAL_BALANCE - amount);
 			assert_eq!(parachain::Assets::balance(0, ALICE), INITIAL_BALANCE - fee);
-			assert_eq!(ParachainBalances::free_balance(BOB), amount);
+			assert_eq!(ParachainBalances::free_balance(BOB), INITIAL_BALANCE + amount);
 		});
 	}
 }

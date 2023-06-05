@@ -105,7 +105,6 @@ mod tests {
 			]);
 
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone(),));
-			print_para_events();
 		});
 
 		ParaA::execute_with(|| {

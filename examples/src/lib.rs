@@ -1,4 +1,5 @@
 mod expects;
+mod fees;
 mod first_look;
 mod holding_modifiers;
 mod locks;

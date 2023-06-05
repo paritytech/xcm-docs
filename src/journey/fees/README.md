@@ -91,22 +91,29 @@ This is useful in many cases:
 
 ```rust,noplayground
 let message = Xcm(vec![
-  WithdrawAsset((Here, amount + fee_estimation).into()),
+  WithdrawAsset((Parent, message_fee).into()),
   BuyExecution {
-    fees: (Here, fee_estimation).into(),
-    weight_limit: WeightLimit::Limited(weight_estimation),
+    fees: (Parent, message_fee).into(),
+    weight_limit: WeightLimit::Unlimited,
   },
   SetErrorHandler(Xcm(vec![
-    RefundSurplus
+    RefundSurplus,
+    DepositAsset {
+      assets: All.into(),
+      beneficiary: AccountId32 {
+        network: Some(ByGenesis([0; 32])),
+        id: relay_sovereign_account_id().into(),
+      }
+      .into(),
+    },
   ])),
-  DepositAsset { ... },
-  DepositAsset { ... },
-  DepositAsset { ... },
-  DepositAsset { ... },
-  DepositAsset { ... },
+  Trap(1),
+  ClearOrigin,
+  ClearOrigin,
+  ClearOrigin,
 ]);
 ```
 
-In this example, we pay upfront for all the transactions we do later with the `DepositAsset` instructions.
-If any transaction throws an error (for example, due to lack of funds), the error handler will be called and the weight for all the instructions that weren't executed is refunded.
+In this example, we pay upfront for all the instructions in the XCM.
+When the `Trap` instruction throws an error, the error handler will be called and the weight for all the instructions that weren't executed is refunded.
 For the full example, check our [repo](https://github.com/paritytech/xcm-docs/tree/main/examples).
