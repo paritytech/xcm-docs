@@ -18,7 +18,7 @@ The [xcm-emulator](https://github.com/paritytech/cumulus/tree/master/xcm/xcm-emu
 
 An example of how the emulator is used for testing common good parachains can be found [here](https://github.com/paritytech/cumulus/tree/master/parachains/integration-tests/emulated).
 
-The xcm-emulator uses the transport layer pallets. However, the messages do not physically go through the same messaging infrastructure as on live networks, so some code is not being tested. Also, consensus related events can not be tested, like disputes, staking and iamonline events. To test for these events, parachains can use E2E tests.
+The xcm-emulator uses the transport layer pallets. However, the messages do not utilize the same messaging infrastructure as live networks, as the transport mechanism is being mocked out. Also, consensus related events are not tested, like disputes, staking and iamonline events. To test for these events, parachains can use E2E tests.
 
 ## End-to-End testing
 There are two frameworks being used in the DotSama ecosystem to do e2e testing:
