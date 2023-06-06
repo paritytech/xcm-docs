@@ -14,7 +14,7 @@ The simulator mocks the Downward Message Passing pallet, enabling us to get the 
 The simulator should be used as a XCM playground. For testing the configuration of your parachain and the integration with other chains, you can use the xcm-emulator.
 
 ## XCM Emulator
-The [xcm-emulator](https://github.com/paritytech/cumulus/tree/master/xcm/xcm-emulator) is a tool to emulator XCM program execution using pre-configured runtimes, including those used to run on live networks, such as Kusama, Polkadot, Statemine et cetera. This allows for testing cross-chain message passing and verifying outcomes, weights, and side-effects. 
+The [xcm-emulator](https://github.com/paritytech/cumulus/tree/master/xcm/xcm-emulator) is a tool to emulate XCM program execution using pre-configured runtimes, including those used to run on live networks, such as Kusama, Polkadot, Statemine, etc. This allows for testing cross-chain message passing and verifying outcomes, weights, and side-effects. 
 
 An example of how the emulator is used for testing common good parachains can be found [here](https://github.com/paritytech/cumulus/tree/master/parachains/integration-tests/emulated).
 
