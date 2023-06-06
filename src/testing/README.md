@@ -11,7 +11,7 @@ We'll discuss tools and best practices for each of these levels.
 The [xcm-simulator](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-simulator) is a tool to quickly test the execution of various XCM instructions against the `xcm-executor`. 
 The examples in this documentation use the xcm-simulator.
 The simulator mocks the Downward Message Passing pallet, enabling us to get the XCMs that a parachain receives from the relay chain using the `received_dmp` getter. 
-The simulator should be used as a XCM playground. For testing the configuration of your parachain and the integration with other chains, you can use the xcm-emulator.
+The simulator should be used as a XCM playground. For testing the XCM configuration of your parachain and the integration with other chains, you can use the xcm-emulator.
 
 ## XCM Emulator
 The [xcm-emulator](https://github.com/paritytech/cumulus/tree/master/xcm/xcm-emulator) is a tool to emulate XCM program execution using pre-configured runtimes, including those used to run on live networks, such as Kusama, Polkadot, Statemine, etc. This allows for testing cross-chain message passing and verifying outcomes, weights, and side-effects. 

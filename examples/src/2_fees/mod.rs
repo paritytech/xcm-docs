@@ -1,16 +1,16 @@
 #[cfg(test)]
 mod tests {
-	use crate::simple_test_net::{*, parachain::estimate_message_fee};
+	use crate::simple_test_net::{parachain::estimate_message_fee, *};
 	use frame_support::assert_ok;
 	use xcm::latest::prelude::*;
 	use xcm_simulator::TestExt;
 
 	/// Scenario:
-	/// Relay chain sends a XCM to Parachain A. 
-    /// Enough execution is bought for the full message.
+	/// Relay chain sends a XCM to Parachain A.
+	/// Enough execution is bought for the full message.
 	/// However, the message errors at the Trap(1) instruction (simulates error in other instructions).
-    /// The last three instructions are not executed 
-    /// and the weight surplus of these instructions is refunded to the relay chain account.
+	/// The last three instructions are not executed
+	/// and the weight surplus of these instructions is refunded to the relay chain account.
 	#[test]
 	fn refund_surplus() {
 		MockNet::reset();
@@ -33,9 +33,9 @@ mod tests {
 				},
 			])),
 			Trap(1),
-            ClearOrigin,
-            ClearOrigin,
-            ClearOrigin,
+			ClearOrigin,
+			ClearOrigin,
+			ClearOrigin,
 		]);
 
 		Relay::execute_with(|| {
