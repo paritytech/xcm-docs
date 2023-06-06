@@ -21,6 +21,6 @@ An example of how the emulator is used for testing common good parachains can be
 The xcm-emulator uses the transport layer pallets. However, the messages do not utilize the same messaging infrastructure as live networks, as the transport mechanism is being mocked out. Also, consensus related events are not tested, like disputes, staking and iamonline events. To test for these events, parachains can use E2E tests.
 
 ## End-to-End testing
-There are two frameworks being used in the DotSama ecosystem to do e2e testing:
+There are two frameworks being used in the ecosystem to do e2e testing:
 - [Zombienet](https://github.com/paritytech/zombienet).
 - [Chopsticks](https://github.com/AcalaNetwork/chopsticks).
