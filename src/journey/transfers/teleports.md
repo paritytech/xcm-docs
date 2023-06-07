@@ -81,7 +81,7 @@ This instruction is a *trusted indication*. It should only be executed if the or
 This level of care must be taken because this instruction will *put assets into the circulating supply*, usually minting them.
 As specified earlier, this can result in an increase/decrease in circulating supply of an asset, or a duplication/loss of an NFT, if the source is not trusted for this purpose.
 
-You can set which origins are allowed (act as teleporters) by configuring the [IsTeleporter](../../executor_config/index.md) type in the XCM executor.
+You can set which origins are allowed to act as teleporters by configuring the [IsTeleporter](../../executor_config/index.md#isteleporter) type in the XCM executor.
 If the origin is not allowed to teleport assets to this system, an `UntrustedTeleportLocation` error is returned.
 
 This instruction will populate the holding register with the teleported assets, which can be used by further instructions.
@@ -125,4 +125,4 @@ The example assumes an NFT with index 42 inside a collection with index 1.
 
 ## Next steps
 
-We'll look at reserve-backed transfers next.
+We'll look at reserve-backed transfers [next](reserve.md).

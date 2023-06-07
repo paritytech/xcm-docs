@@ -3,7 +3,7 @@
 It's essential to understand that XCM is a format, not a protocol.
 It describes how messages should be structured and contains instructions relevant to the on-chain actions the message intends to perform.
 However, XCM does not dictate how messages are delivered.
-That responsibility falls on [transport layer protocols](../transport_protocols/index.md) such as XCMP (Cross Chain Message Passing) and VMP (Vertical Message Passing) in the Polkadot ecosystem, or any others to come.
+That responsibility falls on [transport layer protocols](https://wiki.polkadot.network/docs/learn-xcm-transport) such as XCMP (Cross Chain Message Passing) and VMP (Vertical Message Passing) in the Polkadot ecosystem, or any others to come.
 
 This separation of concerns is useful, since it allows us to think of the interactions we want to build between systems without having to think about how the messages involved are actually routed.
 

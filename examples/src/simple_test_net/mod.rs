@@ -13,7 +13,7 @@
 
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
-
+#![allow(dead_code)]
 pub mod parachain;
 pub mod relay_chain;
 
@@ -130,7 +130,6 @@ pub fn para_ext(para_id: u32) -> sp_io::TestExternalities {
 	use parachain::{MsgQueue, Runtime, System};
 
 	let mut t = frame_system::GenesisConfig::default().build_storage::<Runtime>().unwrap();
-
 	let other_para_ids = match para_id {
 		1 => [2, 3],
 		2 => [1, 3],
@@ -139,7 +138,7 @@ pub fn para_ext(para_id: u32) -> sp_io::TestExternalities {
 	};
 
 	pallet_balances::GenesisConfig::<Runtime> {
-		balances: vec![(ALICE, INITIAL_BALANCE), (relay_sovereign_account_id(), INITIAL_BALANCE)]
+		balances: vec![(ALICE, INITIAL_BALANCE), (relay_sovereign_account_id(), INITIAL_BALANCE), (BOB, INITIAL_BALANCE)]
 			.into_iter()
 			.chain(other_para_ids.iter().map(
 				// Initial balance of native token for ALICE on all sibling sovereign accounts
@@ -180,6 +179,7 @@ pub fn para_ext(para_id: u32) -> sp_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
+
 
 	let mut ext = sp_io::TestExternalities::new(t);
 	ext.execute_with(|| {

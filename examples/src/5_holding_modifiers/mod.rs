@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-	use crate::simple_test_net::{parachain::RelayNativeAsset, *};
+	use crate::simple_test_net::*;
 	use frame_support::{assert_ok, pallet_prelude::Weight};
 	use xcm::latest::prelude::*;
 	use xcm_simulator::TestExt;
