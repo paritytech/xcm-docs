@@ -23,7 +23,7 @@ This must match exactly with the assets claimable by the origin.
 The `ticket` field is an identifier that helps locating the asset. It is, for example, useful for distinguishing between Asset Versions. Lets say we have an XCM V2 trapped asset and send an XCM V3 `ClaimAsset` instruction, then the `ticket` field can be used to tell between the versions. In the xcm-pallet, `Here` is used to describe the same version as the `ClaimAsset` instruction, while the `GeneralIndex` Junction is used to describe other XCM versions.
 
 ## Example
-The full example can be found [here](TODO).
+The full example can be found [here](https://github.com/paritytech/xcm-docs/tree/main/examples).
 
 The scenario of the example is this:
 Parachain A withdraws funds from its sovereign account on the relay chain. 

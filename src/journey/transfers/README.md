@@ -22,7 +22,7 @@ BuyExecution { fees: MultiAssets, weight_limit: WeightLimit },
 
 Because XCM is designed to be agnostic to the underlying consensus system, it doesn't have fee payment baked in.
 This instruction lets you pay for the execution of the XCM using the assets in the holding register.
-Most XCMs are not allowed to be executed (blocked by the [barrier](../../executor_config/index.md)) if they don't contain this instruction as one of the first ones to pay for all future ones.
+Most XCMs are not allowed to be executed (blocked by the [barrier](../../executor_config/index.md#barrier)) if they don't contain this instruction as one of the first ones to pay for all future ones.
 
 ## DepositAsset
 
@@ -30,7 +30,7 @@ Most XCMs are not allowed to be executed (blocked by the [barrier](../../executo
 DepositAsset { assets: MultiAssetFilter, beneficiary: MultiLocation },
 ```
 
-This instruction will put assets from the holding register that match the [MultiAssetFilter](../../fundamentals/multiasset.md) into the `beneficiary`.
+This instruction will put assets from the holding register that match the [MultiAssetFilter](../../fundamentals/multiasset.md#multiassetfilter) into the `beneficiary`.
 Note that `beneficiary` must be a location where the local consensus system can actually deposit assets to, e.g. it doesn't make sense to deposit assets to `../AccountId32(0x0)`.
 
 ## Example
@@ -47,7 +47,7 @@ let message = Xcm(vec![
 ```
 
 As we've seen, the above message results in withdrawing assets from the origin of the message, paying for execution and depositing the rest to another account on the same system.
-The full example can be seen in [the repo](https://github.com/paritytech/xcm-docs).
+The full example can be seen in [the repo](https://github.com/paritytech/xcm-docs/tree/main/examples).
 
 ## Transferring between systems
 

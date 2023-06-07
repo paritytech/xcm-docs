@@ -11,7 +11,7 @@ BuyExecution { fees: MultiAsset, weight_limit: WeightLimit }
 
 This instruction is used to buy weight using fees.
 While in some cases there's no need to pay for execution (if you control both systems for example), in most cases you'll need to add this instruction.
-There's a predefined [barrier](../../executor_config/index.md), `AllowTopLevelPaidExecutionFrom<T>`, that explicitly drops messages that do not include this instruction.
+There's a predefined [barrier](../../executor_config/index.md#barrier), `AllowTopLevelPaidExecutionFrom<T>`, that explicitly drops messages that do not include this instruction.
 
 Let's grab the teleport message from the [transfers chapter](../transfers/teleports.md) and add fee payment.
 
@@ -67,7 +67,7 @@ UnpaidExecution { weight_limit: WeightLimit, check_origin: Option<MultiLocation>
 
 This instruction is used for explicitly stating this message shouldn't be paid for.
 It can be used as a way of identifying certain priviledged messages that don't pay fees, coming from a particular system.
-This instruction can be searched for in [barriers](../../executor_config/index.md) to allow this.
+This instruction can be searched for in [barriers](../../executor_config/index.md#barrier) to allow this.
 Make sure you trust the origin system because it won't be paying fees.
 There's already a predefined barrier in xcm-builder, `AllowExplicitUnpaidExecutionFrom<T>`, that makes sure this is the first instruction in the message.
 As always, you can build your own for your own use-cases.
@@ -91,22 +91,29 @@ This is useful in many cases:
 
 ```rust,noplayground
 let message = Xcm(vec![
-  WithdrawAsset((Here, amount + fee_estimation).into()),
+  WithdrawAsset((Parent, message_fee).into()),
   BuyExecution {
-    fees: (Here, fee_estimation).into(),
-    weight_limit: WeightLimit::Limited(weight_estimation),
+    fees: (Parent, message_fee).into(),
+    weight_limit: WeightLimit::Unlimited,
   },
   SetErrorHandler(Xcm(vec![
-    RefundSurplus
+    RefundSurplus,
+    DepositAsset {
+      assets: All.into(),
+      beneficiary: AccountId32 {
+        network: Some(ByGenesis([0; 32])),
+        id: relay_sovereign_account_id().into(),
+      }
+      .into(),
+    },
   ])),
-  DepositAsset { ... },
-  DepositAsset { ... },
-  DepositAsset { ... },
-  DepositAsset { ... },
-  DepositAsset { ... },
+  Trap(1),
+  ClearOrigin,
+  ClearOrigin,
+  ClearOrigin,
 ]);
 ```
 
-In this example, we pay upfront for all the transactions we do later with the `DepositAsset` instructions.
-If any transaction throws an error (for example, due to lack of funds), the error handler will be called and the weight for all the instructions that weren't executed is refunded.
-For the full example, check our [repo](https://github.com/paritytech/xcm-docs).
+In this example, we pay upfront for all the instructions in the XCM.
+When the `Trap` instruction throws an error, the error handler will be called and the weight for all the instructions that weren't executed is refunded.
+For the full example, check our [repo](https://github.com/paritytech/xcm-docs/tree/main/examples).

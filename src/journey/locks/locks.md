@@ -63,7 +63,7 @@ This principle becomes more clear in the second example.
 
 
 ### Example 1
-Check out the full [example code](https://github.com/paritytech/xcm-docs).
+Check out the full [example code](https://github.com/paritytech/xcm-docs/tree/main/examples).
 The scenario of this example is as follows:
 
 Parachain A locks 5 Cents of relay chain native assets of its Sovereign account on the relay chain and assigns Parachain B as unlocker.
@@ -113,7 +113,7 @@ assert_eq!(
 
 ### Example 2
 
-Check out the full [example code](https://github.com/paritytech/xcm-docs).
+Check out the full [example code](https://github.com/paritytech/xcm-docs/tree/main/examples).
 The scenario of this example is as follows:
 
 Parachain A sets two locks on the relay chain with as unlockers Parachain B and Parachain C.

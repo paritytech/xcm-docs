@@ -21,8 +21,8 @@
   - [Transfers](journey/transfers/README.md)
     - [Asset teleportation](journey/transfers/teleports.md)
     - [Reserve-backed transfers](journey/transfers/reserve.md)
-  - [Transact: A general solution](journey/transact.md)
   - [Fee handling](journey/fees/README.md)
+  - [Transact: A general solution](journey/transact.md)
   - [Origin manipulation](journey/origins.md)
   - [More register modifiers](journey/register-modifiers.md)
   - [More Holding Modifiers](./journey/holding-modifiers.md)
@@ -32,22 +32,12 @@
   - [XCM Version](journey/version.md)
   - [Locks](journey/locks/locks.md)
   - [Channels and Bridges](journey/channels-and-bridges.md)
-  - [Misc]()
 - [Config Deep Dive](executor_config/README.md)
 - [Testing](testing/README.md)
-  - [Separation of concerns]()
-  - [Simulating message execution]()
-  - [How to test my own configuration]()
-  - [Testing the full XCM Journey]()
-- [Transport Protocols](transport_protocols/README.md)
-  - [VMP]()
-  - [HRMP]()
-  - [XCMP]()
 
 # Reference
 
-- [Cookbook]()
-- [All Instructions]()
+<!---- [Cookbook]()
+- [All Instructions]()--->
 - [All XCVM Registers](reference/xcvm-registers.md)
 
-[Next Steps]()

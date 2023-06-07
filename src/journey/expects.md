@@ -18,7 +18,7 @@ ExpectAsset(MultiAssets)
 
 ### Example
 
-For the full example, check [here](https://github.com/paritytech/xcm-docs).
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples).
 
 ```rust, noplayground 
 WithdrawAsset((Here, AMOUNT).into()),
@@ -45,7 +45,7 @@ ExpectOrigin(Option<MultiLocation>)
 
 ### Example
 
-For the full example, check [here](https://github.com/paritytech/xcm-docs).
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples).
 The `ExpectOrigin` instruction errors because the `ClearOrigin` clears the origin register and we expect it to be equal to `Parachain(1)`.
 ```rust,noplayground
 // Set the instructions that are executed when ExpectOrigin does not pass.
@@ -81,7 +81,7 @@ ExpectPallet {
 ```
 
 ### Example
-For the full example, check [here](https://github.com/paritytech/xcm-docs).
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples).
 ```rust, noplayground
 // Set the instructions that are executed when ExpectPallet does not pass.
 // In this case, reporting back an error to the Parachain.
@@ -112,7 +112,7 @@ The `ExpectError` instruction allows to only execute the instructions in the err
 
 ### Example
 
-For the full example, check [here](https://github.com/paritytech/xcm-docs).
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples).
 
 ```rust,noplayground
 SetErrorHandler(Xcm(vec![
@@ -135,21 +135,10 @@ ExpectPallet {
 
 ## ExpectTransactStatus
 The `ExpectTransactStatus` instruction throws an `ExpectationFalse` error if the transact status register does not equal the expected transact status.
-The status is described by the `MaybeErrorCode` enum, and can either be a Success, Error or TruncatedError if the length of the error exceeds the MaxDispatchErrorLen. 
-For pallet-based calls, the Error is represented as the scale encoded `Error` enum of the called pallet. 
-```rust,noplayground
-ExpectTransactStatus(MaybeErrorCode)
-
-pub enum MaybeErrorCode {
-	Success,
-	Error(BoundedVec<u8, MaxDispatchErrorLen>),
-	TruncatedError(BoundedVec<u8, MaxDispatchErrorLen>),
-}
-```
 
 ### Example
 
-For the full example, check [here](https://github.com/paritytech/xcm-docs).
+For the full example, check [here](https://github.com/paritytech/xcm-docs/tree/main/examples).
 The transact status is reported to `Parachain(1)` if the call in the `Transact` errors. 
 
 ```rust,noplayground

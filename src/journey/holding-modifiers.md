@@ -11,7 +11,7 @@ BurnAsset(MultiAssets)
 The `BurnAsset` instruction allows for the reduction of assets in the Holding Register by up to the specified assets. The execution of the instruction does not throw an error if the Holding Register does not contain the assets (to make this an error, use `ExpectAsset` prior).
 
 ### Example
-For the full example, check [the repo](https://github.com/paritytech/xcm-docs).
+For the full example, check [the repo](https://github.com/paritytech/xcm-docs/tree/main/examples).
 The Scenario of the example is as follows:
 Parachain A withdraws 10 units from its sovereign account on the relay chain and burns 4 of them.
 The relay chain then reports back the status of the Holding Register to Parachain A. We expect the Holding Register to hold 6 units. 
@@ -53,7 +53,7 @@ and receive accordingly more assets then stated in `want`. If the `maximal` fiel
 order to receive as little as possible while receiving at least `want`.
 
 ### Example
-The full example can be found in [the repo](https://github.com/paritytech/xcm-docs).
+The full example can be found in [the repo](https://github.com/paritytech/xcm-docs/tree/main/examples).
 
 The scenario for the example is this:
 Scenario:
