@@ -10,7 +10,7 @@ With XCM, we are able to achieve an ecosystem-wide division of labour: a chain c
 
 XCM has four high-level inherent design assumptions:
 1. Asynchronous: XCMs in no way assume that the sender will be blocking on its completion
-2. Absolute: XCMs are guaranteed to be delivered and interpreted accurately, in order and in a timely fashion. Once a message is sent, one can be sure it will be processed as it was intended to be.
+2. Absolute: XCMs are assumed to be delivered and interpreted accurately, in order and in a timely fashion. Once a message is sent, one can assume that it will be processed as intended.
 3. Asymmetric: XCMs, by default, do not have results that let the sender know that the message was received - they follow the 'fire and forget' paradigm. Any results must be separately communicated to the sender with an additional message back to the origin.
 4. Agnostic: XCM makes no assumptions about the nature of the consensus systems between which the messages are being passed. XCM as a message format should be usable in any system that derives finality through consensus.
 
