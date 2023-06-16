@@ -28,7 +28,7 @@ use frame_support::{
 use sp_core::blake2_256;
 use xcm::prelude::*;
 use xcm_executor::traits::{Convert, ShouldExecute};
-use xcm_simulator::{decl_test_network, decl_test_parachain, decl_test_relay_chain};
+use xcm_simulator::{decl_test_network, decl_test_parachain, decl_test_relay_chain, TestExt};
 
 // Accounts
 pub const ADMIN: sp_runtime::AccountId32 = sp_runtime::AccountId32::new([0u8; 32]);
@@ -71,7 +71,11 @@ decl_test_parachain! {
 decl_test_relay_chain! {
 	pub struct Relay {
 		Runtime = relay_chain::Runtime,
+		RuntimeCall = relay_chain::RuntimeCall,
+		RuntimeEvent = relay_chain::RuntimeEvent,
 		XcmConfig = relay_chain::XcmConfig,
+		MessageQueue = relay_chain::MessageQueue,
+		System = relay_chain::System,
 		new_ext = relay_ext(),
 	}
 }

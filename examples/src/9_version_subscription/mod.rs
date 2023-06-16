@@ -38,7 +38,10 @@ mod tests {
 				}])],
 			);
 
-			let unsub_message = Xcm(vec![UnsubscribeVersion]);
+			let unsub_message = Xcm(vec![
+				UnpaidExecution { weight_limit: WeightLimit::Unlimited, check_origin: None }, 
+				UnsubscribeVersion]
+			);
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, unsub_message));
 		});
 	}
