@@ -62,11 +62,6 @@ An XCM executor configuration item that works as a firewall for incoming XCMs.
 All XCMs have to pass the barrier to be executed, else they are dropped.
 It can be used for whitelisting only certain types or messages or messages from certain senders.
 
-## IsReserve and IsTeleporter
-
-XCM executor configuration items that identify `MultiLocation`s as reserves or teleporters for particular `Asset`s.
-If a `MultiLocation` is not considered a reserve or teleporter, trusted indications to mint assets are blocked.
-
 ## UMP (Upward Message Passing)
 
 Transport-layer protocol that allows parachains to send messages upwards to their relay chain.
