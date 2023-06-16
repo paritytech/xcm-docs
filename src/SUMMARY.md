@@ -40,4 +40,4 @@
 <!---- [Cookbook]()
 - [All Instructions]()--->
 - [All XCVM Registers](reference/xcvm-registers.md)
-
+- [Glossary](reference/glossary.md)
