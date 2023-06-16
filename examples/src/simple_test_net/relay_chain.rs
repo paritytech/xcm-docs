@@ -18,11 +18,12 @@
 
 use frame_support::{
 	construct_runtime, parameter_types,
-	traits::{AsEnsureOriginWithArg, Contains, Everything, Nothing, ProcessMessage, ProcessMessageError},
+	traits::{
+		AsEnsureOriginWithArg, Contains, Everything, Nothing, ProcessMessage, ProcessMessageError,
+	},
 	weights::{
 		constants::{WEIGHT_PROOF_SIZE_PER_MB, WEIGHT_REF_TIME_PER_SECOND},
-		Weight,
-		WeightMeter
+		Weight, WeightMeter,
 	},
 };
 
@@ -312,7 +313,6 @@ impl pallet_message_queue::Config for Runtime {
 	type QueueChangeHandler = ();
 	type WeightInfo = ();
 }
-
 
 impl origin::Config for Runtime {}
 

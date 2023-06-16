@@ -21,3 +21,5 @@ mod transfers;
 mod trap_and_claim;
 #[path = "9_version_subscription/mod.rs"]
 mod version_subscription;
+
+mod emulated_test_net;
