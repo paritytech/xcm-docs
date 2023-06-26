@@ -1,17 +1,18 @@
 # Architecture
 
-XCM is a [format](https://github.com/paritytech/xcm-format), which means anyone is free to create an implementation for it.
-The first one is made in [Rust](https://www.rust-lang.org/), primarily for [Substrate](https://substrate.io/)-based chains in the [Polkadot](https://polkadot.network/) ecosystem.
-We'll be looking at this first implementation to tinker with different types of messages in the next sections.
-For now, we'll take a look at how it's structured.
+XCM is a [format](https://github.com/paritytech/xcm-format).
+Anyone can create an implementation of the XCVM to interpret said format.
+
+Parity Technologies maintains a Rust implementation, primarily for [Substrate](https://substrate.io/)-based chains in the [Polkadot](https://polkadot.network/) ecosystem.
+It is this implementation that we use throughout this documentation.
 
 All the code lives in the [Polkadot repo](https://github.com/paritytech/polkadot/tree/master/xcm).
 The main structure is as follows:
-- XCM: Defines the fundamental constructs used in XCM and an enum with all the instructions available.
-- Executor: Implements the XCVM, capable of executing XCMs. Highly configurable.
-- Builder: Offers common configuration building blocks for the executor.
-- Pallet: FRAME pallet that provides extrinsics with specific XCM programs.
-- Simulator: Allows for testing of XCM programs.
+- [XCM](https://github.com/paritytech/polkadot/tree/master/xcm/src): Defines the fundamental constructs used in XCM and an enum with all the instructions available.
+- [Executor](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-executor/src): Implements the XCVM, capable of executing XCMs. Highly configurable.
+- [Builder](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-builder/src): Offers common configuration building blocks for the executor.
+- [Pallet](https://github.com/paritytech/polkadot/tree/master/xcm/pallet-xcm/src): FRAME pallet that provides extrinsics with specific XCM programs.
+- [Simulator](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-simulator/example/src): Allows for testing of XCM programs.
 
 ## Executor
 

@@ -1,21 +1,15 @@
 # Overview
 
-XCM allows for different consensus systems to communicate with each other.
-This allows things like:
-- Sending tokens from one chain to another
-- Locking assets on one chain in order to gain some benefit on a smart contract on another chain
-- Calling functions (extrinsics) on another chain
+XCM enables different consensus systems to communicate with each other.
+Common cross-consensus use-cases include:
+- Sending tokens between blockchains
+- Locking assets on one blockchain in order to gain some benefit on a smart contract on another blockchain
+- Calling specific functions on another blockchain
 
-But that's just the beginning.
-The true power of XCM comes from its composability.
-Once you can communicate with other consensus systems, you can get creative and implement whatever use case you need.
-This is especially true in the context of an ecosystem of highly specialized chains, like Polkadot.
+These are just a few basic examples; once you can communicate with other consensus systems, you can create applications that can leverage multiple blockchains' capabilities.
+The potential it provides is especially evident in an ecosystem of highly specialized blockchains like Polkadot.
 
-Decentralized distributed systems are very complex, so when building interactions between them, it's easy to make mistakes.
-Because of that, the end-user is not expected to write custom XCMs from scratch for all the interactions they want to achieve.
-Instead, builders will use XCM to create enticing products that provide a good and safe user experience.
-This is usually done by carefully thinking and testing the interaction, then packaging it into your system's runtime logic (via an extrinsic or smart contract for example), and exposing that functionality to users.
+Decentralized distributed systems are very complex, so it's easy to make errors when building interactions between them.
+XCM is meant to be used by developers to package these interactions into their runtime logic before exposing that functionality to end users.
 
-In this chapter, we will cover what XCM is, what it isn't, why it matters, and delve into the different components that make up the XCM ecosystem.
-
-Let's begin.
+This chapter will cover what XCM is, what it isn't, and why it matters before exploring the different components that make up the XCM ecosystem.
