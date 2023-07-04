@@ -2,8 +2,7 @@
 
 We mentioned before that XCM is a language, it definitely can be seen as one.
 Concretely, XCM is a message format, it specifies how to craft messages that communicate intentions to other consensus systems.
-It is designed to enable seamless communication between different consensus systems.
-Examples of consensus systems are blockchains and smart contracts.
+Some examples of consensus systems are blockchains and smart contracts.
 XCM comes from the [Polkadot](https://polkadot.network/) ecosystem, but is designed to be general enough to provide a common format for cross-consensus communication that can be used anywhere.
 
 Its goal is to let blockchain ecosystems thrive via specialization instead of generalization.
