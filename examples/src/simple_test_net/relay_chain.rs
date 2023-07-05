@@ -30,17 +30,20 @@ use sp_core::{ConstU128, ConstU32, H256};
 use sp_runtime::{testing::Header, traits::IdentityLookup, AccountId32};
 
 use polkadot_parachain::primitives::Id as ParaId;
-use polkadot_runtime_parachains::{configuration, origin, shared, ump};
+use polkadot_runtime_parachains::{configuration, origin, shared};
 use xcm::latest::prelude::*;
 use xcm_builder::{
-	AccountId32Aliases, AllowExplicitUnpaidExecutionFrom, AllowTopLevelPaidExecutionFrom,
-	AsPrefixedGeneralIndex, ChildParachainAsNative, ChildParachainConvertsVia,
-	ChildSystemParachainAsSuperuser, ConvertedConcreteId, CurrencyAdapter as XcmCurrencyAdapter,
-	FixedRateOfFungible, FixedWeightBounds, IsConcrete, NoChecking, NonFungiblesAdapter,
-	SiblingParachainConvertsVia, SignedAccountId32AsNative, SignedToAccountId32,
-	SovereignSignedViaLocation, WithComputedOrigin,
+	AccountId32Aliases, AllowExplicitUnpaidExecutionFrom, AllowSubscriptionsFrom,
+	AllowTopLevelPaidExecutionFrom, AsPrefixedGeneralIndex, ChildParachainAsNative,
+	ChildParachainConvertsVia, ChildSystemParachainAsSuperuser, ConvertedConcreteId,
+	CurrencyAdapter as XcmCurrencyAdapter, FixedRateOfFungible, FixedWeightBounds, IsConcrete,
+	NoChecking, NonFungiblesAdapter, SiblingParachainConvertsVia, SignedAccountId32AsNative,
+	SignedToAccountId32, SovereignSignedViaLocation, WithComputedOrigin,
 };
 use xcm_executor::{traits::JustTry, Config, XcmExecutor};
+use xcm_simulator::{
+	AggregateMessageOrigin, ProcessMessage, ProcessMessageError, UmpQueueId, WeightMeter,
+};
 
 use super::{AllowNoteUnlockables, AllowUnlocks, Balance, ForeignChainAliasAccount};
 
@@ -200,6 +203,7 @@ pub type Barrier = WithComputedOrigin<
 		AllowUnlocks,
 		AllowExplicitUnpaidExecutionFrom<ChildrenParachains>,
 		AllowTopLevelPaidExecutionFrom<Everything>,
+		AllowSubscriptionsFrom<Everything>,
 	),
 	UniversalLocation,
 	ConstU32<1>,
@@ -260,6 +264,8 @@ impl pallet_xcm::Config for Runtime {
 	type TrustedLockers = ();
 	type SovereignAccountOf = SovereignAccountOf;
 	type MaxLockers = ConstU32<8>;
+	type MaxRemoteLockConsumers = ConstU32<0>;
+	type RemoteLockConsumerIdentifier = ();
 	type WeightInfo = pallet_xcm::TestWeightInfo;
 	#[cfg(feature = "runtime-benchmarks")]
 	type ReachableDest = ReachableDest;
@@ -270,18 +276,50 @@ parameter_types! {
 	pub const FirstMessageFactorPercent: u64 = 100;
 }
 
-impl ump::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type UmpSink = ump::XcmSink<XcmExecutor<XcmConfig>, Runtime>;
-	type FirstMessageFactorPercent = FirstMessageFactorPercent;
-	type ExecuteOverweightOrigin = frame_system::EnsureRoot<AccountId>;
-	type WeightInfo = ump::TestWeightInfo;
-}
-
 impl origin::Config for Runtime {}
 
 type UncheckedExtrinsic = frame_system::mocking::MockUncheckedExtrinsic<Runtime>;
 type Block = frame_system::mocking::MockBlock<Runtime>;
+
+parameter_types! {
+	/// Amount of weight that can be spent per block to service messages.
+	pub MessageQueueServiceWeight: Weight = Weight::from_parts(1_000_000_000, 1_000_000);
+	pub const MessageQueueHeapSize: u32 = 65_536;
+	pub const MessageQueueMaxStale: u32 = 16;
+}
+
+/// Message processor to handle any messages that were enqueued into the `MessageQueue` pallet.
+pub struct MessageProcessor;
+impl ProcessMessage for MessageProcessor {
+	type Origin = AggregateMessageOrigin;
+
+	fn process_message(
+		message: &[u8],
+		origin: Self::Origin,
+		meter: &mut WeightMeter,
+		id: &mut [u8; 32],
+	) -> Result<bool, ProcessMessageError> {
+		let para = match origin {
+			AggregateMessageOrigin::Ump(UmpQueueId::Para(para)) => para,
+		};
+		xcm_builder::ProcessXcmMessage::<
+			Junction,
+			xcm_executor::XcmExecutor<XcmConfig>,
+			RuntimeCall,
+		>::process_message(message, Junction::Parachain(para.into()), meter, id)
+	}
+}
+
+impl pallet_message_queue::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Size = u32;
+	type HeapSize = MessageQueueHeapSize;
+	type MaxStale = MessageQueueMaxStale;
+	type ServiceWeight = MessageQueueServiceWeight;
+	type MessageProcessor = MessageProcessor;
+	type QueueChangeHandler = ();
+	type WeightInfo = ();
+}
 
 construct_runtime!(
 	pub enum Runtime where
@@ -293,7 +331,7 @@ construct_runtime!(
 		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
 		Uniques: pallet_uniques,
 		ParasOrigin: origin::{Pallet, Origin},
-		ParasUmp: ump::{Pallet, Call, Storage, Event},
 		XcmPallet: pallet_xcm::{Pallet, Call, Storage, Event<T>, Origin},
+		MessageQueue: pallet_message_queue::{Pallet, Event<T>},
 	}
 );
