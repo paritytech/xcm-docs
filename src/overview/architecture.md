@@ -11,7 +11,7 @@ The main structure is as follows:
 - [XCM](https://github.com/paritytech/polkadot/tree/master/xcm/src): Defines the fundamental constructs used in XCM and an enum with all the instructions available.
 - [Executor](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-executor/src): Implements the XCVM, capable of executing XCMs. Highly configurable.
 - [Builder](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-builder/src): Offers common configuration building blocks for the executor.
-- [Pallet](https://github.com/paritytech/polkadot/tree/master/xcm/pallet-xcm/src): FRAME pallet that provides extrinsics with specific XCM programs.
+- [Pallet](https://github.com/paritytech/polkadot/tree/master/xcm/pallet-xcm/src): FRAME pallet that provides extrinsics for interacting with the XCM executor, as well as specific XCM programs, such as teleports and reserve asset transfers.
 - [Simulator](https://github.com/paritytech/polkadot/tree/master/xcm/xcm-simulator/example/src): Allows for testing of XCM programs.
 
 ## Executor
