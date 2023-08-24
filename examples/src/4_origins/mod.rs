@@ -5,7 +5,6 @@ mod tests {
 	use xcm::latest::prelude::*;
 	use xcm_simulator::TestExt;
 
-	const AMOUNT: u128 = 10;
 	const QUERY_ID: u64 = 1234;
 
 	/// Scenario:
@@ -13,9 +12,13 @@ mod tests {
 	fn descend_origin() {
 		MockNet::reset();
 		ParaA::execute_with(|| {
+			let message_fee = parachain::estimate_message_fee(6);
 			let message = Xcm(vec![
-				WithdrawAsset((Here, AMOUNT).into()),
-				BuyExecution { fees: (Here, AMOUNT).into(), weight_limit: WeightLimit::Unlimited },
+				WithdrawAsset((Here, message_fee).into()),
+				BuyExecution {
+					fees: (Here, message_fee).into(),
+					weight_limit: WeightLimit::Unlimited,
+				},
 				// Set the instructions that are executed when ExpectOrigin does not pass.
 				// In this case, reporting back an error to the Parachain.
 				SetErrorHandler(Xcm(vec![ReportError(QueryResponseInfo {
@@ -28,6 +31,10 @@ mod tests {
 				ExpectOrigin(Some((Parachain(1), PalletInstance(1)).into())),
 			]);
 			assert_ok!(ParachainPalletXcm::send_xcm(Here, Parent, message.clone(),));
+		});
+
+		Relay::execute_with(|| {
+			assert!(relay_successful_execution());
 		});
 
 		// Check that message queue is empty.

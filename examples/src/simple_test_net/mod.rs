@@ -138,17 +138,21 @@ pub fn para_ext(para_id: u32) -> sp_io::TestExternalities {
 	};
 
 	pallet_balances::GenesisConfig::<Runtime> {
-		balances: vec![(ALICE, INITIAL_BALANCE), (relay_sovereign_account_id(), INITIAL_BALANCE), (BOB, INITIAL_BALANCE)]
-			.into_iter()
-			.chain(other_para_ids.iter().map(
-				// Initial balance of native token for ALICE on all sibling sovereign accounts
-				|&para_id| (sibling_account_sovereign_account_id(para_id, ALICE), INITIAL_BALANCE),
-			))
-			.chain(other_para_ids.iter().map(
-				// Initial balance of native token all sibling sovereign accounts
-				|&para_id| (sibling_sovereign_account_id(para_id), INITIAL_BALANCE),
-			))
-			.collect(),
+		balances: vec![
+			(ALICE, INITIAL_BALANCE),
+			(relay_sovereign_account_id(), INITIAL_BALANCE),
+			(BOB, INITIAL_BALANCE),
+		]
+		.into_iter()
+		.chain(other_para_ids.iter().map(
+			// Initial balance of native token for ALICE on all sibling sovereign accounts
+			|&para_id| (sibling_account_sovereign_account_id(para_id, ALICE), INITIAL_BALANCE),
+		))
+		.chain(other_para_ids.iter().map(
+			// Initial balance of native token all sibling sovereign accounts
+			|&para_id| (sibling_sovereign_account_id(para_id), INITIAL_BALANCE),
+		))
+		.collect(),
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
@@ -179,7 +183,6 @@ pub fn para_ext(para_id: u32) -> sp_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-
 
 	let mut ext = sp_io::TestExternalities::new(t);
 	ext.execute_with(|| {
@@ -224,6 +227,16 @@ pub fn print_para_events() {
 pub fn print_relay_events() {
 	use relay_chain::System;
 	System::events().iter().for_each(|r| println!(">>> {:?}", r.event));
+}
+
+pub fn relay_successful_execution() -> bool {
+	use relay_chain::System;
+	System::events().iter().any(|e| match &e.event {
+		relay_chain::RuntimeEvent::ParasUmp(
+			polkadot_runtime_parachains::ump::Event::ExecutedUpward(_, outcome),
+		) => outcome.clone().ensure_complete().is_ok(),
+		_ => false,
+	})
 }
 
 pub type RelaychainPalletXcm = pallet_xcm::Pallet<relay_chain::Runtime>;
