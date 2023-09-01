@@ -237,9 +237,9 @@ pub fn print_relay_events() {
 pub fn relay_successful_execution() -> bool {
 	use relay_chain::System;
 	System::events().iter().any(|e| match &e.event {
-		relay_chain::RuntimeEvent::ParasUmp(
-			polkadot_runtime_parachains::ump::Event::ExecutedUpward(_, outcome),
-		) => outcome.clone().ensure_complete().is_ok(),
+		relay_chain::RuntimeEvent::MessageQueue(
+			pallet_message_queue::Event::Processed{id: _, origin: _, weight_used: _, success: true},
+		) => true,
 		_ => false,
 	})
 }
