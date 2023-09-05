@@ -33,6 +33,7 @@
   - [Locks](journey/locks/locks.md)
   - [Channels and Bridges](journey/channels-and-bridges.md)
 - [Config Deep Dive](executor_config/README.md)
+  - [Barriers](executor_config/barrier.md)
 - [Testing](testing/README.md)
 
 # Reference
