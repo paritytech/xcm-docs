@@ -1,89 +1,75 @@
--TODO: All Barriers Explained
--TODO: Security Note about misconfigured barriers
--TODO: Example
-
 # Barrier
-Before any XCMs are executed in the XCM executor, they must pass the Barrier.
-The Barrier type implements the `ShouldExecute`
-[trait](https://paritytech.github.io/polkadot/doc/xcm_executor/traits/trait.ShouldExecute.html)
-and can be viewed as the firewall for the xcm-executor. 
-Each time the xcm-executor receives an XCM, it checks with the barrier to determine if the XCM should be executed.
+Before any XCMs are executed in the XCM executor, they must pass through the Barrier. The Barrier type implements the [`ShouldExecute`] trait and serves as the firewall for the xcm-executor. Each time the xcm-executor receives an XCM, it consults the Barrier to determine if the XCM should be executed.
 
-We can also define multiple barriers for our Barrier type using a tuple.
-During execution, each barrier is checked, and if any of them succeed, the XCM is executed.
-The combination of barriers is especially important as it can either block or allow certain XCM
-functionalities. We will show an example of how barriers can be combined in the [example section]().
+Multiple barriers can be defined for the Barrier type using a tuple. During execution, each barrier is checked, and if any succeed, the XCM is executed. The combination of barriers is crucial as it can either block or allow specific XCM functionalities. An example of how barriers can be combined will be provided in the [example section](#example).
+
+## Security
+Barriers are vital for the security of the xcm-executor, acting as its firewall. Their main role is to decide whether a given XCM should be executed. Barriers can operate in various ways, such as checking if certain origins are authorized to execute an XCM, verifying if the XCM contains specific instructions, or a combination of both. Incorrectly configuring a barrier can lead to vulnerabilities, such as allowing attackers to flood the system with XCMs, potentially causing a Denial of Service.
 
 ## Implementations
-The [xcm-builder
-directory](https://github.com/paritytech/polkadot-sdk/blob/master/polkadot/xcm/xcm-builder/src/barriers.rs)
-has many implementations for the Barrier type:
-- `TakeWeightCredit`
-- `AllowTopLevelPaidExecutionFrom`
-- `AllowUnpaidExecutionFrom`
-- `AllowExplicitUnpaidExecutionFrom`
-- `IsChildSystemParachain`
-- `AllowKnownQueryResponses`
-- `AllowSubscriptionsFrom`
-- `WithComputedOrigin`
-- `TrailingSetTopicAsId`
-- `RespectSuspension`
-- `DenyThenTry`
-- `DenyReserveTransferToRelayChain`
+The xcm-builder [`barriers`] file contains numerous implementations for the Barrier type. For more details, check out the linked documentation for each of these implementations.
+
+- [`TakeWeightCredit`]
+- [`AllowTopLevelPaidExecutionFrom`]
+- [`AllowUnpaidExecutionFrom`]
+- [`AllowExplicitUnpaidExecutionFrom`]
+- [`AllowKnownQueryResponses`]
+- [`AllowSubscriptionsFrom`]
+- [`WithComputedOrigin`]
+- [`TrailingSetTopicAsId`]
+- [`RespectSuspension`]
+- [`DenyThenTry`]
+- [`DenyReserveTransferToRelayChain`]
 
 
-### `TakeWeightCredit`
-The `TakeWeightCredit`` barrier checks if the calculated weight of the XCM does not exceed a set weight limit. 
-This Barrier is particularly useful to allow XCM execution by local chain users via extrinsics.
-For example, in the `execute` function in `pallet-xcm`, users can set a max_weight that
-specifies the maximum weight that the message may consume. The `TakeWeightCredit` Barrier
-blocks the message if the specified `max_weight` is to low.
-
-### `AllowTopLevelPaidExecutionFrom`
-The `AllowTopLevelPaidExecutionFrom<T>` barrier accepts the execution of an XCM if the origin
-of the XCM is contained in `T` and the XCM pays for execution. 
-To ensure that the XCM is paid for, it should start with an instruction (`ReceiveTeleportedAsset`,
-`ReserveAssetDeposited`, `WithdrawAsset`, `ClaimAsset`) that places assets in the
-Holding Register to pay for execution followed by the `BuyExecution` instruction. 
-
-The most commenly used configuration of this barrier:
-```rust
-// Accept all XCMs that pay for execution.
-AllowTopLevelPaidExecutionFrom<Everything>
-```
-
-### `AllowUnpaidExecutionFrom`
-The `AllowUnpaidExecutionFrom<T>` barrier accepts the execution of an XCM if the origin
-of the XCM is contained in `T`. This barrier allows for free execution for specific origins.
-SECURITY NOTE: Configure this barrier only for completely trusted origins, from which no
-permissionless messages can be sent. 
+### Example
+The example below illustrates a comprehensive Barrier configuration, demonstrating how multiple barriers can be consecutively used or nested to fine-tune the execution of XCMs.
 
 ```rust
-// Parent and its pluralities (i.e. governance bodies) get free execution.
-// For example the Kusama relay chain gets free execution on AssetHub.
-AllowUnpaidExecutionFrom<ParentOrParentsPlurality>
+// Sets the message ID to `t` using a `SetTopic(t)` in the last position if present.
+TrailingSetTopicAsId< 
+	DenyThenTry<
+        // Deny filter: 
+        // Deny Reserve based transfers to the Relay chain. Allow everything else.
+		DenyReserveTransferToRelayChain,
+        // Allow filter:
+		(
+            // Allow local users to buy weight credit.
+			TakeWeightCredit,
+            // Evaluate XCMs with the inner barrier types using the newly computed origin.
+            // XCMs without origin-altering instruction will be evaluated with the original origin.
+			WithComputedOrigin<
+				(
+                    // If the message is one that immediately attemps to pay for execution, then
+					// allow it.
+					AllowTopLevelPaidExecutionFrom<Everything>,
+                    // Parent and its pluralities (i.e. governance bodies) get free execution.
+					AllowExplicitUnpaidExecutionFrom<ParentOrParentsPlurality>,
+					// Subscriptions for version tracking are OK.
+					AllowSubscriptionsFrom<Everything>,
+				),
+				UniversalLocation,
+				ConstU32<8>,
+			>,
+		),
+	>,
+>;
 ```
 
-### `AllowExplicitUnpaidExecutionFrom`
-The `AllowExplicitUnpaidExecutionFrom` barrier is almost identical to the
-`AllowUnpaidExecutionFrom`. The only difference is that it checks if the XCM begins with the
-`UnpaidExecution` instruction with a sufficient `weight_limit`. 
-This barrier is preferred over the `AllowUnpaidExecutionFrom` as the origin has to explicitly
-specify that it expects the execution to be free. This prevents accidental free execution.
+[`ShouldExecute`]: https://paritytech.github.io/polkadot/doc/xcm_executor/traits/trait.ShouldExecute.html
+[`barriers`]: https://github.com/paritytech/polkadot-sdk/blob/master/polkadot/xcm/xcm-builder/src/barriers.rs
+[`WithComputedOrigin`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.WithComputedOrigin.html
+[`TakeWeightCredit`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.TakeWeightCredit.html
+[`AllowTopLevelPaidExecutionFrom`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.AllowTopLevelPaidExecutionFrom.html
+[`AllowUnpaidExecutionFrom`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.AllowUnpaidExecutionFrom.html
+[`AllowExplicitUnpaidExecutionFrom`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.AllowExplicitUnpaidExecutionFrom.html
+[`AllowKnownQueryResponses`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.AllowKnownQueryResponses.html
+[`AllowSubscriptionsFrom`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.AllowSubscriptionsFrom.html
+[`TrailingSetTopicAsId`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.TrailingSetTopicAsId.html
+[`RespectSuspension`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.RespectSuspension.html
+[`DenyThenTry`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.DenyThenTry.html
+[`DenyReserveTransferToRelayChain`]:https://paritytech.github.io/polkadot/doc/xcm_builder/struct.DenyReserveTransferToRelayChain.html
 
-```rust
-// Parent and its pluralities (i.e. governance bodies) get free execution.
-// For example the Kusama relay chain gets free execution on AssetHub.
-AllowUnpaidExecutionFrom<ParentOrParentsPlurality>
-```
 
 
-### `IsChildSystemParachain`
-### `AllowKnownQueryResponses`
-### `AllowSubscriptionsFrom`
-### `WithComputedOrigin`
-### `TrailingSetTopicAsId`
-### `RespectSuspension`
-### `DenyThenTry`
-### `DenyReserveTransferToRelayChain`
 
