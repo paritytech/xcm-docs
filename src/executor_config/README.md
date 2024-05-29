@@ -149,14 +149,7 @@ X2(GlobalConsensus(NetworkId::Polkadot), Parachain(1000))
 ```
 
 ### Barrier
-Before any XCMs are executed in the XCM executor, they need to pass the `Barrier`.
-The `Barrier` type implements the `ShouldExecute` trait and can be seen as the firewall of the xcm-executor.
-Each time the xcm-executor receives an XCM, it check with the barrier if the XCM should be executed.
-We can also define multiple barriers for our `Barrier` type by using a tuple.
-During execution, each barrier is checks, and if one of them succeed, the XCM is executed.
-Example of a `Barrier` implementations is `AllowTopLevelPaidExecutionFrom<T>` that accepts the XCM if the `T` contains the origin of the XCM and the XCM contains the `BuyExecution` instruction.
-To accept all XCMs that pay for execution we could set the barrier to `AllowTopLevelPaidExecutionFrom<Everything>`.
-There are multiple pre-defined barrier implementations in the xcm-builder.
+Information about the Barrier config can be found in the [Barrier section](barrier.md).
 
 ### Weigher
 The `Weigher` is responsible for weighing full XCMs and individual instructions.
