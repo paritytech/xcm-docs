@@ -1,0 +1,6 @@
+[book]
+authors = ["Francisco Aguirre"]
+language = "en"
+multilingual = false
+src = "src"
+title = "XCM Documentation"
